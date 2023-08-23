@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Card,
   CardActionArea,
@@ -8,7 +9,7 @@ import {
 
 const CardCourse = ({ name, description, image, units, time }) => {
   return (
-    <Card sx={{ maxWidth: 345, borderRadius:4 }}>
+    <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
       <CardActionArea>
         <CardMedia
           component="img"
