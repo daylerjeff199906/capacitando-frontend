@@ -77,7 +77,11 @@ const FormAddCourse = () => {
             </div>
           </Stack>
         </Grid>
-        <Grid item xs={6}></Grid>
+        <Grid item xs={6}>
+          <Stack spacing={1}>
+            <Typography variant="body1">Asignar doncente(s) a curso</Typography>
+          </Stack>
+        </Grid>
         <Grid item xs={12}>
           <Box
             sx={{

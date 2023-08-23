@@ -4,8 +4,8 @@ const AddCourseSection = () => {
   return (
     <>
       <Box>
-        <Typography variant="h4" paddingY={4}>
-          Gestionar Cursos
+        <Typography variant="h4" paddingY={4} fontFamily={"Poppins"}>
+          Gestionar cursos
         </Typography>
       </Box>
       <Grid container spacing={2} sx={{ paddingRight: 4 }}>
