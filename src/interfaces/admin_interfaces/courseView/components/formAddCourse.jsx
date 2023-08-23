@@ -18,6 +18,7 @@ const FormAddCourse = () => {
     event.preventDefault();
     setSelectedFile(event.dataTransfer.files[0]);
   };
+  
 
   return (
     <>
