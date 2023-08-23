@@ -9,6 +9,8 @@ import { Grid } from "@mui/material";
 import AddUserSection from "./interfaces/admin_interfaces/userView/sections/addUserSection";
 import AddCourseSection from "./interfaces/admin_interfaces/courseView/sections/addCourseSection";
 import IndexStudent from "./interfaces/user_interfaces/students/indexStudent";
+import CourseList from "./interfaces/user_interfaces/students/sections/courseList";
+import CourseDetails from "./interfaces/user_interfaces/students/sections/courseDetails";
 
 function App() {
   return (
@@ -52,6 +54,8 @@ function HomeStundent() {
         <Grid item xs={12}>
           <Routes>
             <Route path="/" element={<IndexStudent />} />
+            <Route path="/miscursos" element={<CourseList />} />
+            <Route path="/miscursos/:id" element={<CourseDetails />} />
           </Routes>
         </Grid>
       </Grid>
