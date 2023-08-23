@@ -4,14 +4,14 @@ const AddCourseSection = () => {
   return (
     <>
       <Box>
-        <Typography variant="h4" fontWeight={800} paddingY={4}>
+        <Typography variant="h4" paddingY={4}>
           Gestionar Cursos
         </Typography>
       </Box>
       <Grid container spacing={2} sx={{ paddingRight: 4 }}>
         <Grid item xs={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
-            <Typography variant="h6" fontWeight={800} paddingY={3}>
+            <Typography variant="h6" paddingY={3}>
               Añadir datos de curso
             </Typography>
             <FormAddCourse />
@@ -19,7 +19,7 @@ const AddCourseSection = () => {
         </Grid>
         <Grid item xs={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
-            <Typography variant="h6" fontWeight={800} paddingY={3}>
+            <Typography variant="h6" paddingY={3}>
               Detalles de curso
             </Typography>
             {/* <DetailsUserSection /> */}

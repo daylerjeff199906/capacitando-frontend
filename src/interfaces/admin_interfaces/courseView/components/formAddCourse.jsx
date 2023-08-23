@@ -43,7 +43,7 @@ const FormAddCourse = () => {
             placeholder="Ingrese el título del curso ..."
             fullWidth
           />
-             <Typography variant="body1">Subir imagen de portada</Typography>
+          <Typography variant="body1">Subir imagen de portada</Typography>
           <input
             type="file"
             accept="image/*"
@@ -52,7 +52,12 @@ const FormAddCourse = () => {
             onChange={handleFileChange}
           />
           <label htmlFor="fileInput">
-            <Button variant="contained" component="span" size="small" color="success">
+            <Button
+              variant="contained"
+              component="span"
+              size="small"
+              color="success"
+            >
               Subir imagen
             </Button>
           </label>
@@ -82,7 +87,6 @@ const FormAddCourse = () => {
               </Link>
             </Stack>
           </Box>
-
         </Stack>
       </Box>
     </>
