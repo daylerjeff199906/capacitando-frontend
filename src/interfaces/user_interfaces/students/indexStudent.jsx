@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CardCourse from "../../../components/CardCourse";
+import { Link } from "react-router-dom";
 
 const courses = [
   {
@@ -57,9 +58,11 @@ const indexStudent = () => {
                 verás durante este semestre.
               </Typography>
               <Box sx={{ paddingY: 4 }}>
-                <Button variant="contained" color="primary">
-                  Ir a mis cursos
-                </Button>
+                <Link to="/home/miscursos">
+                  <Button variant="contained" color="primary">
+                    Ir a mis cursos
+                  </Button>
+                </Link>
               </Box>
             </Grid>
             <Grid item xs={6}>
@@ -86,9 +89,11 @@ const indexStudent = () => {
                 >
                   Cursos más recientes
                 </Typography>
-                <Button variant="outline" color="primary">
-                  Ver todos los cursos
-                </Button>
+                <Link to="/home/miscursos" style={{ textDecoration: "none" }}>
+                  <Button variant="outline" color="primary">
+                    Ver todos los cursos
+                  </Button>
+                </Link>
               </Box>
             </Grid>
             {courses.map((course) => (
