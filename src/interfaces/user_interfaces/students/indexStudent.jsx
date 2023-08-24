@@ -1,33 +1,7 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CardCourse from "../../../components/CardCourse";
 import { Link } from "react-router-dom";
-
-const courses = [
-  {
-    id: 1,
-    name: "Curso 1",
-    description: "Descripcion del curso 1",
-    image: "https://picsum.photos/200/300",
-  },
-  {
-    id: 2,
-    name: "Curso 2",
-    description: "Descripcion del curso 2",
-    image: "https://picsum.photos/200/300",
-  },
-  {
-    id: 3,
-    name: "Curso 2",
-    description: "Descripcion del curso 2",
-    image: "https://picsum.photos/200/300",
-  },
-  {
-    id: 4,
-    name: "Curso 2",
-    description: "Descripcion del curso 2",
-    image: "https://picsum.photos/200/300",
-  },
-];
+import courses from "../../../infraestructures/data/coursesArray";
 
 const indexStudent = () => {
   return (
@@ -96,7 +70,7 @@ const indexStudent = () => {
                 </Link>
               </Box>
             </Grid>
-            {courses.map((course) => (
+            {courses.slice(0,4).map((course) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
                 <CardCourse
                   name={course.name}
