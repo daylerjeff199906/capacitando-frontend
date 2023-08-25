@@ -1,31 +1,48 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 
 const FormDetailsCourse = () => {
   return (
     <>
       <Box color={"#000000"}>
         <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <Typography>Código</Typography>
-            <Typography>N° de DNI</Typography>
-            <Typography>Tipo de usuario</Typography>
-            <Typography>Nombre</Typography>
-            <Typography>Apellido</Typography>
-            <Typography>Correo</Typography>
-            <Typography>Contraseña:</Typography>
-            <Typography>Fecha de nacimiento</Typography>
-            <Typography>Estado</Typography>
+          <Grid item xs={4}>
+            <Stack spacing={1}>
+              <Typography>Nombre de curso</Typography>
+              <Typography>Descripción corta</Typography>
+              <Typography>url de video</Typography>
+              <Typography>Estado</Typography>
+              <Typography>Cantidad de sesiones</Typography>
+              <Typography>Cantidad de clases</Typography>
+              <Typography>Docente(s) asignado(s)</Typography>
+              <Typography>Alumnos(s) asignados(s)</Typography>
+            </Stack>
           </Grid>
-          <Grid item xs={6}>
-            <Typography>:0001</Typography>
-            <Typography>:12345678</Typography>
-            <Typography>:Administrador</Typography>
-            <Typography>:Carlos</Typography>
-            <Typography>:Alvarez</Typography>
-            <Typography>:asdasd@hotmail.com</Typography>
-            <Typography>:123456</Typography>
-            <Typography>:01/01/2000</Typography>
-            <Typography>:Activo</Typography>
+          <Grid item xs={8}>
+            <Stack spacing={1}>
+              <Typography>:0001</Typography>
+              <Typography>:12345678</Typography>
+              <Typography>:Administrador</Typography>
+              <Typography>:Carlos</Typography>
+              <Typography>:20</Typography>
+              <Typography>:Carlos</Typography>
+              <Typography>:Carlos</Typography>
+              <Typography>:Alvarez</Typography>
+            </Stack>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ paddingTop: 2 }}>
+          <Grid item xs={12}>
+            <Stack spacing={1} direction={"row"} justifyContent={"center"}>
+              <Button variant="contained" color="success">
+                Editar
+              </Button>
+              <Button variant="contained" color="error">
+                Eliminar
+              </Button>
+              <Button variant="contained" color="info">
+                Asignar contenido
+              </Button>
+            </Stack>
           </Grid>
         </Grid>
       </Box>

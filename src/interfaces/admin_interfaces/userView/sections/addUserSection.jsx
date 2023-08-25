@@ -4,7 +4,7 @@ const AddUserSection = () => {
   return (
     <>
       <Box>
-        <Typography variant="h4" paddingY={4}>
+        <Typography variant="h4" paddingY={4} fontFamily={"Poppins"}>
           Gestionar usuarios
         </Typography>
       </Box>
