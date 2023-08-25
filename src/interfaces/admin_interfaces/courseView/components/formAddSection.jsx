@@ -1,4 +1,4 @@
-import { Typography, TextField } from "@mui/material";
+import { Typography, TextField, Box, Button } from "@mui/material";
 
 const FormAddSection = () => {
   return (
@@ -21,6 +21,11 @@ const FormAddSection = () => {
         multiline
         rows={4}
       />
+      <Box marginTop={2}>
+        <Button variant="contained" component="label">
+          Guardar
+        </Button>
+      </Box>
     </>
   );
 };

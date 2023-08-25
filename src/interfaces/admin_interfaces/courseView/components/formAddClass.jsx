@@ -1,4 +1,4 @@
-import { Typography, TextField } from "@mui/material";
+import { Typography, TextField, Box, Button } from "@mui/material";
 const FormAddClass = () => {
   return (
     <>
@@ -28,6 +28,11 @@ const FormAddClass = () => {
         placeholder="Ingresar url del video ..."
         fullWidth
       />
+      <Box marginTop={2}>
+        <Button variant="contained" component="label">
+          Guardar
+        </Button>
+      </Box>
     </>
   );
 };
