@@ -101,7 +101,7 @@ const FormAddCourse = () => {
           </Stack>
         </Grid>
         <Grid item xs={6}>
-          <Stack spacing={1} sx={{ marginBottom: 8 }}>
+          <Stack spacing={1} sx={{ marginBottom: 6 }}>
             <Typography variant="body1">Asignar doncente(s) a curso</Typography>
             <Grid item xs={6} style={{ paddingLeft: 0, paddingTop: 0 }}>
               <Box display="flex" alignItems="center">
