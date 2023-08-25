@@ -12,10 +12,11 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 
 const Sidebar = () => {
   return (
-    <Paper sx={{ height: "100vh", position:"fixed", paddingRight:"24px" }}>
+    <Paper sx={{ height: "100vh", position: "fixed", paddingRight: "24px" }}>
       <Box>
         <MenuList>
           <Link
@@ -54,6 +55,14 @@ const Sidebar = () => {
                 <PlaylistAddIcon />
               </ListItemIcon>
               <ListItemText primary="Añadir curso" />
+            </MenuItem>
+          </Link>
+          <Link to="/dashboard/courses/1" style={{ textDecoration: "none", color: "gray" }}>
+            <MenuItem>
+              <ListItemIcon>
+                <PostAddOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Añadir contendio" />
             </MenuItem>
           </Link>
           <MenuItem>
