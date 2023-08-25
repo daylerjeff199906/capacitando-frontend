@@ -11,6 +11,7 @@ import AddCourseSection from "./interfaces/admin_interfaces/courseView/sections/
 import IndexStudent from "./interfaces/user_interfaces/students/indexStudent";
 import CourseList from "./interfaces/user_interfaces/students/sections/courseList";
 import CourseDetails from "./interfaces/user_interfaces/students/sections/courseDetails";
+import AddContentSection from "./interfaces/admin_interfaces/courseView/sections/addContentSection";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function DashboardLayout() {
             <Route path="users" element={<IndexUser />} />
             <Route path="courses" element={<IndexCourse />} />
             <Route path="courses/add" element={<AddCourseSection />} />
+            <Route path="courses/:id" element={<AddContentSection />} />
           </Routes>
         </Grid>
       </Grid>

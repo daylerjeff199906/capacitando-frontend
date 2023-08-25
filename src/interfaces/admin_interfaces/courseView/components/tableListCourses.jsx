@@ -20,7 +20,7 @@ const columns = [
   { id: "units", label: "Unidades", minWidth: 100 },
   { id: "hours", label: "Horas", minWidth: 100 },
   { id: "status", label: "Estado", minWidth: 100 },
-  { id: "action", label: "Acción", minWidth: 100 },
+  { id: "action", label: "Acción", minWidth: 100, align: "center" },
 ];
 
 const TableListCourses = () => {
