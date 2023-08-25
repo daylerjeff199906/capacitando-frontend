@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
-import TableListUsers from "../../userView/components/tableListUsers";
 import { Link } from "react-router-dom";
+import TableListCourses from "../components/tableListCourses";
 
 const ListCourseSection = () => {
   return (
@@ -13,7 +13,7 @@ const ListCourseSection = () => {
           </Button>
         </Link>
       </Box>
-      <TableListUsers />
+      <TableListCourses />
     </>
   );
 };

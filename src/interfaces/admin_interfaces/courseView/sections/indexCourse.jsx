@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import ListCourseSection from "./listCourseSection";
-import DetailsCourseSection from "./detailsCourseSection";
+// import DetailsCourseSection from "./detailsCourseSection";
 
 const indexCourse = () => {
   return (
@@ -11,7 +11,7 @@ const indexCourse = () => {
         </Typography>
       </Box>
       <Grid container spacing={2} sx={{ paddingRight: 4 }}>
-        <Grid item xs={6}>
+        <Grid item xs={12}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
             <Typography variant="h6" paddingY={3}>
               Lista de cursos
@@ -19,14 +19,14 @@ const indexCourse = () => {
             <ListCourseSection />
           </Box>
         </Grid>
-        <Grid item xs={6}>
+        {/* <Grid item xs={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
             <Typography variant="h6" paddingY={3}>
               Detalles de Curos
             </Typography>
             <DetailsCourseSection />
           </Box>
-        </Grid>
+        </Grid> */}
       </Grid>
     </>
   );
