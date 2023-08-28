@@ -13,6 +13,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 
 import CoursesArray from "../../../../infraestructures/data/coursesArray";
+import FetchDataCourse from "../../../../infraestructures/api/FetchDataCourse"
 
 const columns = [
   { id: "id", label: "ID", minWidth: 50 },
@@ -26,6 +27,9 @@ const columns = [
 const TableListCourses = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
+  const {apiData}=FetchDataCourse.FetchDataCourse()
+  console.log(apiData)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
