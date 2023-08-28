@@ -1,10 +1,40 @@
-import React from "react";
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import "../index.css";
+import { useState } from "react";
+import {
+  Alert,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
+import userAxios from "../config/axios";
 
 const LoginIndex = () => {
-  const [username, setUsername] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    if (!username.trim() || !password.trim()) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    setError(null); 
+
+    try {
+      const { data } = await userAxios.post("/login", {
+        usuario: username,
+        password: password,
+      });
+      localStorage.setItem("token", data.token);
+    } catch (error) {
+      console.log(error);
+      setError("Error al iniciar sesión. Verifica tus credenciales.");
+    }
+  };
 
   return (
     <Box
@@ -17,27 +47,11 @@ const LoginIndex = () => {
       }}
     >
       <Container maxWidth="sm">
-        {/* <Box alignContent={"center"} justifyContent={"center"} height="100vh"> */}
-
         <Box
           sx={{ minWidth: 275, padding: 4, backgroundColor: "#ffffff" }}
           borderRadius={4}
           boxShadow={6}
         >
-          <Box
-            width={"100%"}
-            alignContent={"center"}
-            justifyContent={"center"}
-            display={"flex"}
-            marginBottom={2}
-          >
-            <Box
-              component={"img"}
-              src="/images/logos/iiap.png"
-              width={52}
-              height={52}
-            />
-          </Box>
           <Typography
             variant="h4"
             align="center"
@@ -45,18 +59,20 @@ const LoginIndex = () => {
             fontWeight={700}
             gutterBottom
           >
-            Capacitando
+            Capacitandome
           </Typography>
-          <Typography variant="body1" align="center" gutterBottom>
-            Inicia sesión con tu usuario y contraseña
-          </Typography>
+          {error && (
+            <Alert severity="error" sx={{ marginBottom: 2 }}>
+              {error}
+            </Alert>
+          )}
           <TextField
             id="username"
             label="Username"
             variant="standard"
-            value={username}
             fullWidth
             margin="normal"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
@@ -74,11 +90,11 @@ const LoginIndex = () => {
             sx={{ marginY: 4, borderRadius: 4 }}
             color="secondary"
             fullWidth
+            onClick={handleLogin}
           >
             Iniciar sesión
           </Button>
         </Box>
-        {/* </Box> */}
       </Container>
     </Box>
   );

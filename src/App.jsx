@@ -14,20 +14,24 @@ import CourseDetails from "./interfaces/user_interfaces/students/sections/course
 import AddContentSection from "./interfaces/admin_interfaces/courseView/sections/addContentSection";
 import ProtectedRoute from "./protectedRoute";
 
+import { AuthProvider } from "./context/AuthProvider";
+
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LoginIndex />} />
-        <Route
-          path="/dashboard/*"
-          element={<ProtectedRoute element={<DashboardLayout />} />}
-        />
-        <Route
-          path="/home/*"
-          element={<ProtectedRoute element={<HomeStundent />} />}
-        />
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<LoginIndex />} />
+          <Route
+            path="/dashboard/*"
+            element={<ProtectedRoute element={<DashboardLayout />} />}
+          />
+          <Route
+            path="/home/*"
+            element={<ProtectedRoute element={<HomeStundent />} />}
+          />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
