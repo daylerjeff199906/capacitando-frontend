@@ -14,7 +14,6 @@ const AuthProvider = ({ children }) => {
         setLoading(false);
         return;
       }
-      console.log(token);
       const config = {
         headers: {
           "content-type": "application/json",
@@ -23,7 +22,6 @@ const AuthProvider = ({ children }) => {
       };
       try {
         const { data } = await userAxios.get("/admin/list", config);
-        console.log(data);
         setAuth(data);
       } catch (error) {
         console.log(error.error.data.msg);

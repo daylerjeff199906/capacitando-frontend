@@ -34,7 +34,7 @@ const LoginIndex = () => {
         password: password,
       });
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", JSON.stringify(data.usuario));
+      localStorage.setItem("user", data.usuario);
       localStorage.setItem("rol", JSON.stringify(data.rol));
 
       navigate("/dashboard");
