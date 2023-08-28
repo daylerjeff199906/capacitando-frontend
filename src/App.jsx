@@ -3,9 +3,7 @@ import LoginIndex from "./pages/loginIndex";
 import Dashboard from "./interfaces/admin_interfaces/dashboard/DashBoard";
 import IndexUser from "./interfaces/admin_interfaces/userView/sections/indexUser";
 import IndexCourse from "./interfaces/admin_interfaces/courseView/sections/indexCourse";
-import Navbar from "./components/NavBar";
-import Sidebar from "./components/SideBar";
-import { Grid } from "@mui/material";
+
 import AddUserSection from "./interfaces/admin_interfaces/userView/sections/addUserSection";
 import AddCourseSection from "./interfaces/admin_interfaces/courseView/sections/addCourseSection";
 import IndexStudent from "./interfaces/user_interfaces/students/indexStudent";
@@ -22,53 +20,23 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LoginIndex />} />
-          <Route path="/dashboard/*" element={<DashboardLayout />} />
-          <Route path="/home/*" element={<HomeStundent />} />
+          <Route path="/dashboard/*" element={<ProtectedRoute />}>
+            <Route index element={<Dashboard />} />
+            <Route path="users/add" element={<AddUserSection />} />
+            <Route path="users" element={<IndexUser />} />
+            <Route path="courses" element={<IndexCourse />} />
+            <Route path="courses/add" element={<AddCourseSection />} />
+            <Route path="courses/:id" element={<AddContentSection />} />
+          </Route>
+
+          <Route path="/home/*" element={<ProtectedRoute />}>
+            <Route index element={<IndexStudent />} />
+            <Route path="miscursos" element={<CourseList />} />
+            <Route path="miscursos/:id" element={<CourseDetails />} />
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-  );
-}
-
-function DashboardLayout() {
-  return (
-    <>
-      <Navbar />
-      <Grid container spacing={4} sx={{ paddingTop: 8 }}>
-        <Grid item xs={2}>
-          <Sidebar />
-        </Grid>
-        <Grid item xs={10}>
-          <Routes>
-            <Route path="/" element={<ProtectedRoute />}>
-              <Route index element={<Dashboard />} />
-              <Route path="users/add" element={<AddUserSection />} />
-              <Route path="users" element={<IndexUser />} />
-              <Route path="courses" element={<IndexCourse />} />
-              <Route path="courses/add" element={<AddCourseSection />} />
-              <Route path="courses/:id" element={<AddContentSection />} />
-            </Route>
-          </Routes>
-        </Grid>
-      </Grid>
-    </>
-  );
-}
-
-function HomeStundent() {
-  return (
-    <>
-      <Navbar />
-      <Grid container spacing={4} sx={{ paddingTop: 8 }}>
-        <Grid item xs={12}>
-          <Routes>
-            <Route path="/" element={<IndexStudent />} />
-            <Route path="/miscursos" element={<CourseList />} />
-            <Route path="/miscursos/:id" element={<CourseDetails />} />
-          </Routes>
-        </Grid>
-      </Grid>
-    </>
   );
 }
 
