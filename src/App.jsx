@@ -12,14 +12,21 @@ import IndexStudent from "./interfaces/user_interfaces/students/indexStudent";
 import CourseList from "./interfaces/user_interfaces/students/sections/courseList";
 import CourseDetails from "./interfaces/user_interfaces/students/sections/courseDetails";
 import AddContentSection from "./interfaces/admin_interfaces/courseView/sections/addContentSection";
+import ProtectedRoute from "./protectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginIndex />} />
-        <Route path="/dashboard/*" element={<DashboardLayout />} />
-        <Route path="/home/*" element={<HomeStundent />} />
+        <Route
+          path="/dashboard/*"
+          element={<ProtectedRoute element={<DashboardLayout />} />}
+        />
+        <Route
+          path="/home/*"
+          element={<ProtectedRoute element={<HomeStundent />} />}
+        />
       </Routes>
     </BrowserRouter>
   );

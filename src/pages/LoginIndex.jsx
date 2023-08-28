@@ -1,14 +1,18 @@
+import React from "react";
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import "../index.css";
 
 const LoginIndex = () => {
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
   return (
     <Box
       sx={{
         backgroundColor: "#f6f6f6",
         display: "flex",
-        alignItems: "center", // Centrar verticalmente
-        justifyContent: "center", // Centrar horizontalmente
+        alignItems: "center",
+        justifyContent: "center",
         minHeight: "100vh",
       }}
     >
@@ -50,8 +54,10 @@ const LoginIndex = () => {
             id="username"
             label="Username"
             variant="standard"
+            value={username}
             fullWidth
             margin="normal"
+            onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
             id="password"
@@ -59,6 +65,9 @@ const LoginIndex = () => {
             variant="standard"
             fullWidth
             margin="normal"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button
             variant="contained"
