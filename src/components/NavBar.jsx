@@ -10,12 +10,15 @@ import {
   Box,
 } from "@mui/material";
 import { Menu as MenuIcon, AccountCircle } from "@mui/icons-material";
+import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
   const [auth, setAuth] = React.useState(false);
   const [user, setUser] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
 
+const { logout } = useAuth();
+  
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
@@ -83,7 +86,7 @@ const Navbar = () => {
               onClose={handleClose}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={logout}>Cerrar sesión</MenuItem>
             </Menu>
           </Box>
         )}
