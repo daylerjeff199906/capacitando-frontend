@@ -22,14 +22,8 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<LoginIndex />} />
-          <Route
-            path="/dashboard/*"
-            element={<ProtectedRoute element={<DashboardLayout />} />}
-          />
-          <Route
-            path="/home/*"
-            element={<ProtectedRoute element={<HomeStundent />} />}
-          />
+          <Route path="/dashboard/*" element={<DashboardLayout />} />
+          <Route path="/home/*" element={<HomeStundent />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
@@ -46,12 +40,14 @@ function DashboardLayout() {
         </Grid>
         <Grid item xs={10}>
           <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="users/add" element={<AddUserSection />} />
-            <Route path="users" element={<IndexUser />} />
-            <Route path="courses" element={<IndexCourse />} />
-            <Route path="courses/add" element={<AddCourseSection />} />
-            <Route path="courses/:id" element={<AddContentSection />} />
+            <Route path="/" element={<ProtectedRoute />}>
+              <Route index element={<Dashboard />} />
+              <Route path="users/add" element={<AddUserSection />} />
+              <Route path="users" element={<IndexUser />} />
+              <Route path="courses" element={<IndexCourse />} />
+              <Route path="courses/add" element={<AddCourseSection />} />
+              <Route path="courses/:id" element={<AddContentSection />} />
+            </Route>
           </Routes>
         </Grid>
       </Grid>

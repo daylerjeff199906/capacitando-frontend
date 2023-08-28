@@ -1,13 +1,16 @@
-import { Navigate, useRoutes } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { Outlet, Navigate } from "react-router-dom";
+import useAuth from "./hooks/useAuth";
 
-function ProtectedRoute({ element }) {
-  const isAuthenticated = false;
-  
-  if (isAuthenticated) {
-    return element;
-  } else {
-    return <Navigate to="/" />;
+const ProtectedRoute = () => {
+  const { auth, loading } = useAuth();
+
+  console.log(auth.usersData);
+
+  if (loading) {
+    return "Cargando...";
   }
-}
+  return <>{auth._idusuario ? <Outlet /> : <Navigate to="/" />}</>;
+};
 
 export default ProtectedRoute;

@@ -1,4 +1,6 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Alert,
   Box,
@@ -14,6 +16,8 @@ const LoginIndex = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -22,7 +26,7 @@ const LoginIndex = () => {
       return;
     }
 
-    setError(null); 
+    setError(null);
 
     try {
       const { data } = await userAxios.post("/login", {
@@ -30,6 +34,8 @@ const LoginIndex = () => {
         password: password,
       });
       localStorage.setItem("token", data.token);
+
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
       setError("Error al iniciar sesión. Verifica tus credenciales.");

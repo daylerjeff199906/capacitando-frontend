@@ -4,13 +4,14 @@ import userAxios from "../config/axios";
 
 const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [auth, setAuth] = useState({});
 
   useEffect(() => {
     const authUser = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
-        setAuth(null);
+        setLoading(false);
         return;
       }
       console.log(token);
@@ -23,9 +24,12 @@ const AuthProvider = ({ children }) => {
       try {
         const { data } = await userAxios.get("/admin/list", config);
         console.log(data);
+        setAuth(data);
       } catch (error) {
         console.log(error.error.data.msg);
+        setAuth({});
       }
+      setLoading(false);
     };
 
     authUser();
@@ -36,6 +40,7 @@ const AuthProvider = ({ children }) => {
       value={{
         auth,
         setAuth,
+        loading,
       }}
     >
       {children}
