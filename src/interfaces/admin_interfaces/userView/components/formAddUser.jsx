@@ -1,5 +1,6 @@
 import * as React from "react";
 import {
+  Alert,
   Box,
   Button,
   Select,
@@ -10,33 +11,100 @@ import {
   Grid,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import useUsers from "../../../../hooks/useUsers";
 
 const typeUsers = [
   { id: 0, label: "Seleccionar tipo de usuario", value: 0 },
-  { id: 1, label: "Docente", value: 1 },
-  { id: 2, label: "Alumno", value: 2 },
+  { id: 1, label: "Docente", value: 2 },
+  { id: 2, label: "Alumno", value: 3 },
 ];
 
 const FormAddUser = () => {
   const [userType, setUserType] = React.useState(0);
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
-  const [userName, setUserName] = React.useState("");
-  const [userLastName, setUserLastName] = React.useState("");
-  const [userDni, setUserDni] = React.useState("");
-  const [userEmail, setUserEmail] = React.useState("");
-  const [userPhone, setUserPhone] = React.useState("");
-  const [userAddress, setUserAddress] = React.useState("");
-  const [userCareer, setUserCareer] = React.useState("");
-  const [userProfile, setUserProfile] = React.useState("");
-  const [userProfileName, setUserProfileName] = React.useState("");
-  const [userPassword, setUserPassword] = React.useState("");
+  const { saveUsers } = useUsers();
+
+  const [usuario, setUsuario] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [userConfirmPassword, setUserConfirmPassword] = React.useState("");
+  const [nombre, setNombre] = React.useState("");
+  const [apellido, setApellido] = React.useState("");
+  const [dni, setDni] = React.useState("");
+  const [telefono, setTelefono] = React.useState("");
+  const [correo, setCorreo] = React.useState("");
+  const [direccion, setDireccion] = React.useState("");
+  const [carrera, setCarrera] = React.useState("");
+  const [perfil, setPerfil] = React.useState("");
+  const [rol, setRol] = React.useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      [
+        nombre,
+        apellido,
+        dni,
+        telefono,
+        correo,
+        direccion,
+        carrera,
+        usuario,
+        password,
+        userConfirmPassword,
+        rol,
+      ].includes("")
+    ) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+
+    if (password !== userConfirmPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
+    setError(null);
+    saveUsers({
+      nombre,
+      apellido,
+      dni,
+      telefono,
+      correo,
+      direccion,
+      carrera,
+      usuario,
+      password,
+      perfil,
+      rol,
+    });
+
+    setUsuario("");
+    setPassword("");
+    setUserConfirmPassword("");
+    setNombre("");
+    setApellido("");
+    setDni("");
+    setTelefono("");
+    setCorreo("");
+    setDireccion("");
+    setCarrera("");
+    setPerfil("");
+    setRol("");
+  };
 
   const handleChange = (event) => {
     setUserType(event.target.value);
-    setIsProfileEnabled(event.target.value === 1);
+    setIsProfileEnabled(event.target.value === 2);
+    if (event.target.value !== 0) {
+      setRol(event.target.value);
+    } else if (event.target.value === 0) {
+      setRol("");
+    }
   };
+  console.log(rol);
+
   return (
     <>
       <Box>
@@ -57,6 +125,11 @@ const FormAddUser = () => {
             </li>
           </Typography>
         </Box>
+        {error && (
+          <Alert severity="error" sx={{ marginBottom: 2 }}>
+            {error}
+          </Alert>
+        )}
         <Box
           bgcolor={"#C085FF"}
           color={"white"}
@@ -79,8 +152,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Ingrese nombre"
               fullWidth
-              value={userName}
-              onChange={(e) => setUserName(e.target.value)}
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -92,8 +165,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Apellido"
               fullWidth
-              value={userLastName}
-              onChange={(e) => setUserLastName(e.target.value)}
+              value={apellido}
+              onChange={(e) => setApellido(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -105,8 +178,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Ingrese DNI"
               fullWidth
-              value={userDni}
-              onChange={(e) => setUserDni(e.target.value)}
+              value={dni}
+              onChange={(e) => setDni(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -118,8 +191,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Correo"
               fullWidth
-              value={userEmail}
-              onChange={(e) => setUserEmail(e.target.value)}
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -131,8 +204,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Telefono"
               fullWidth
-              value={userPhone}
-              onChange={(e) => setUserPhone(e.target.value)}
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -144,8 +217,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Dirección"
               fullWidth
-              value={userAddress}
-              onChange={(e) => setUserAddress(e.target.value)}
+              value={direccion}
+              onChange={(e) => setDireccion(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -177,8 +250,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Ingrese la carrera que estudia"
               fullWidth
-              value={userCareer}
-              onChange={(e) => setUserCareer(e.target.value)}
+              value={carrera}
+              onChange={(e) => setCarrera(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -192,8 +265,8 @@ const FormAddUser = () => {
               rows={2}
               fullWidth
               disabled={!isProfileEnabled}
-              value={userProfile}
-              onChange={(e) => setUserProfile(e.target.value)}
+              value={perfil}
+              onChange={(e) => setPerfil(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -220,8 +293,8 @@ const FormAddUser = () => {
               size="small"
               placeholder="Contraseña"
               fullWidth
-              value={userProfileName}
-              onChange={(e) => setUserProfileName(e.target.value)}
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
@@ -236,8 +309,8 @@ const FormAddUser = () => {
               id="userPassword"
               size="small"
               placeholder="Contraseña"
-              value={userPassword}
-              onChange={(e) => setUserPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               fullWidth
             />
           </Grid>
@@ -258,7 +331,9 @@ const FormAddUser = () => {
         <Grid container spacing={2}>
           <Grid item xs={12}>
             <Box paddingY={4} justifyContent={"center"} display={"flex"}>
-              <Button variant="contained">Guardar</Button>
+              <Button variant="contained" onClick={handleSubmit}>
+                Guardar
+              </Button>
               <Link to="/dashboard/users" style={{ textDecoration: "none" }}>
                 <Button
                   variant="contained"

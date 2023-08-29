@@ -21,7 +21,7 @@ const AuthProvider = ({ children }) => {
         },
       };
       try {
-        const { data } = await userAxios.get("/admin/list", config);
+        const { data } = await userAxios.get("users/admin/list", config);
         setAuth(data.usersData);
         console.log(data);
       } catch (error) {

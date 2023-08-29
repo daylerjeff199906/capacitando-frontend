@@ -15,28 +15,31 @@ import ProtectedRoute from "./protectedRoute";
 import "./index.css";
 
 import { AuthProvider } from "./context/AuthProvider";
+import { UserProvider } from "./context/UserProvider";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<LoginIndex />} />
-          <Route path="/dashboard/*" element={<ProtectedRoute />}>
-            <Route index element={<Dashboard />} />
-            <Route path="users/add" element={<AddUserSection />} />
-            <Route path="users" element={<IndexUser />} />
-            <Route path="courses" element={<IndexCourse />} />
-            <Route path="courses/add" element={<AddCourseSection />} />
-            <Route path="courses/:id" element={<AddContentSection />} />
-          </Route>
+        <UserProvider>
+          <Routes>
+            <Route path="/" element={<LoginIndex />} />
+            <Route path="/dashboard/*" element={<ProtectedRoute />}>
+              <Route index element={<Dashboard />} />
+              <Route path="users/add" element={<AddUserSection />} />
+              <Route path="users" element={<IndexUser />} />
+              <Route path="courses" element={<IndexCourse />} />
+              <Route path="courses/add" element={<AddCourseSection />} />
+              <Route path="courses/:id" element={<AddContentSection />} />
+            </Route>
 
-          <Route path="/home/*" element={<ProtectedRoute />}>
-            <Route index element={<IndexStudent />} />
-            <Route path="miscursos" element={<CourseList />} />
-            <Route path="miscursos/:id" element={<CourseDetails />} />
-          </Route>
-        </Routes>
+            <Route path="/home/*" element={<ProtectedRoute />}>
+              <Route index element={<IndexStudent />} />
+              <Route path="miscursos" element={<CourseList />} />
+              <Route path="miscursos/:id" element={<CourseDetails />} />
+            </Route>
+          </Routes>
+        </UserProvider>
       </AuthProvider>
     </BrowserRouter>
   );

@@ -32,7 +32,7 @@ const LoginIndex = () => {
     setError(null);
 
     try {
-      const { data } = await userAxios.post("/login", {
+      const { data } = await userAxios.post("/users/login", {
         usuario: username,
         password: password,
       });
