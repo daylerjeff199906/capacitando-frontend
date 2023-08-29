@@ -6,10 +6,10 @@ const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  const [usuarioId, setUsuarioId] = useState({});
 
   useEffect(() => {
     const getUsers = async () => {
-      console.log("getUsers");
       try {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -52,11 +52,17 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const editUsers = (user) => {
+    setUsuarioId(user);
+  };
+
   return (
     <UserContext.Provider
       value={{
         users,
+        usuarioId,
         saveUsers,
+        editUsers,
       }}
     >
       {children}

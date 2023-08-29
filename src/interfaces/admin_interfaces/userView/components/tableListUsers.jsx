@@ -12,11 +12,11 @@ import {
 } from "@mui/material";
 
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-// import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useUsers from "../../../../hooks/useUsers";
 import ModalViewUser from "./modalViewUser";
+import { Link } from "react-router-dom";
 
 const columns = [
   { id: "code", label: "Usuario" },
@@ -47,6 +47,7 @@ const TableListUsers = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
 
   const { users } = useUsers();
+  const { editUsers } = useUsers();
   console.log("este: ", users);
 
   const getRolLabel = (rolId) => {
@@ -112,12 +113,17 @@ const TableListUsers = () => {
                     <TableCell align="right">
                       {getEstadoLabel(user.estado)}
                     </TableCell>
-                    <TableCell align="center" sx={{ display: "flex", justifyContent:"center" }}>
+                    <TableCell
+                      align="center"
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    >
                       <ModalViewUser />
                       <Chip
                         icon={<EditNoteRoundedIcon />}
                         label="Editar"
-                        // onClick={() => handleEditAction(row.id)} // Implement the handleEditAction function
+                        component={Link}
+                        to={`/dashboard/users/add`}
+                        onClick={() => editUsers(user)}
                         color="primary"
                         size="small"
                         sx={{ marginLeft: 1 }}

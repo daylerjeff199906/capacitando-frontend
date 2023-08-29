@@ -23,8 +23,9 @@ const FormAddUser = () => {
   const [userType, setUserType] = React.useState(0);
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
   const [error, setError] = React.useState(null);
+  const [id, setId] = React.useState(null);
 
-  const { saveUsers } = useUsers();
+  const { saveUsers, usuarioId } = useUsers();
 
   const [usuario, setUsuario] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -38,6 +39,40 @@ const FormAddUser = () => {
   const [carrera, setCarrera] = React.useState("");
   const [perfil, setPerfil] = React.useState("");
   const [rol, setRol] = React.useState("");
+
+  React.useEffect(() => {
+    if (usuarioId?.nombre) {
+      setNombre(usuarioId.nombre);
+      setId(usuarioId.id);
+      setUsuario(usuarioId.usuario);
+    }
+    if (usuarioId?.apellido) {
+      setApellido(usuarioId.apellido);
+    }
+    if (usuarioId?.dni) {
+      setDni(usuarioId.dni);
+    }
+    if (usuarioId?.telefono) {
+      setTelefono(usuarioId.telefono);
+    }
+    if (usuarioId?.correo) {
+      setCorreo(usuarioId.correo);
+    }
+    if (usuarioId?.direccion) {
+      setDireccion(usuarioId.direccion);
+    }
+    if (usuarioId?.carrera) {
+      setCarrera(usuarioId.carrera);
+    }
+    if (usuarioId?.perfil) {
+      setPerfil(usuarioId.perfil);
+    }
+    if (usuarioId?.rol) {
+      setRol(usuarioId.rol);
+      setUserType(usuarioId.rol);
+      setIsProfileEnabled(usuarioId.rol === 2);
+    }
+  }, [usuarioId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -331,7 +366,7 @@ const FormAddUser = () => {
           <Grid item xs={12}>
             <Box paddingY={4} justifyContent={"center"} display={"flex"}>
               <Button variant="contained" onClick={handleSubmit}>
-                Guardar
+                {id ? "Guardar cambios" : "Agregar"}
               </Button>
               <Link to="/dashboard/users" style={{ textDecoration: "none" }}>
                 <Button
