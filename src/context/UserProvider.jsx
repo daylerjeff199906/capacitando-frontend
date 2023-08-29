@@ -23,8 +23,7 @@ const UserProvider = ({ children }) => {
         user,
         config
       );
-      console.log(data);
-      
+      setUsers([...users, data]);
     } catch (error) {
       console.log(error);
     }
