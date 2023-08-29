@@ -103,7 +103,6 @@ const FormAddUser = () => {
       setRol("");
     }
   };
-  console.log(rol);
 
   return (
     <>

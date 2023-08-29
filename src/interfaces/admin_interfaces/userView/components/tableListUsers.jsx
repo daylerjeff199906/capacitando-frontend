@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,8 +8,7 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
-import userAxios from "../../../../config/axios";
-import  AuthContext  from "../../../../context/AuthProvider";
+import useUsers from "../../../../hooks/useUsers";
 
 const columns = [
   { id: "code", label: "Usuario", minWidth: 100 },
@@ -34,25 +33,22 @@ const columns = [
 ];
 
 const TableListUsers = () => {
-  const { isAdminAuthenticated } = useContext(AuthContext);
+  // const { isAdminAuthenticated } = useContext(AuthContext);
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [users, setUsers] = useState([]);
+  // const [rowsPerPage, setRowsPerPage] = useState(10);
+  // const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (isAdminAuthenticated) {
-        try {
-          const response = await userAxios.get("/admin/list");
-          setUsers(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
+  const { users } = useUsers();
+  console.log("este: ", users);
 
-    fetchData();
-  }, [isAdminAuthenticated]);
+  const getRolLabel = (rolId) => {
+    if (rolId === 2) {
+      return "Docente";
+    } else if (rolId === 3) {
+      return "Alumno";
+    }
+    return "";
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -82,27 +78,22 @@ const TableListUsers = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                      {columns.map((column) => (
-                        <TableCell key={column.id} align={column.align}>
-                          {user[column.id]}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  );
-                })}
+              {users.usersData.map((user, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell align="left">{user.usuario}</TableCell>
+                  <TableCell align="right">{user.nombre}</TableCell>
+                  <TableCell align="right">{user.apellido}</TableCell>
+                  <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
+          count={users.usersData.length}
+          rowsPerPage={9}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
