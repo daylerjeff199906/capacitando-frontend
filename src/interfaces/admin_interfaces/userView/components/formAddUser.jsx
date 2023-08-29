@@ -20,10 +20,10 @@ const typeUsers = [
 ];
 
 const FormAddUser = () => {
+  const [id, setId] = React.useState(null);
   const [userType, setUserType] = React.useState(0);
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
   const [error, setError] = React.useState(null);
-  const [id, setId] = React.useState(null);
 
   const { saveUsers, usuarioId } = useUsers();
 
@@ -128,6 +128,7 @@ const FormAddUser = () => {
     setCarrera("");
     setPerfil("");
     setRol("");
+    setId(null);
   };
 
   const handleChange = (event) => {
@@ -140,10 +141,26 @@ const FormAddUser = () => {
     }
   };
 
+  const handleCancel = () => {
+    setId(null);
+    setUsuario("");
+    setPassword("");
+    setUserConfirmPassword("");
+    setNombre("");
+    setApellido("");
+    setDni("");
+    setTelefono("");
+    setCorreo("");
+    setDireccion("");
+    setCarrera("");
+    setPerfil("");
+    setRol("");
+  };
+
   return (
     <>
       <Typography variant="h6" paddingY={3}>
-        Añadir datos de usuario
+        {id ? "Actualizar datos de usuario" : "Añadir datos de Usuario"}
       </Typography>
       <Box>
         <Typography variant="subtitle2" fontWeight={600} color={"red"}>
@@ -377,6 +394,7 @@ const FormAddUser = () => {
                   variant="contained"
                   sx={{ marginLeft: 2 }}
                   color="error"
+                  onClick={handleCancel}
                 >
                   Cancelar
                 </Button>

@@ -31,32 +31,38 @@ const UserProvider = ({ children }) => {
   }, []);
 
   const saveUsers = async (user) => {
-    
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
     if (user.id) {
-      console.log("editando");
+      try {
+        const { data } = await userAxios.patch(
+          `/users/update/${user.id}`,
+          user,
+          config
+        );
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      console.log("creando");
+      try {
+        const { data } = await userAxios.post(
+          "/users/admin/create",
+          user,
+          config
+        );
+        setUsers([...users, data]);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    console.log("usuario:",user);
-    return
-    // try {
-    //   const token = localStorage.getItem("token");
-    //   const config = {
-    //     headers: {
-    //       "content-type": "application/json",
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //   };
-
-    //   const { data } = await userAxios.post(
-    //     "/users/admin/create",
-    //     user,
-    //     config
-    //   );
-    //   setUsers([...users, data]);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    console.log("usuario:", user);
+    return;
   };
 
   const editUsers = (user) => {
