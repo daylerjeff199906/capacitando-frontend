@@ -10,11 +10,14 @@ import {
   Typography,
 } from "@mui/material";
 import userAxios from "../config/axios";
+import useAuth from "../hooks/useAuth";
 
 const LoginIndex = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -35,8 +38,8 @@ const LoginIndex = () => {
       });
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", data.usuario);
-      localStorage.setItem("rol", JSON.stringify(data.rol));
-
+      localStorage.setItem("rol", data.rol);
+      setAuth(data);
       navigate("/dashboard");
     } catch (error) {
       console.log(error);
