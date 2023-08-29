@@ -43,7 +43,7 @@ const FormAddUser = () => {
   React.useEffect(() => {
     if (usuarioId?.nombre) {
       setNombre(usuarioId.nombre);
-      setId(usuarioId.id);
+      setId(usuarioId.idusuario);
       setUsuario(usuarioId.usuario);
     }
     if (usuarioId?.apellido) {
@@ -102,6 +102,7 @@ const FormAddUser = () => {
 
     setError(null);
     saveUsers({
+      id,
       nombre,
       apellido,
       dni,
@@ -141,6 +142,9 @@ const FormAddUser = () => {
 
   return (
     <>
+      <Typography variant="h6" paddingY={3}>
+        Añadir datos de usuario
+      </Typography>
       <Box>
         <Typography variant="subtitle2" fontWeight={600} color={"red"}>
           Importante
