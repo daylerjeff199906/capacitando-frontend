@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("rol");
     setAuth({});
-  }; 
+  };
 
   return (
     <AuthContext.Provider

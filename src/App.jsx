@@ -12,6 +12,8 @@ import CourseDetails from "./interfaces/user_interfaces/students/sections/course
 import AddContentSection from "./interfaces/admin_interfaces/courseView/sections/addContentSection";
 import ProtectedRoute from "./protectedRoute";
 
+import "./index.css";
+
 import { AuthProvider } from "./context/AuthProvider";
 
 function App() {
