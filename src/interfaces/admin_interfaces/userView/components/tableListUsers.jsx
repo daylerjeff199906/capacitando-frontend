@@ -1,42 +1,49 @@
 import { useState } from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Chip,
+} from "@mui/material";
+
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useUsers from "../../../../hooks/useUsers";
 
 const columns = [
-  { id: "code", label: "Usuario", minWidth: 100 },
+  { id: "code", label: "Usuario" },
   {
-    id: "population",
-    label: "Name",
-    minWidth: 170,
+    id: "names",
+    label: "Nombres y apellidos",
     align: "right",
   },
   {
-    id: "size",
-    label: "SurName",
-    minWidth: 170,
-    align: "right",
-  },
-  {
-    id: "density",
+    id: "rol",
     label: "Rol",
-    minWidth: 170,
     align: "right",
+  },
+  {
+    id: "Estado",
+    label: "Correo",
+    align: "right",
+  },
+  {
+    id: "actions",
+    label: "Acciones",
+    align: "center",
   },
 ];
 
 const TableListUsers = () => {
-  // const { isAdminAuthenticated } = useContext(AuthContext);
   const [page, setPage] = useState(0);
-  // const [rowsPerPage, setRowsPerPage] = useState(10);
-  // const [users, setUsers] = useState([]);
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
 
   const { users } = useUsers();
   console.log("este: ", users);
@@ -46,6 +53,15 @@ const TableListUsers = () => {
       return "Docente";
     } else if (rolId === 3) {
       return "Alumno";
+    }
+    return "";
+  };
+
+  const getEstadoLabel = (estadoId) => {
+    if (estadoId === 1) {
+      return "Activo";
+    } else if (estadoId === 2) {
+      return "Inactivo";
     }
     return "";
   };
@@ -62,7 +78,7 @@ const TableListUsers = () => {
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 300 }}>
+        <TableContainer sx={{ maxHeight: 300, minHeight: 300 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -70,7 +86,7 @@ const TableListUsers = () => {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{ minWidth: column.minWidth, fontWeight: "bold" }}
                   >
                     {column.label}
                   </TableCell>
@@ -78,22 +94,53 @@ const TableListUsers = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.usersData.map((user, index) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell align="left">{user.usuario}</TableCell>
-                  <TableCell align="right">{user.nombre}</TableCell>
-                  <TableCell align="right">{user.apellido}</TableCell>
-                  <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
-                </TableRow>
-              ))}
+              {users
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((user, index) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableCell align="left">{user.usuario}</TableCell>
+                    <TableCell align="right">
+                      {user.nombre} {user.apellido}
+                    </TableCell>
+                    <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
+                    <TableCell align="right">
+                      {getEstadoLabel(user.estado)}
+                    </TableCell>
+                    <TableCell align="center">
+                      <Chip
+                        icon={<AddCircleRoundedIcon />}
+                        label="Ver"
+                        size="small"
+                        // onClick={() => handleAddAction(row.id)} // Implement the handleAddAction function
+                        color="warning"
+                      />
+                      <Chip
+                        icon={<EditNoteRoundedIcon />}
+                        label="Editar"
+                        // onClick={() => handleEditAction(row.id)} // Implement the handleEditAction function
+                        color="primary"
+                        size="small"
+                        sx={{ marginLeft: 1 }}
+                      />
+                      <Chip
+                        icon={<DeleteRoundedIcon />}
+                        label="Eliminar"
+                        size="small"
+                        // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
+                        color="error"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={users.usersData.length}
-          rowsPerPage={9}
+          count={users.length} // Use the length of usersData
+          rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
@@ -102,4 +149,5 @@ const TableListUsers = () => {
     </>
   );
 };
+
 export default TableListUsers;

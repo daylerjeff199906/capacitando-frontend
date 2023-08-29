@@ -1,6 +1,6 @@
 import { Box, Grid, Typography } from "@mui/material";
 import ListUserSection from "./listUserSection";
-import DetailsUserSection from "./detailsUserSection";
+// import DetailsUserSection from "./detailsUserSection";
 
 const IndexUser = () => {
   return (
