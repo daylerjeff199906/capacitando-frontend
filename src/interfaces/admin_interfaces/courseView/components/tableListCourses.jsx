@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -29,7 +30,6 @@ const TableListCourses = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
   const {apiData}=FetchDataCourse.FetchDataCourse()
-  console.log(apiData)
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

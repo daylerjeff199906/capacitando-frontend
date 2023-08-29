@@ -24,7 +24,7 @@ const LoginIndex = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    if (!username.trim() || !password.trim()) {
+    if ([username, password].includes("")) {
       setError("Todos los campos son obligatorios");
       return;
     }
@@ -39,6 +39,7 @@ const LoginIndex = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", data.usuario);
       localStorage.setItem("rol", data.rol);
+
       setAuth(data);
       navigate("/dashboard");
     } catch (error) {

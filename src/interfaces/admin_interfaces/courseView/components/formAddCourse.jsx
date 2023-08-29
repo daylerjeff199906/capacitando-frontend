@@ -20,7 +20,6 @@ import { Link } from "react-router-dom";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Add } from "@mui/icons-material";
 import UsersArray from "../../../../infraestructures/data/usersArray";
-console.log(UsersArray);
 
 const FormAddCourse = () => {
   const [selectedFile, setSelectedFile] = useState(null);

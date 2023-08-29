@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import LoginIndex from "./pages/loginIndex";
+import LoginIndex from "./pages/LoginIndex";
 import Dashboard from "./interfaces/admin_interfaces/dashboard/DashBoard";
 import IndexUser from "./interfaces/admin_interfaces/userView/sections/indexUser";
 import IndexCourse from "./interfaces/admin_interfaces/courseView/sections/indexCourse";
