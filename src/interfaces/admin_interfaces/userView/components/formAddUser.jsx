@@ -21,6 +21,18 @@ const FormAddUser = () => {
   const [userType, setUserType] = React.useState(0);
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
 
+  const [userName, setUserName] = React.useState("");
+  const [userLastName, setUserLastName] = React.useState("");
+  const [userDni, setUserDni] = React.useState("");
+  const [userEmail, setUserEmail] = React.useState("");
+  const [userPhone, setUserPhone] = React.useState("");
+  const [userAddress, setUserAddress] = React.useState("");
+  const [userCareer, setUserCareer] = React.useState("");
+  const [userProfile, setUserProfile] = React.useState("");
+  const [userProfileName, setUserProfileName] = React.useState("");
+  const [userPassword, setUserPassword] = React.useState("");
+  const [userConfirmPassword, setUserConfirmPassword] = React.useState("");
+
   const handleChange = (event) => {
     setUserType(event.target.value);
     setIsProfileEnabled(event.target.value === 1);
@@ -62,37 +74,79 @@ const FormAddUser = () => {
             <Typography variant="body1" color="gray">
               Nombre(s)
             </Typography>
-            <TextField size="small" placeholder="Ingrese nombre" fullWidth />
+            <TextField
+              id="userName"
+              size="small"
+              placeholder="Ingrese nombre"
+              fullWidth
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1" color="gray">
               Apellido(s)
             </Typography>
-            <TextField size="small" placeholder="Apellido" fullWidth />
+            <TextField
+              id="userLastName"
+              size="small"
+              placeholder="Apellido"
+              fullWidth
+              value={userLastName}
+              onChange={(e) => setUserLastName(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1" color="gray">
               DNI
             </Typography>
-            <TextField size="small" placeholder="Ingrese DNI" fullWidth />
+            <TextField
+              id="userDni"
+              size="small"
+              placeholder="Ingrese DNI"
+              fullWidth
+              value={userDni}
+              onChange={(e) => setUserDni(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1" color="gray">
               Correo
             </Typography>
-            <TextField size="small" placeholder="Correo" fullWidth />
+            <TextField
+              id="userEmail"
+              size="small"
+              placeholder="Correo"
+              fullWidth
+              value={userEmail}
+              onChange={(e) => setUserEmail(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1" color="gray">
               Telefono
             </Typography>
-            <TextField size="small" placeholder="Telefono" fullWidth />
+            <TextField
+              id="userPhone"
+              size="small"
+              placeholder="Telefono"
+              fullWidth
+              value={userPhone}
+              onChange={(e) => setUserPhone(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1" color="gray">
               Dirección
             </Typography>
-            <TextField size="small" placeholder="Dirección" fullWidth />
+            <TextField
+              id="userAddress"
+              size="small"
+              placeholder="Dirección"
+              fullWidth
+              value={userAddress}
+              onChange={(e) => setUserAddress(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="body1" color={"gray"}>
@@ -119,9 +173,12 @@ const FormAddUser = () => {
               Carrera
             </Typography>
             <TextField
+              id="userCareer"
               size="small"
               placeholder="Ingrese la carrera que estudia"
               fullWidth
+              value={userCareer}
+              onChange={(e) => setUserCareer(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -135,6 +192,8 @@ const FormAddUser = () => {
               rows={2}
               fullWidth
               disabled={!isProfileEnabled}
+              value={userProfile}
+              onChange={(e) => setUserProfile(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -156,22 +215,43 @@ const FormAddUser = () => {
             <Typography variant="subtitle1" sx={{ color: "gray" }}>
               Usuario
             </Typography>
-            <TextField size="small" placeholder="Contraseña" fullWidth />
+            <TextField
+              id="user"
+              size="small"
+              placeholder="Contraseña"
+              fullWidth
+              value={userProfileName}
+              onChange={(e) => setUserProfileName(e.target.value)}
+            />
           </Grid>
           <Grid item xs={4}>
-            <Typography variant="subtitle1" sx={{ color: "gray" }}>
+            <Typography
+              id="userPassword"
+              variant="subtitle1"
+              sx={{ color: "gray" }}
+            >
               Contraseña
             </Typography>
-            <TextField size="small" placeholder="Contraseña" fullWidth />
+            <TextField
+              id="userPassword"
+              size="small"
+              placeholder="Contraseña"
+              value={userPassword}
+              onChange={(e) => setUserPassword(e.target.value)}
+              fullWidth
+            />
           </Grid>
           <Grid item xs={4}>
             <Typography variant="subtitle1" sx={{ color: "gray" }}>
               Confirmar Contraseña
             </Typography>
             <TextField
+              id="userConfirmPassword"
               size="small"
               placeholder="Confirmar contraseña"
               fullWidth
+              value={userConfirmPassword}
+              onChange={(e) => setUserConfirmPassword(e.target.value)}
             />
           </Grid>
         </Grid>
