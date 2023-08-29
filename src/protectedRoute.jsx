@@ -19,7 +19,7 @@ const ProtectedRoute = () => {
           <SideBar />
         </Grid>
         <Grid item xs={10}>
-          {auth.usersData ? <Outlet /> : <Navigate to="/" />}
+          {auth?.idusuario ? <Outlet /> : <Navigate to="/" />}
         </Grid>
       </Grid>
     </>

@@ -22,7 +22,8 @@ const AuthProvider = ({ children }) => {
       };
       try {
         const { data } = await userAxios.get("/admin/list", config);
-        setAuth(data);
+        setAuth(data.usersData);
+        console.log(data);
       } catch (error) {
         console.log(error.error.data.msg);
         setAuth({});
