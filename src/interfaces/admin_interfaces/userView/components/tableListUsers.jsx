@@ -12,10 +12,11 @@ import {
 } from "@mui/material";
 
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+// import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useUsers from "../../../../hooks/useUsers";
+import ModalViewUser from "./modalViewUser";
 
 const columns = [
   { id: "code", label: "Usuario" },
@@ -86,7 +87,12 @@ const TableListUsers = () => {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth, fontWeight: "bold" }}
+                    style={{
+                      minWidth: column.minWidth,
+                      fontWeight: "bold",
+                      whiteSpace: "nowrap",
+                      verticalAlign: "middle",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -106,14 +112,8 @@ const TableListUsers = () => {
                     <TableCell align="right">
                       {getEstadoLabel(user.estado)}
                     </TableCell>
-                    <TableCell align="center">
-                      <Chip
-                        icon={<AddCircleRoundedIcon />}
-                        label="Ver"
-                        size="small"
-                        // onClick={() => handleAddAction(row.id)} // Implement the handleAddAction function
-                        color="warning"
-                      />
+                    <TableCell align="center" sx={{ display: "flex", justifyContent:"center" }}>
+                      <ModalViewUser />
                       <Chip
                         icon={<EditNoteRoundedIcon />}
                         label="Editar"
