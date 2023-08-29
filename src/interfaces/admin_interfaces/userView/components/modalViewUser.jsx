@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import * as React from "react";
 import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
@@ -21,23 +22,23 @@ const style = {
   p: 4,
 };
 
-export default function ModalViewUser() {
+export default function ModalViewUser({ user }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const user = {
-    nombre: "Nombre del usuario",
-    apellido: "Apellido del usuario",
-    dni: "12345678",
-    correo: "usuario@example.com",
-    direccion: "Dirección del usuario",
-    telefono: "1234567890",
-    rol: 2,
-    estado: "Activo",
-    usuario: "nombreusuario",
-    carrera: "Carrera del usuario",
-  };
+  // const user = {
+  //   nombre: "Nombre del usuario",
+  //   apellido: "Apellido del usuario",
+  //   dni: "12345678",
+  //   correo: "usuario@example.com",
+  //   direccion: "Dirección del usuario",
+  //   telefono: "1234567890",
+  //   rol: 2,
+  //   estado: "Activo",
+  //   usuario: "nombreusuario",
+  //   carrera: "Carrera del usuario",
+  // };
 
   const userFields = [
     { label: "DNI", value: user.dni },

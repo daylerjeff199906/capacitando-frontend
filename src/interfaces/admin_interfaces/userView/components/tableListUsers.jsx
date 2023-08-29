@@ -117,7 +117,9 @@ const TableListUsers = () => {
                       align="center"
                       sx={{ display: "flex", justifyContent: "center" }}
                     >
-                      <ModalViewUser />
+                      <ModalViewUser
+                        user={user}
+                      />
                       <Chip
                         icon={<EditNoteRoundedIcon />}
                         label="Editar"
