@@ -51,7 +51,7 @@ const LoginIndex = () => {
   return (
     <Box
       sx={{
-        backgroundColor: "#f6f6f6",
+        backgroundImage: 'url("../../public/images/svg/background-login.svg")',
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
