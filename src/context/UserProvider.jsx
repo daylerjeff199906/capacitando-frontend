@@ -97,10 +97,15 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  const clearUsers = () => {
+    setUsuarioId({});
+  };
+
   return (
     <UserContext.Provider
       value={{
         users,
+        clearUsers,
         usuarioId,
         saveUsers,
         editUsers,

@@ -25,7 +25,7 @@ const FormAddUser = () => {
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
   const [error, setError] = React.useState(null);
 
-  const { saveUsers, usuarioId } = useUsers();
+  const { saveUsers, usuarioId, clearUsers } = useUsers();
 
   const [usuario, setUsuario] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -178,6 +178,12 @@ const FormAddUser = () => {
     setPerfil("");
     setRol("");
   };
+
+  React.useEffect(() => {
+    return () => {
+      clearUsers();
+    };
+  }, [clearUsers]);
 
   return (
     <>
