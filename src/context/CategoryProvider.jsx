@@ -6,6 +6,7 @@ const CategoryContext = createContext();
 
 const CategoryProvider = ({ children }) => {
   const [categorys, setCategorys] = useState([]);
+  const [categoryId, setCategoryId] = useState({});
 
   useEffect(() => {
     const getCategory = async () => {
@@ -29,8 +30,49 @@ const CategoryProvider = ({ children }) => {
     getCategory();
   }, []);
 
+  const saveCategory = async (category) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      if (category.id) {
+        const { data } = await userAxios.patch(
+          `/categories/update/${category.id}`,
+          category,
+          config
+        );
+        console.log(data);
+        setCategorys((prevCategorys) =>
+          prevCategorys.map((category) =>
+            category.id === data.id ? data : category
+          )
+        );
+      } else {
+        const { data } = await userAxios.post(
+          "/categories/create",
+          category,
+          config
+        );
+        console.log(data);
+        setCategorys((prevCategorys) => [...prevCategorys, data]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const editCategory = (category) => {
+    setCategoryId(category);
+  };
+
   return (
-    <CategoryContext.Provider value={{ categorys }}>
+    <CategoryContext.Provider
+      value={{ categorys, categoryId, saveCategory, editCategory }}
+    >
       {children}
     </CategoryContext.Provider>
   );

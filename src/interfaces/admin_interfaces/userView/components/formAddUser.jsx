@@ -79,7 +79,6 @@ const FormAddUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (id) {
       if (
         [
@@ -117,7 +116,6 @@ const FormAddUser = () => {
         return;
       }
     }
-
     if (password !== userConfirmPassword) {
       setError("Las contraseñas no coinciden");
       return;

@@ -14,7 +14,7 @@ import useCategory from "../../../../hooks/useCategory";
 import useCourse from "../../../../hooks/useCourse";
 
 const FormAddCourse = () => {
-  const [id, setId] = useState(null);
+  // const [id, setId] = useState(null);
   const [error, setError] = useState(null);
 
   const { categorys } = useCategory();
@@ -50,6 +50,7 @@ const FormAddCourse = () => {
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
+  console.log(selectedFile);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);

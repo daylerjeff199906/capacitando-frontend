@@ -29,7 +29,7 @@ const TableListCategorys = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { categorys } = useCategory();
+  const { categorys, editCategory } = useCategory();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
@@ -51,7 +51,7 @@ const TableListCategorys = () => {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 300, minHeight:300 }}>
+      <TableContainer sx={{ maxHeight: 300, minHeight: 300 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -71,7 +71,7 @@ const TableListCategorys = () => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((category, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell align="left">{category.categoria}</TableCell>                 
+                  <TableCell align="left">{category.categoria}</TableCell>
                   <TableCell align="left">
                     {getEstadoLabel(category.estado)}
                   </TableCell>
@@ -84,7 +84,7 @@ const TableListCategorys = () => {
                       label="Editar"
                       // component={Link}
                       to={`/dashboard/users/add`}
-                      // onClick={() => editUsers(user)}
+                      onClick={() => editCategory(category)}
                       color="primary"
                       size="small"
                       sx={{ marginLeft: 1 }}

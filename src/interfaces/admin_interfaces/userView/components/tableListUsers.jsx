@@ -52,7 +52,6 @@ const TableListUsers = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
 
   const { users, editUsers, editStateUser } = useUsers();
-  console.log("este: ", users);
 
   const getRolLabel = (rolId) => {
     if (rolId === 2) {
