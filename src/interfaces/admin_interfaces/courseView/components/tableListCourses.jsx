@@ -1,24 +1,26 @@
 /* eslint-disable no-unused-vars */
 import React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import Chip from "@mui/material/Chip";
-import EditNoteRoundedIcon from '@mui/icons-material/EditNoteRounded';
-import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Chip,
+} from "@mui/material";
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import CoursesArray from "../../../../infraestructures/data/coursesArray";
-import FetchDataCourse from "../../../../infraestructures/api/FetchDataCourse"
+
+import useCourse from "../../../../hooks/useCourse";
 
 const columns = [
-  { id: "id", label: "ID", minWidth: 50 },
-  { id: "name", label: "Nombre", minWidth: 170 },
+  { id: "name", label: "Nombre" },
   { id: "units", label: "Unidades", minWidth: 100 },
   { id: "hours", label: "Horas", minWidth: 100 },
   { id: "status", label: "Estado", minWidth: 100 },
@@ -28,8 +30,17 @@ const columns = [
 const TableListCourses = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-  const {apiData}=FetchDataCourse.FetchDataCourse()
+
+  const { courses } = useCourse();
+
+  const getEstadoLabel = (estadoId) => {
+    if (estadoId === 1) {
+      return "Activo";
+    } else if (estadoId === 2) {
+      return "Inactivo";
+    }
+    return "";
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -58,58 +69,48 @@ const TableListCourses = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {CoursesArray.slice(
-              page * rowsPerPage,
-              page * rowsPerPage + rowsPerPage
-            ).map((row) => {
-              return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                  {columns.map((column) => {
-                    const value = row[column.id];
-                    if (column.id === "action") {
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          <Chip
-                            icon={<EditNoteRoundedIcon />}
-                            label="Agregar"
-                            // onClick={() => handleEditAction(row.id)} // Implement the handleEditAction function
-                            color="primary"
-                          />
-                          <Chip
-                            icon={<AddCircleRoundedIcon />}
-                            label="Editar"
-                            // onClick={() => handleAddAction(row.id)} // Implement the handleAddAction function
-                            color="success"
-                            sx={{ marginLeft: 1 }}
-                          />
-                          <Chip
-                            icon={<DeleteRoundedIcon />}
-                            label="Eliminar"
-                            // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
-                            color="error"
-                            sx={{ marginLeft: 1 }}
-                          />
-                        </TableCell>
-                      );
-                    }
-                    return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === "number"
-                          ? column.format(value)
-                          : value}
-                      </TableCell>
-                    );
-                  })}
+            {courses
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((course, index) => (
+                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                  <TableCell align="left">{course.titulo}</TableCell>
+                  <TableCell align="left">{course.total_clases}</TableCell>
+                  <TableCell align="left">{course.hora_duracion}</TableCell>
+                  <TableCell align="left">
+                    {getEstadoLabel(course.estado)}
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ display: "flex", justifyContent: "center" }}
+                  >
+                    <Chip
+                      icon={<EditNoteRoundedIcon />}
+                      label="Editar"
+                      // component={Link}
+                      to={`/dashboard/users/add`}
+                      // onClick={() => editUsers(user)}
+                      color="primary"
+                      size="small"
+                      sx={{ marginLeft: 1 }}
+                    />
+                    <Chip
+                      icon={<DeleteRoundedIcon />}
+                      label="Eliminar"
+                      size="small"
+                      // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
+                      color="error"
+                      sx={{ marginLeft: 1 }}
+                    />
+                  </TableCell>
                 </TableRow>
-              );
-            })}
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={CoursesArray.length}
+        count={courses.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

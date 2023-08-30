@@ -27,19 +27,6 @@ export default function ModalViewUser({ user }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // const user = {
-  //   nombre: "Nombre del usuario",
-  //   apellido: "Apellido del usuario",
-  //   dni: "12345678",
-  //   correo: "usuario@example.com",
-  //   direccion: "Dirección del usuario",
-  //   telefono: "1234567890",
-  //   rol: 2,
-  //   estado: "Activo",
-  //   usuario: "nombreusuario",
-  //   carrera: "Carrera del usuario",
-  // };
-
   const userFields = [
     { label: "DNI", value: user.dni },
     { label: "Nombre", value: user.nombre },

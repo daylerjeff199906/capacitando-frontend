@@ -23,17 +23,22 @@ const columns = [
   {
     id: "names",
     label: "Nombres y apellidos",
-    align: "right",
+    align: "center",
+  },
+  {
+    id: "email",
+    label: "Correo",
+    align: "center",
   },
   {
     id: "rol",
     label: "Rol",
-    align: "right",
+    align: "center",
   },
   {
     id: "Estado",
-    label: "Correo",
-    align: "right",
+    label: "Estado",
+    align: "center",
   },
   {
     id: "actions",
@@ -106,9 +111,10 @@ const TableListUsers = () => {
                 .map((user, index) => (
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     <TableCell align="left">{user.usuario}</TableCell>
-                    <TableCell align="right">
+                    <TableCell align="left">
                       {user.nombre} {user.apellido}
                     </TableCell>
+                    <TableCell align="left">{user.correo}</TableCell>
                     <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
                     <TableCell align="right">
                       {getEstadoLabel(user.estado)}
@@ -117,9 +123,7 @@ const TableListUsers = () => {
                       align="center"
                       sx={{ display: "flex", justifyContent: "center" }}
                     >
-                      <ModalViewUser
-                        user={user}
-                      />
+                      <ModalViewUser user={user} />
                       <Chip
                         icon={<EditNoteRoundedIcon />}
                         label="Editar"
