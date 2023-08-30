@@ -10,13 +10,14 @@ import IndexStudent from "./interfaces/user_interfaces/students/indexStudent";
 import CourseList from "./interfaces/user_interfaces/students/sections/courseList";
 import CourseDetails from "./interfaces/user_interfaces/students/sections/courseDetails";
 import AddContentSection from "./interfaces/admin_interfaces/courseView/sections/addContentSection";
-import ProtectedRoute from "./protectedRoute";
+import ProtectedRoute from "./layouts/protectedRoute";
 
 import "./index.css";
 
 import { AuthProvider } from "./context/AuthProvider";
 import { UserProvider } from "./context/UserProvider";
 import { CourseProvider } from "./context/CourseProvider";
+import ProtectedRouteUser from "./layouts/protectedRouteUser";
 
 function App() {
   return (
@@ -35,7 +36,7 @@ function App() {
                 <Route path="courses/:id" element={<AddContentSection />} />
               </Route>
 
-              <Route path="/home/*" element={<ProtectedRoute />}>
+              <Route path="/home/*" element={<ProtectedRouteUser />}>
                 <Route index element={<IndexStudent />} />
                 <Route path="miscursos" element={<CourseList />} />
                 <Route path="miscursos/:id" element={<CourseDetails />} />

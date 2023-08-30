@@ -41,7 +41,12 @@ const LoginIndex = () => {
       localStorage.setItem("rol", data.rol);
 
       setAuth(data);
-      navigate("/dashboard");
+      if (data.rol !== 3) {
+        navigate("/dashboard");
+      }else if (data.rol === 3) {
+        navigate("/home");
+      }
+
     } catch (error) {
       console.log(error);
       setError("Error al iniciar sesión. Verifica tus credenciales.");
