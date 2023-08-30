@@ -13,7 +13,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
-import LibraryAddIcon from "@mui/icons-material/LibraryAdd";
+import CategoryIcon from "@mui/icons-material/Category";
 
 const Sidebar = () => {
   return (
@@ -53,9 +53,9 @@ const Sidebar = () => {
           >
             <MenuItem>
               <ListItemIcon>
-                <LibraryAddIcon />
+                <CategoryIcon />
               </ListItemIcon>
-              <ListItemText primary="Añadir categoria" />
+              <ListItemText primary="Categorias" />
             </MenuItem>
           </Link>
           <Link
