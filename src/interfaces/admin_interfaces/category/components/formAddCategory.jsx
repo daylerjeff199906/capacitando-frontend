@@ -12,10 +12,9 @@ import useCategory from "../../../../hooks/useCategory";
 
 const FormAddCategory = () => {
   const [id, setId] = useState("");
-  const { saveCategory, categoryId } = useCategory();
+  const { saveCategory, categoryId, clearCategoryId } = useCategory();
 
   const [categoria, setCategoria] = useState("");
-  // const [idcategoria, setIdCategoria] = useState("");
 
   useEffect(() => {
     if (categoryId?.categoria) {
@@ -41,6 +40,12 @@ const FormAddCategory = () => {
     setCategoria("");
     setId("");
   };
+
+  useEffect(() => {
+    return () => {
+      clearCategoryId();
+    };
+  }, []);
 
   return (
     <>

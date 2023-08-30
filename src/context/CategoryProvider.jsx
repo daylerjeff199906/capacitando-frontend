@@ -93,6 +93,10 @@ const CategoryProvider = ({ children }) => {
     }
   };
 
+  const clearCategoryId = () => {
+    setCategoryId({});
+  };
+
   return (
     <CategoryContext.Provider
       value={{
@@ -101,6 +105,7 @@ const CategoryProvider = ({ children }) => {
         saveCategory,
         editCategory,
         editStateCategory,
+        clearCategoryId,
       }}
     >
       {children}
