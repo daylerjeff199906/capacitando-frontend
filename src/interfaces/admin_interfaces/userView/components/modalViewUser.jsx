@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Fade from "@mui/material/Fade";
 import Chip from "@mui/material/Chip";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Typography from "@mui/material/Typography";
 import { Divider, Grid, Stack } from "@mui/material";
 
@@ -43,11 +43,11 @@ export default function ModalViewUser({ user }) {
   return (
     <div>
       <Chip
-        icon={<AddCircleRoundedIcon />}
+        icon={<RemoveRedEyeIcon />}
         label="Ver"
         size="small"
         onClick={handleOpen}
-        color="warning"
+        color="success"
       />
       <Modal
         aria-labelledby="transition-modal-title"

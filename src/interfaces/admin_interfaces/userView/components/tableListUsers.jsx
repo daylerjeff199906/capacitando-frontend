@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useUsers from "../../../../hooks/useUsers";
 import ModalViewUser from "./modalViewUser";
@@ -132,14 +131,6 @@ const TableListUsers = () => {
                         onClick={() => editUsers(user)}
                         color="primary"
                         size="small"
-                        sx={{ marginLeft: 1 }}
-                      />
-                      <Chip
-                        icon={<DeleteRoundedIcon />}
-                        label="Eliminar"
-                        size="small"
-                        // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
-                        color="error"
                         sx={{ marginLeft: 1 }}
                       />
                     </TableCell>
