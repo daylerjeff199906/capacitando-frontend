@@ -29,8 +29,45 @@ const CourseProvider = ({ children }) => {
     getCourses();
   }, []);
 
+  const saveCourses = async (course) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if (course.id) {
+      try {
+        const { data } = await userAxios.patch(
+          `/courses/update/${course.id}`,
+          course,
+          config
+        );
+
+        const newCourses = courses.map((courseState) =>
+          courseState.id === course.id ? data : courseState
+        );
+        setCourses(newCourses);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await userAxios.post(
+          "/courses/create",
+          course,
+          config
+        );
+        setCourses([...courses, data]);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
-    <CourseContext.Provider value={{ courses }}>
+    <CourseContext.Provider value={{ courses, saveCourses }}>
       {children}
     </CourseContext.Provider>
   );

@@ -40,7 +40,7 @@ const FormAddUser = () => {
   const [perfil, setPerfil] = React.useState("");
   const [rol, setRol] = React.useState("");
 
-  console.log("password:", usuarioId?.password);
+  // console.log("password:", usuarioId?.password);
   React.useEffect(() => {
     if (usuarioId?.nombre) {
       setNombre(usuarioId.nombre);

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   Autocomplete,
+  Alert,
   Box,
   Button,
   Chip,
@@ -19,23 +20,51 @@ import {
 import { Link } from "react-router-dom";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Add } from "@mui/icons-material";
-import UsersArray from "../../../../infraestructures/data/usersArray";
 
 import useUsers from "../../../../hooks/useUsers";
+import useCourse from "../../../../hooks/useCourse";
 
 const FormAddCourse = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [id, setId] = useState(null);
+  const [error, setError] = useState(null);
 
   const { users } = useUsers();
+  const { saveCourses } = useCourse();
+
+  const [titulo, setTitulo] = useState("");
+  const [descripcion, setDescripcion] = useState("");
+  const [url_video_intro, setUrl_video_intro] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if ([titulo, descripcion, url_video_intro].includes("")) {
+      setError("Todos los campos son obligatorios");
+      return;
+    }
+    setError(null);
+
+    saveCourses({
+      titulo,
+      descripcion,
+      url_video_intro,
+    });
+    clearTextFields();
+  };
+
+  const clearTextFields = () => {
+    setTitulo("");
+    setDescripcion("");
+    setUrl_video_intro("");
+  };
+
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
   };
-
   const handleDragOver = (event) => {
     event.preventDefault();
   };
-
   const handleDrop = (event) => {
     event.preventDefault();
     setSelectedFile(event.dataTransfer.files[0]);
@@ -48,12 +77,19 @@ const FormAddCourse = () => {
     <>
       <Grid container spacing={4}>
         <Grid item xs={6}>
+          {error && (
+            <Alert severity="error" sx={{ marginBottom: 2 }}>
+              {error}
+            </Alert>
+          )}
           <Stack spacing={1}>
             <Typography variant="body1">Título</Typography>
             <TextField
               size="small"
               placeholder="Ingrese el título del curso ..."
               fullWidth
+              value={titulo}
+              onChange={(e) => setTitulo(e.target.value)}
             />
             <Typography variant="body1">Descripción corta</Typography>
             <TextField
@@ -62,6 +98,8 @@ const FormAddCourse = () => {
               fullWidth
               multiline
               rows={4}
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
             />
             <Typography variant="body1">
               Url de video de presentación
@@ -70,6 +108,8 @@ const FormAddCourse = () => {
               size="small"
               placeholder="Ingrese el título del curso ..."
               fullWidth
+              value={url_video_intro}
+              onChange={(e) => setUrl_video_intro(e.target.value)}
             />
             <Typography variant="body1">Subir imagen de portada</Typography>
             <input
@@ -223,7 +263,9 @@ const FormAddCourse = () => {
             }}
           >
             <Stack direction="row" spacing={2}>
-              <Button variant="contained">Guardar</Button>
+              <Button variant="contained" onClick={handleSubmit}>
+                Guardar
+              </Button>
               <Link to="/dashboard/courses" style={{ textDecoration: "none" }}>
                 <Button variant="contained" color={"error"}>
                   Cancelar
