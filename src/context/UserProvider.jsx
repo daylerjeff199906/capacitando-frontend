@@ -12,7 +12,6 @@ const UserProvider = ({ children }) => {
     const getUsers = async () => {
       try {
         const token = localStorage.getItem("token");
-        console.log("mi token 2 : ", token);
         if (!token) return;
 
         const config = {
