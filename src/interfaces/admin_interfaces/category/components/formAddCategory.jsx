@@ -11,18 +11,16 @@ import {
 import useCategory from "../../../../hooks/useCategory";
 
 const FormAddCategory = () => {
-  // const [id, setId] = useState("");
+  const [id, setId] = useState("");
   const { saveCategory, categoryId } = useCategory();
 
   const [categoria, setCategoria] = useState("");
-  const [idcategoria, setIdCategoria] = useState("");
+  // const [idcategoria, setIdCategoria] = useState("");
 
   useEffect(() => {
     if (categoryId?.categoria) {
       setCategoria(categoryId.categoria);
-    }
-    if (categoryId?.id) {
-      setIdCategoria(categoryId.id);
+      setId(categoryId.idcategoria);
     }
   }, [categoryId]);
 
@@ -32,7 +30,7 @@ const FormAddCategory = () => {
       return;
     }
     saveCategory({
-      idcategoria,
+      id,
       categoria,
     });
 
@@ -41,6 +39,7 @@ const FormAddCategory = () => {
 
   const clearTextFields = () => {
     setCategoria("");
+    setId("");
   };
 
   return (
@@ -53,7 +52,7 @@ const FormAddCategory = () => {
           fontFamily={"poppins"}
           fontWeight={600}
         >
-          Añadir categoria
+          {id ? "Editar categoría" : "Añadir categoría"}
         </Typography>
         <Divider />
         <FormGroup>
@@ -75,7 +74,7 @@ const FormAddCategory = () => {
                 color="primary"
                 onClick={handleSubmit}
               >
-                Añadir
+                {id ? "Guardar cambios" : "Guardar"}
               </Button>
               <Button
                 variant="contained"

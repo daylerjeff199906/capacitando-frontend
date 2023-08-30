@@ -10,26 +10,24 @@ import {
   TablePagination,
   TableRow,
   Chip,
+  Tooltip,
 } from "@mui/material";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
-
-import CoursesArray from "../../../../infraestructures/data/coursesArray";
 
 import useCategory from "../../../../hooks/useCategory";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 const columns = [
   { id: "name", label: "Nombre" },
-  { id: "status", label: "Estado", minWidth: 100 },
-  { id: "action", label: "Acción", minWidth: 100, align: "center" },
+  { id: "status", label: "Estado" },
+  { id: "action", label: "Acción", align: "center" },
 ];
 
 const TableListCategorys = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { categorys, editCategory } = useCategory();
+  const { categorys, editCategory, editStateCategory } = useCategory();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
@@ -73,7 +71,18 @@ const TableListCategorys = () => {
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align="left">{category.categoria}</TableCell>
                   <TableCell align="left">
-                    {getEstadoLabel(category.estado)}
+                    <Tooltip title={"Cambiar de estado"}>
+                      <Chip
+                        label={getEstadoLabel(category.estado)}
+                        color={
+                          getEstadoLabel(category.estado) === "Activo"
+                            ? "success"
+                            : "error"
+                        }
+                        size="small"
+                        variant="outlined"
+                      />
+                    </Tooltip>
                   </TableCell>
                   <TableCell
                     align="center"
@@ -82,7 +91,6 @@ const TableListCategorys = () => {
                     <Chip
                       icon={<EditNoteRoundedIcon />}
                       label="Editar"
-                      // component={Link}
                       to={`/dashboard/users/add`}
                       onClick={() => editCategory(category)}
                       color="primary"
@@ -90,11 +98,11 @@ const TableListCategorys = () => {
                       sx={{ marginLeft: 1 }}
                     />
                     <Chip
-                      icon={<DeleteRoundedIcon />}
+                      icon={<DeleteOutlineOutlined />}
                       label="Eliminar"
-                      size="small"
-                      // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
+                      onClick={() => editStateCategory(category)}
                       color="error"
+                      size="small"
                       sx={{ marginLeft: 1 }}
                     />
                   </TableCell>

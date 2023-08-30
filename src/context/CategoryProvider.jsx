@@ -69,9 +69,39 @@ const CategoryProvider = ({ children }) => {
     setCategoryId(category);
   };
 
+  const editStateCategory = async (category) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.put(
+        `/categories/status/${category.idcategoria}`,
+        category,
+        config
+      );
+      setCategorys((prevCategorys) =>
+        prevCategorys.map((category) =>
+          category.id === data.id ? data : category
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <CategoryContext.Provider
-      value={{ categorys, categoryId, saveCategory, editCategory }}
+      value={{
+        categorys,
+        categoryId,
+        saveCategory,
+        editCategory,
+        editStateCategory,
+      }}
     >
       {children}
     </CategoryContext.Provider>
