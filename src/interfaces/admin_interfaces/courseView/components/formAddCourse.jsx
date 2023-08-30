@@ -22,6 +22,7 @@ import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Add } from "@mui/icons-material";
 
 import useUsers from "../../../../hooks/useUsers";
+import useCategory from "../../../../hooks/useCategory";
 import useCourse from "../../../../hooks/useCourse";
 
 const FormAddCourse = () => {
@@ -29,15 +30,17 @@ const FormAddCourse = () => {
   const [error, setError] = useState(null);
 
   const { users } = useUsers();
+  const { categorys } = useCategory();
   const { saveCourses } = useCourse();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [url_video_intro, setUrl_video_intro] = useState("");
+  const [idcategoria, setIdcategoria] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if ([titulo, descripcion, url_video_intro].includes("")) {
+    if ([titulo, descripcion, url_video_intro, idcategoria].includes("")) {
       setError("Todos los campos son obligatorios");
       return;
     }
@@ -45,6 +48,7 @@ const FormAddCourse = () => {
 
     saveCourses({
       titulo,
+      idcategoria,
       descripcion,
       url_video_intro,
     });
@@ -55,6 +59,7 @@ const FormAddCourse = () => {
     setTitulo("");
     setDescripcion("");
     setUrl_video_intro("");
+    setIdcategoria("");
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -90,6 +95,23 @@ const FormAddCourse = () => {
               fullWidth
               value={titulo}
               onChange={(e) => setTitulo(e.target.value)}
+            />
+            <Typography variant="body1">Categoría</Typography>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={categorys}
+              getOptionLabel={(category) => `${category.categoria} `}
+              onChange={(e, value) => setIdcategoria(value.idcategoria)}
+              sx={{ flex: 2 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  size="small"
+                  placeholder="Selecciona una categoría"
+                  fullWidth
+                />
+              )}
             />
             <Typography variant="body1">Descripción corta</Typography>
             <TextField
