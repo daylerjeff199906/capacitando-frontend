@@ -40,11 +40,14 @@ const FormAddUser = () => {
   const [perfil, setPerfil] = React.useState("");
   const [rol, setRol] = React.useState("");
 
+  console.log("password:", usuarioId?.password);
   React.useEffect(() => {
     if (usuarioId?.nombre) {
       setNombre(usuarioId.nombre);
       setId(usuarioId.idusuario);
       setUsuario(usuarioId.usuario);
+      // setPassword(usuarioId.password);
+      // setUserConfirmPassword(usuarioId.password);
     }
     if (usuarioId?.apellido) {
       setApellido(usuarioId.apellido);
@@ -76,23 +79,43 @@ const FormAddUser = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      [
-        nombre,
-        apellido,
-        dni,
-        telefono,
-        correo,
-        direccion,
-        carrera,
-        usuario,
-        password,
-        userConfirmPassword,
-        rol,
-      ].includes("")
-    ) {
-      setError("Todos los campos son obligatorios");
-      return;
+
+    if (id) {
+      if (
+        [
+          nombre,
+          apellido,
+          dni,
+          telefono,
+          correo,
+          direccion,
+          carrera,
+          usuario,
+          rol,
+        ].includes("")
+      ) {
+        setError("Todos los campos son obligatorios");
+        return;
+      }
+    } else {
+      if (
+        [
+          nombre,
+          apellido,
+          dni,
+          telefono,
+          correo,
+          direccion,
+          carrera,
+          usuario,
+          password,
+          userConfirmPassword,
+          rol,
+        ].includes("")
+      ) {
+        setError("Todos los campos son obligatorios");
+        return;
+      }
     }
 
     if (password !== userConfirmPassword) {
@@ -129,6 +152,7 @@ const FormAddUser = () => {
     setPerfil("");
     setRol("");
     setId(null);
+    setUserType(0);
   };
 
   const handleChange = (event) => {
@@ -367,6 +391,8 @@ const FormAddUser = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               fullWidth
+              type="password"
+              disabled={id ? true : false}
             />
           </Grid>
           <Grid item xs={4}>
@@ -380,6 +406,8 @@ const FormAddUser = () => {
               fullWidth
               value={userConfirmPassword}
               onChange={(e) => setUserConfirmPassword(e.target.value)}
+              type="password"
+              disabled={id ? true : false}
             />
           </Grid>
         </Grid>

@@ -112,7 +112,7 @@ const TableListUsers = () => {
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     <TableCell align="left">{user.usuario}</TableCell>
                     <TableCell align="left">
-                      {user.nombre} {user.apellido}
+                      {user.apellido} {user.nombre}
                     </TableCell>
                     <TableCell align="left">{user.correo}</TableCell>
                     <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
@@ -151,7 +151,7 @@ const TableListUsers = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={users.length} // Use the length of usersData
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
