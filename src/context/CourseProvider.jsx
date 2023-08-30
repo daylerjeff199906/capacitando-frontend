@@ -6,6 +6,7 @@ const CourseContext = createContext();
 
 const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
+  const [detailCourse, setDetailCourse] = useState({});
 
   useEffect(() => {
     const getCourses = async () => {
@@ -28,6 +29,24 @@ const CourseProvider = ({ children }) => {
     };
     getCourses();
   }, []);
+
+  const getDetailCourse = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get(`/courses/detail/${id}`, config);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const saveCourses = async (course) => {
     const token = localStorage.getItem("token");
@@ -67,7 +86,9 @@ const CourseProvider = ({ children }) => {
   };
 
   return (
-    <CourseContext.Provider value={{ courses, saveCourses }}>
+    <CourseContext.Provider
+      value={{ courses, getDetailCourse, detailCourse, saveCourses }}
+    >
       {children}
     </CourseContext.Provider>
   );
