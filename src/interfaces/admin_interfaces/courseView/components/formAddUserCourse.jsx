@@ -35,10 +35,13 @@ const headerStudent = [
 
 const FormAddUserCourse = () => {
   const { users } = useUsers();
-  const { courses, getDetailCourse } = useCourse();
+  const { courses, getDetailCourse, addUserCourse } = useCourse();
 
   const [selectedDocentes, setSelectedDocentes] = useState([]);
   const [selectedAlumnos, setSelectedAlumnos] = useState([]);
+
+  const [idcurso, setIdCurso] = useState(null);
+  const [idusuario, setIdUsuario] = useState(null);
 
   const handleCourseSelection = (course) => {
     if (course) {
@@ -46,11 +49,21 @@ const FormAddUserCourse = () => {
         console.log(data);
         setSelectedDocentes(data.docentes);
         setSelectedAlumnos(data.estudiantes);
+        setIdCurso(data.idcurso);
       });
     }
   };
   const filteredDocentes = users.filter((user) => user.rol === 2);
   const filteredAlumnos = users.filter((user) => user.rol === 3);
+
+  const handleAddUSer = () => {
+    addUserCourse({ idcurso, idusuario });
+    // setSelectedDocentes([
+    //   ...selectedDocentes,
+    //   { idusuario, docente: "Docente" },
+    // ]);
+    console.log("hemos añadido un usuario");
+  };
   return (
     <>
       <Stack spacing={1} sx={{ marginBottom: 6 }}>
@@ -79,6 +92,7 @@ const FormAddUserCourse = () => {
             id="combo-box-demo"
             options={filteredDocentes}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
+            onChange={(e, value) => setIdUsuario(value.idusuario)}
             sx={{ flex: 2 }}
             renderInput={(params) => (
               <TextField
@@ -93,7 +107,7 @@ const FormAddUserCourse = () => {
             icon={<Add />}
             label="Añadir docente"
             variant="outlined"
-            onClick={() => console.log("Añadir docente")}
+            onClick={handleAddUSer}
             color="success"
             size="large"
             sx={{ borderRadius: 4, ml: 2 }}
@@ -136,6 +150,7 @@ const FormAddUserCourse = () => {
             id="combo-box-demo"
             options={filteredAlumnos}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
+            onChange={(e, value) => setIdUsuario(value.idusuario)}
             sx={{ flex: 2 }}
             renderInput={(params) => (
               <TextField
@@ -150,14 +165,16 @@ const FormAddUserCourse = () => {
             icon={<Add />}
             label="Añadir Alumno"
             variant="outlined"
-            onClick={() => console.log("Añadir Alumno")}
+            onClick={handleAddUSer}
             color="success"
             size="large"
             sx={{ borderRadius: 4, ml: 2 }}
           />
         </Box>
 
-        <TableContainer sx={{ maxWidth: "100%", maxHeight: 200 }}>
+        <TableContainer
+          sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
+        >
           <Table>
             <TableHead>
               <TableRow>

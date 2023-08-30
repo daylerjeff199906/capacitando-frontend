@@ -6,7 +6,6 @@ const CourseContext = createContext();
 
 const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
-  const [detailCourse, setDetailCourse] = useState({});
 
   useEffect(() => {
     const getCourses = async () => {
@@ -85,9 +84,29 @@ const CourseProvider = ({ children }) => {
     }
   };
 
+  const addUserCourse = async (userCourse) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await userAxios.post(
+        "/courses/add/User",
+        userCourse,
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <CourseContext.Provider
-      value={{ courses, getDetailCourse, detailCourse, saveCourses }}
+      value={{ courses, getDetailCourse, saveCourses, addUserCourse }}
     >
       {children}
     </CourseContext.Provider>
