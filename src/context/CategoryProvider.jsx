@@ -57,7 +57,6 @@ const CategoryProvider = ({ children }) => {
           category,
           config
         );
-        console.log(data);
         setCategorys((prevCategorys) => [...prevCategorys, data]);
       }
     } catch (error) {

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
   Box,
@@ -39,11 +40,12 @@ const FormAddCategory = () => {
   const clearTextFields = () => {
     setCategoria("");
     setId("");
+    clearCategoryId();
   };
 
   useEffect(() => {
     return () => {
-      clearCategoryId();
+      clearTextFields();
     };
   }, []);
 
