@@ -9,6 +9,7 @@ import {
   TablePagination,
   TableRow,
   Chip,
+  Tooltip,
 } from "@mui/material";
 
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
@@ -50,8 +51,7 @@ const TableListUsers = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
 
-  const { users } = useUsers();
-  const { editUsers } = useUsers();
+  const { users, editUsers, editStateUser } = useUsers();
   console.log("este: ", users);
 
   const getRolLabel = (rolId) => {
@@ -66,7 +66,7 @@ const TableListUsers = () => {
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
       return "Activo";
-    } else if (estadoId === 2) {
+    } else if (estadoId === 0) {
       return "Inactivo";
     }
     return "";
@@ -116,7 +116,17 @@ const TableListUsers = () => {
                     <TableCell align="left">{user.correo}</TableCell>
                     <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
                     <TableCell align="right">
-                      {getEstadoLabel(user.estado)}
+                      <Tooltip title="Cambiar estado">
+                        <Chip
+                          label={getEstadoLabel(user.estado)}
+                          color={user.estado === 1 ? "success" : "error"}
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {
+                            editStateUser(user);
+                          }}
+                        />
+                      </Tooltip>
                     </TableCell>
                     <TableCell
                       align="center"

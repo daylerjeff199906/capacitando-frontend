@@ -47,7 +47,7 @@ export default function ModalViewUser({ user }) {
         label="Ver"
         size="small"
         onClick={handleOpen}
-        color="success"
+        color="warning"
       />
       <Modal
         aria-labelledby="transition-modal-title"

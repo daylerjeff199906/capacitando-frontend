@@ -73,6 +73,30 @@ const UserProvider = ({ children }) => {
     setUsuarioId(user);
   };
 
+  const editStateUser = async (user) => {
+    console.log("user: ", user);
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await userAxios.put(
+        `/users/status/${user.idusuario}`,
+        user,
+        config
+      );
+      const newUsers = users.map((userState) =>
+        userState.id === user.id ? data : userState
+      );
+      setUsers(newUsers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -80,6 +104,7 @@ const UserProvider = ({ children }) => {
         usuarioId,
         saveUsers,
         editUsers,
+        editStateUser,
       }}
     >
       {children}
