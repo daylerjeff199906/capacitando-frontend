@@ -21,9 +21,12 @@ import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Add } from "@mui/icons-material";
 import UsersArray from "../../../../infraestructures/data/usersArray";
 
+import useUsers from "../../../../hooks/useUsers";
+
 const FormAddCourse = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  console.log(selectedFile);
+
+  const { users } = useUsers();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -38,8 +41,8 @@ const FormAddCourse = () => {
     setSelectedFile(event.dataTransfer.files[0]);
   };
 
-  const filteredDocentes = UsersArray.filter((user) => user.rol === "Docente");
-  const filteredAlumnos = UsersArray.filter((user) => user.rol === "Alumno");
+  const filteredDocentes = users.filter((user) => user.rol === 2);
+  const filteredAlumnos = users.filter((user) => user.rol === 3);
 
   return (
     <>
@@ -108,7 +111,7 @@ const FormAddCourse = () => {
                   disablePortal
                   id="combo-box-demo"
                   options={filteredDocentes}
-                  getOptionLabel={(user) => `${user.names} ${user.surName}`}
+                  getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
                   sx={{ flex: 2 }}
                   renderInput={(params) => (
                     <TextField
@@ -163,7 +166,7 @@ const FormAddCourse = () => {
                   disablePortal
                   id="combo-box-demo"
                   options={filteredAlumnos}
-                  getOptionLabel={(user) => `${user.names} ${user.surName}`}
+                  getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
                   sx={{ flex: 2 }}
                   renderInput={(params) => (
                     <TextField
