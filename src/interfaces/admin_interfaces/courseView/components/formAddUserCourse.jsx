@@ -4,6 +4,7 @@ import {
   Box,
   //   Button,
   Chip,
+  IconButton,
   Stack,
   Table,
   TableBody,
@@ -35,7 +36,8 @@ const headerStudent = [
 
 const FormAddUserCourse = () => {
   const { users } = useUsers();
-  const { courses, getDetailCourse, addUserCourse } = useCourse();
+  const { courses, getDetailCourse, addUserCourse, deleteUserCourse } =
+    useCourse();
 
   const [selectedDocentes, setSelectedDocentes] = useState([]);
   const [selectedAlumnos, setSelectedAlumnos] = useState([]);
@@ -58,12 +60,13 @@ const FormAddUserCourse = () => {
 
   const handleAddUSer = () => {
     addUserCourse({ idcurso, idusuario });
-    // setSelectedDocentes([
-    //   ...selectedDocentes,
-    //   { idusuario, docente: "Docente" },
-    // ]);
-    console.log("hemos añadido un usuario");
   };
+
+  const handleDeleteUser = (idselected) => {
+    setIdUsuario(idselected);
+    deleteUserCourse({ idcurso, idusuario });
+  };
+
   return (
     <>
       <Stack spacing={1} sx={{ marginBottom: 6 }}>
@@ -117,7 +120,7 @@ const FormAddUserCourse = () => {
         <TableContainer
           sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
         >
-          <Table>
+          <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 {headerTeacher.map((headCell) => (
@@ -132,7 +135,11 @@ const FormAddUserCourse = () => {
                   <TableCell>{docente.docente}</TableCell>
                   <TableCell>
                     <Tooltip title="Quitar docente">
-                      <HighlightOffRoundedIcon color="error" />
+                      <IconButton
+                        onClick={() => handleDeleteUser(docente.id_docentes)}
+                      >
+                        <HighlightOffRoundedIcon color="error" />
+                      </IconButton>
                     </Tooltip>
                   </TableCell>
                 </TableRow>
@@ -175,7 +182,7 @@ const FormAddUserCourse = () => {
         <TableContainer
           sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
         >
-          <Table>
+          <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
                 {headerStudent.map((headCell) => (

@@ -94,7 +94,27 @@ const CourseProvider = ({ children }) => {
     };
     try {
       const { data } = await userAxios.post(
-        "/courses/add/User",
+        "/courses/add/user",
+        userCourse,
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const deleteUserCourse = async (userCourse) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await userAxios.delete(
+        "/courses/delete/user",
         userCourse,
         config
       );
@@ -106,7 +126,13 @@ const CourseProvider = ({ children }) => {
 
   return (
     <CourseContext.Provider
-      value={{ courses, getDetailCourse, saveCourses, addUserCourse }}
+      value={{
+        courses,
+        getDetailCourse,
+        saveCourses,
+        addUserCourse,
+        deleteUserCourse,
+      }}
     >
       {children}
     </CourseContext.Provider>
