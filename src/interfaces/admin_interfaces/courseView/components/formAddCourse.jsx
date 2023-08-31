@@ -4,6 +4,7 @@ import {
   MenuItem,
   Alert,
   Box,
+  Divider,
   Button,
   Stack,
   TextField,
@@ -96,6 +97,10 @@ const FormAddCourse = () => {
 
   return (
     <>
+      <Typography variant="h6" paddingY={1}>
+        {id ? "Editar curso" : "Agregar curso"}
+      </Typography>
+      <Divider sx={{ marginBottom: 2 }} />
       {error && (
         <Alert severity="error" sx={{ marginBottom: 2 }}>
           {error}
@@ -179,7 +184,7 @@ const FormAddCourse = () => {
         >
           <Stack direction="row" spacing={2}>
             <Button variant="contained" onClick={handleSubmit}>
-              Guardar
+              {id ? "Guardar cambios" : "Agregar curso"}
             </Button>
             <Link to="/dashboard/courses" style={{ textDecoration: "none" }}>
               <Button variant="contained" color={"error"}>
