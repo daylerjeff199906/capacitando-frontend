@@ -46,10 +46,9 @@ const UserProvider = ({ children }) => {
           config
         );
 
-        const newUsers = users.map((userState) =>
-          userState.id === user.id ? data : userState
+        setUsers((prevUsers) =>
+          prevUsers.map((users) => (users.id === data.id ? data : users))
         );
-        setUsers(newUsers);
       } catch (error) {
         console.log(error);
       }

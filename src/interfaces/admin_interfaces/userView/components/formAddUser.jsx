@@ -20,7 +20,7 @@ const typeUsers = [
 ];
 
 const FormAddUser = () => {
-  const [id, setId] = React.useState(null);
+  const [id, setId] = React.useState("");
   const [userType, setUserType] = React.useState(0);
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
   const [error, setError] = React.useState(null);
@@ -120,22 +120,48 @@ const FormAddUser = () => {
       setError("Las contraseñas no coinciden");
       return;
     }
+    if (rol === 0) {
+      setError("Seleccione un tipo de usuario");
+      return;
+    }
+    if (dni.length !== 8) {
+      setError("El DNI debe tener 8 dígitos");
+      return;
+    }
+    if (telefono.length !== 9) {
+      setError("El número de teléfono debe tener 9 dígitos");
+      return;
+    }
 
     setError(null);
-    saveUsers({
-      id,
-      nombre,
-      apellido,
-      dni,
-      telefono,
-      correo,
-      direccion,
-      carrera,
-      usuario,
-      password,
-      perfil,
-      rol,
-    });
+
+    if (id) {
+      saveUsers({
+        id,
+        nombre,
+        apellido,
+        dni,
+        telefono,
+        correo,
+        direccion,
+        carrera,
+        usuario,
+        rol,
+      });
+    } else {
+      saveUsers({
+        nombre,
+        apellido,
+        dni,
+        telefono,
+        correo,
+        direccion,
+        carrera,
+        usuario,
+        password,
+        rol,
+      });
+    }
 
     setUsuario("");
     setPassword("");
@@ -149,8 +175,9 @@ const FormAddUser = () => {
     setCarrera("");
     setPerfil("");
     setRol("");
-    setId(null);
+    setId("");
     setUserType(0);
+    setIsProfileEnabled(false);
   };
 
   const handleChange = (event) => {
@@ -164,7 +191,7 @@ const FormAddUser = () => {
   };
 
   const handleCancel = () => {
-    setId(null);
+    setId("");
     setUsuario("");
     setPassword("");
     setUserConfirmPassword("");
@@ -263,6 +290,12 @@ const FormAddUser = () => {
               fullWidth
               value={dni}
               onChange={(e) => setDni(e.target.value)}
+              inputProps={{
+                maxLength: 8,
+                minLength: 8,
+                pattern: "[0-9]{8}",
+                title: "El DNI debe tener 8 dígitos",
+              }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -276,6 +309,7 @@ const FormAddUser = () => {
               fullWidth
               value={correo}
               onChange={(e) => setCorreo(e.target.value)}
+              type="email"
             />
           </Grid>
           <Grid item xs={4}>
@@ -289,6 +323,12 @@ const FormAddUser = () => {
               fullWidth
               value={telefono}
               onChange={(e) => setTelefono(e.target.value)}
+              inputProps={{
+                maxLength: 9,
+                minLength: 9,
+                pattern: "[0-9]{9}",
+                title: "El número de teléfono debe tener 9 dígitos",
+              }}
             />
           </Grid>
           <Grid item xs={4}>
