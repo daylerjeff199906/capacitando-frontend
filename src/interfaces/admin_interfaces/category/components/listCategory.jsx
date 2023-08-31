@@ -10,26 +10,24 @@ import {
   TablePagination,
   TableRow,
   Chip,
+  Tooltip,
 } from "@mui/material";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
-import useCourse from "../../../../hooks/useCourse";
-import { Link } from "react-router-dom";
+import useCategory from "../../../../hooks/useCategory";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 const columns = [
   { id: "name", label: "Nombre" },
-  { id: "units", label: "Unidades", minWidth: 100 },
-  { id: "hours", label: "Horas", minWidth: 100 },
-  { id: "status", label: "Estado", minWidth: 100 },
-  { id: "action", label: "Acción", minWidth: 100, align: "center" },
+  { id: "status", label: "Estado" },
+  { id: "action", label: "Acción", align: "center" },
 ];
 
-const TableListCourses = () => {
+const TableListCategorys = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { courses, editCourse } = useCourse();
+  const { categorys, editCategory, editStateCategory } = useCategory();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
@@ -51,7 +49,7 @@ const TableListCourses = () => {
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 300 }}>
+      <TableContainer sx={{ maxHeight: 300, minHeight: 300 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -67,15 +65,24 @@ const TableListCourses = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses
+            {categorys
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((course, index) => (
+              .map((category, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell align="left">{course.titulo}</TableCell>
-                  <TableCell align="left">{course.total_clases}</TableCell>
-                  <TableCell align="left">{course.hora_duracion}</TableCell>
+                  <TableCell align="left">{category.categoria}</TableCell>
                   <TableCell align="left">
-                    {getEstadoLabel(course.estado)}
+                    <Tooltip title={"Cambiar de estado"}>
+                      <Chip
+                        label={getEstadoLabel(category.estado)}
+                        color={
+                          getEstadoLabel(category.estado) === "Activo"
+                            ? "success"
+                            : "error"
+                        }
+                        size="small"
+                        variant="outlined"
+                      />
+                    </Tooltip>
                   </TableCell>
                   <TableCell
                     align="center"
@@ -84,19 +91,18 @@ const TableListCourses = () => {
                     <Chip
                       icon={<EditNoteRoundedIcon />}
                       label="Editar"
-                      component={Link}
-                      to={`/dashboard/courses/add`}
-                      onClick={() => editCourse(course)}
+                      to={`/dashboard/users/add`}
+                      onClick={() => editCategory(category)}
                       color="primary"
                       size="small"
                       sx={{ marginLeft: 1 }}
                     />
                     <Chip
-                      icon={<DeleteRoundedIcon />}
+                      icon={<DeleteOutlineOutlined />}
                       label="Eliminar"
-                      size="small"
-                      // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
+                      onClick={() => editStateCategory(category)}
                       color="error"
+                      size="small"
                       sx={{ marginLeft: 1 }}
                     />
                   </TableCell>
@@ -108,7 +114,7 @@ const TableListCourses = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={courses.length}
+        count={categorys.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -118,4 +124,4 @@ const TableListCourses = () => {
   );
 };
 
-export default TableListCourses;
+export default TableListCategorys;
