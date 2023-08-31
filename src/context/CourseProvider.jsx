@@ -6,6 +6,7 @@ const CourseContext = createContext();
 
 const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
+  const [courseId, setCourseId] = useState({});
 
   useEffect(() => {
     const getCourses = async () => {
@@ -84,6 +85,10 @@ const CourseProvider = ({ children }) => {
     }
   };
 
+  const editCourse = (course) => {
+    setCourseId(course);
+  };
+
   const addUserCourse = async (userCourse) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -124,10 +129,17 @@ const CourseProvider = ({ children }) => {
     }
   };
 
+  const clearCourseId = () => {
+    setCourseId({});
+  };
+
   return (
     <CourseContext.Provider
       value={{
         courses,
+        courseId,
+        editCourse,
+        clearCourseId,
         getDetailCourse,
         saveCourses,
         addUserCourse,

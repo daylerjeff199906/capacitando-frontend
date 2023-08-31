@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import {
   Autocomplete,
   Alert,
@@ -14,16 +15,26 @@ import useCategory from "../../../../hooks/useCategory";
 import useCourse from "../../../../hooks/useCourse";
 
 const FormAddCourse = () => {
-  // const [id, setId] = useState(null);
+  const [id, setId] = useState(null);
   const [error, setError] = useState(null);
 
   const { categorys } = useCategory();
-  const { saveCourses } = useCourse();
+  const { saveCourses, courseId, clearCourseId } = useCourse();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [url_video_intro, setUrl_video_intro] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
+
+  useEffect(() => {
+    if (courseId?.titulo) {
+      setTitulo(courseId.titulo);
+      setDescripcion(courseId.descripcion);
+      setUrl_video_intro(courseId.url_video_intro);
+      setIdcategoria(courseId.idcategoria);
+      setId(courseId.id);
+    }
+  }, [courseId]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,22 +42,27 @@ const FormAddCourse = () => {
       setError("Todos los campos son obligatorios");
       return;
     }
+
     setError(null);
 
-    saveCourses({
-      titulo,
-      idcategoria,
-      descripcion,
-      url_video_intro,
-    });
-    clearTextFields();
-  };
+    if (id) {
+      saveCourses({
+        id,
+        titulo,
+        descripcion,
+        url_video_intro,
+        idcategoria,
+      });
+    } else {
+      saveCourses({
+        titulo,
+        descripcion,
+        url_video_intro,
+        idcategoria,
+      });
+    }
 
-  const clearTextFields = () => {
-    setTitulo("");
-    setDescripcion("");
-    setUrl_video_intro("");
-    setIdcategoria("");
+    clearTextFields();
   };
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -62,6 +78,31 @@ const FormAddCourse = () => {
     event.preventDefault();
     setSelectedFile(event.dataTransfer.files[0]);
   };
+
+  const clearTextFields = () => {
+    setTitulo("");
+    setDescripcion("");
+    setUrl_video_intro("");
+    setIdcategoria("");
+    setId(null);
+    clearCourseId();
+  };
+
+  useEffect(() => {
+    return () => {
+      clearTextFields();
+    };
+  }, []);
+
+  useEffect(() => {
+    // Aquí obtén la categoría correspondiente al id seleccionado
+    const selectedCategory = categorys.find(
+      (category) => category.idcategoria === id
+    );
+    if (selectedCategory) {
+      setIdcategoria(selectedCategory.categoria);
+    }
+  }, [id, categorys]);
 
   return (
     <>
@@ -84,6 +125,7 @@ const FormAddCourse = () => {
           disablePortal
           id="combo-box-demo"
           options={categorys}
+          //observacion
           getOptionLabel={(category) => `${category.categoria} `}
           onChange={(e, value) => setIdcategoria(value.idcategoria)}
           sx={{ flex: 2 }}
@@ -93,6 +135,7 @@ const FormAddCourse = () => {
               size="small"
               placeholder="Selecciona una categoría"
               fullWidth
+              value={idcategoria}
             />
           )}
         />

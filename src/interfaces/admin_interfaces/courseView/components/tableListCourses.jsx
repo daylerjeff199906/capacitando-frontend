@@ -12,12 +12,10 @@ import {
   Chip,
 } from "@mui/material";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
-import CoursesArray from "../../../../infraestructures/data/coursesArray";
-
 import useCourse from "../../../../hooks/useCourse";
+import { Link } from "react-router-dom";
 
 const columns = [
   { id: "name", label: "Nombre" },
@@ -31,7 +29,7 @@ const TableListCourses = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const { courses } = useCourse();
+  const { courses, editCourse } = useCourse();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
@@ -86,9 +84,9 @@ const TableListCourses = () => {
                     <Chip
                       icon={<EditNoteRoundedIcon />}
                       label="Editar"
-                      // component={Link}
-                      to={`/dashboard/users/add`}
-                      // onClick={() => editUsers(user)}
+                      component={Link}
+                      to={`/dashboard/courses/add`}
+                      onClick={() => editCourse(course)}
                       color="primary"
                       size="small"
                       sx={{ marginLeft: 1 }}
