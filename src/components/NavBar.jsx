@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // Navbar.js
 import * as React from "react";
 import {
@@ -12,19 +13,19 @@ import {
 import { Menu as MenuIcon, AccountCircle } from "@mui/icons-material";
 import useAuth from "../hooks/useAuth";
 
-const Navbar = () => {
+const Navbar = ({ widthNavBAr }) => {
   const [auth, setAuth] = React.useState(false);
   const [user, setUser] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-const { logout } = useAuth();
-  
+  const { logout } = useAuth();
+
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
     if (token) {
       setAuth(true);
-      setUser(storedUser)
+      setUser(storedUser);
     }
   }, []);
 
@@ -37,7 +38,10 @@ const { logout } = useAuth();
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar
+      position="fixed"
+      sx={{ width: `calc(100% - ${widthNavBAr}px)`, mr: `${widthNavBAr}px` }}
+    >
       <Toolbar>
         <IconButton
           size="large"
