@@ -89,6 +89,31 @@ const CourseProvider = ({ children }) => {
     setCourseId(course);
   };
 
+  const editStateCourse = async (course) => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.put(
+        `/courses/status/${course.idcurso}`,
+        course,
+        config
+      );
+      console.log(data);
+      setCourses((prevCourses) =>
+        prevCourses.map((course) =>
+          course.idcurso === data.id ? data : course
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addUserCourse = async (userCourse) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -139,6 +164,7 @@ const CourseProvider = ({ children }) => {
         courses,
         courseId,
         editCourse,
+        editStateCourse,
         clearCourseId,
         getDetailCourse,
         saveCourses,
