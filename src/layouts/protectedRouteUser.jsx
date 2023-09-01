@@ -5,11 +5,11 @@ import Navbar from "../components/NavBar";
 import { Grid } from "@mui/material";
 
 const ProtectedRouteUser = () => {
-  const { auth, loading } = useAuth();
+  const { auth } = useAuth();
 
-  if (loading) {
-    return "Cargando...";
-  }
+  // if (loading) {
+  //   return "Cargando...";
+  // }
 
   return (
     <>

@@ -1,12 +1,26 @@
+import { useState } from "react";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CardCourse from "../../../components/CardCourse";
 import { Link } from "react-router-dom";
-import courses from "../../../infraestructures/data/coursesArray";
 
-const indexStudent = () => {
+import useUsers from "../../../hooks/useUsers";
+import useCourse from "../../../hooks/useCourse";
+
+const IndexStudent = () => {
+  const { getProfile, detailUser } = useUsers();
+  const { courses } = useCourse();
+
+  const [perfilUser, setPerfilUser] = useState({});
+
+  getProfile().then((data) => {
+    detailUser(data.idusuario).then((data) => {
+      setPerfilUser(data);
+    });
+  });
+
   return (
     <>
-      <Box bgcolor="#FFFFFF" paddingTop={8}>
+      <Box bgcolor="#FFFFFF" height={"100vh"} paddingTop={8}>
         <Container maxWidth={"lg"}>
           <Grid container spacing={4} sx={{ paddingY: 4 }}>
             <Grid item xs={6}>
@@ -17,7 +31,7 @@ const indexStudent = () => {
                 fontFamily={"Poppins"}
                 gutterBottom
               >
-                Bienvenido, Nombre de ususario
+                Bienvenido, {perfilUser.nombre}
               </Typography>
               <Typography
                 variant="body1"
@@ -41,7 +55,7 @@ const indexStudent = () => {
             </Grid>
             <Grid item xs={6}>
               <iframe
-                width="560"
+                width="100%"
                 height="315"
                 src="https://www.youtube.com/embed/VTJImsnuO6A"
                 title="YouTube video player"
@@ -70,12 +84,14 @@ const indexStudent = () => {
                 </Link>
               </Box>
             </Grid>
-            {courses.slice(0,4).map((course) => (
+            {courses.slice(0, 4).map((course) => (
               <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
                 <CardCourse
-                  name={course.name}
-                  description={course.description}
-                  image={course.image}
+                  name={course.titulo}
+                  description={course.categoria}
+                  image="https://img.freepik.com/foto-gratis/mujer-vista-lateral-que-usa-tableta_23-2149557251.jpg?w=996&t=st=1693521065~exp=1693521665~hmac=9cf874f285d6af14794df820ee870ac2e257a0958ca3ddda7d04bc4b01c59744"
+                  time={course.hora_duracion + " horas"}
+                  units={course.total_clases + " clases"}
                 />
               </Grid>
             ))}
@@ -85,4 +101,4 @@ const indexStudent = () => {
     </>
   );
 };
-export default indexStudent;
+export default IndexStudent;

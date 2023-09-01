@@ -100,12 +100,47 @@ const UserProvider = ({ children }) => {
     setUsuarioId({});
   };
 
+  const getProfile = async () => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    try {
+      const { data } = await userAxios.get("/users/profile", config);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const detailUser = async (id) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await userAxios.get(`/users/detail/${id}`, config);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <UserContext.Provider
       value={{
         users,
         clearUsers,
         usuarioId,
+        getProfile,
+        detailUser,
         saveUsers,
         editUsers,
         editStateUser,

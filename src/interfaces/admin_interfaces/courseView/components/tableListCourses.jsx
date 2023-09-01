@@ -17,6 +17,8 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useCourse from "../../../../hooks/useCourse";
 import { Link } from "react-router-dom";
+import ModalDetailCourse from "./modalDetailCourse";
+import { RemoveRedEyeOutlined } from "@mui/icons-material";
 
 const columns = [
   { id: "name", label: "Nombre" },
@@ -30,8 +32,10 @@ const columns = [
 const TableListCourses = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [courseSelected, setCourseSelected] = React.useState({});
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const { courses, editCourse, editStateCourse } = useCourse();
+  const { courses, editCourse, editStateCourse, getDetailCourse } = useCourse();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
@@ -49,6 +53,17 @@ const TableListCourses = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleCourseSelected = (id) => {
+    getDetailCourse(id).then((data) => {
+      setCourseSelected(data);
+    });
+  };
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -104,16 +119,18 @@ const TableListCourses = () => {
                       onClick={() => editCourse(course)}
                       color="success"
                       size="small"
-                      sx={{ marginLeft: 1 }}
+                      sx={{ marginRight: 1 }}
                     />
-                    {/* <Chip
-                      icon={<DeleteRoundedIcon />}
-                      label="Eliminar"
+                    <Chip
+                      icon={<RemoveRedEyeOutlined />}
+                      label="Ver"
+                      color="warning"
                       size="small"
-                      // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
-                      color="error"
-                      sx={{ marginLeft: 1 }}
-                    /> */}
+                      onClick={() => {
+                        handleCourseSelected(course.idcurso);
+                        handleOpenModal();
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}
@@ -128,6 +145,11 @@ const TableListCourses = () => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <ModalDetailCourse
+        modalOpen={isModalOpen}
+        course={courseSelected}
+        onClose={handleCloseModal}
       />
     </Paper>
   );

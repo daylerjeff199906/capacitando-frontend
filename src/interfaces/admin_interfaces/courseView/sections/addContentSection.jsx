@@ -14,10 +14,6 @@ const AddContentSection = () => {
       <Grid container spacing={4} sx={{ paddingRight: 4 }}>
         <Grid item xs={12}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
-            <Typography variant="h6" paddingY={2}>
-              Crear sesión
-            </Typography>
-            <Divider sx={{ marginBottom: 2 }} />
             <Grid container spacing={2}>
               <Grid item xs={12} md={6}>
                 <FormAddSection />

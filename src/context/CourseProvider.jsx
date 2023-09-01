@@ -105,7 +105,9 @@ const CourseProvider = ({ children }) => {
       );
       console.log(data);
       setCourses((prevCourses) =>
-        prevCourses.map((course) => (course.idcurso === data.id ? data : course))
+        prevCourses.map((course) =>
+          course.idcurso === data.id ? data : course
+        )
       );
     } catch (error) {
       console.log(error);
