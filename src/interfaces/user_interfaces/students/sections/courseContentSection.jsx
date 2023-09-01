@@ -22,7 +22,7 @@ const CourseContentSection = ({
 
   return (
     <>
-      <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
+      <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingX={3}>
         <Typography
           variant="h4"
           component="h4"
@@ -34,12 +34,12 @@ const CourseContentSection = ({
         </Typography>
         <CustomBreadcrumb routesArray={routesArray} />
         <Divider sx={{ marginY: 2 }} />
-        <Box paddingX={8} paddingY={2}>
+        <Box paddingY={2}>
           <iframe
             width="100%"
-            height="420"
+            height="500"
             src={
-              findContenido?.url_video !== undefined
+              findContenido?.url_video !== null
                 ? findContenido?.url_video + "?autoplay=1&mute=1"
                 : "https://www.youtube.com/embed/1y_kfWUCFDQ?autoplay=1&mute=1"
             }

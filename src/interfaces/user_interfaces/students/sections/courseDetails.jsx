@@ -34,7 +34,7 @@ const CourseDetails = () => {
         sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
         <Container maxWidth={"xl"}>
-          <Box component={"main"} flexGrow={4} padding={3}>
+          <Box component={"main"} flexGrow={4} paddingX={3} paddingY={1}>
             <CourseContentSection
               detailCourse={detailCourse}
               contentSelected={selectedContentId}
