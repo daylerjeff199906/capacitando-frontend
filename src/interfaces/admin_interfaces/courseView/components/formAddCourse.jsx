@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
-  Autocomplete,
+  MenuItem,
   Alert,
   Box,
+  Divider,
   Button,
   Stack,
   TextField,
   Typography,
+  Select,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -17,6 +19,9 @@ import useCourse from "../../../../hooks/useCourse";
 const FormAddCourse = () => {
   const [id, setId] = useState(null);
   const [error, setError] = useState(null);
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  console.log(selectedFile);
 
   const { categorys } = useCategory();
   const { saveCourses, courseId, clearCourseId } = useCourse();
@@ -32,7 +37,7 @@ const FormAddCourse = () => {
       setDescripcion(courseId.descripcion);
       setUrl_video_intro(courseId.url_video_intro);
       setIdcategoria(courseId.idcategoria);
-      setId(courseId.id);
+      setId(courseId.idcurso);
     }
   }, [courseId]);
 
@@ -44,29 +49,16 @@ const FormAddCourse = () => {
     }
 
     setError(null);
-
-    if (id) {
-      saveCourses({
-        id,
-        titulo,
-        descripcion,
-        url_video_intro,
-        idcategoria,
-      });
-    } else {
-      saveCourses({
-        titulo,
-        descripcion,
-        url_video_intro,
-        idcategoria,
-      });
-    }
+    saveCourses({
+      id,
+      titulo,
+      descripcion,
+      url_video_intro,
+      idcategoria,
+    });
 
     clearTextFields();
   };
-
-  const [selectedFile, setSelectedFile] = useState(null);
-  console.log(selectedFile);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -95,7 +87,6 @@ const FormAddCourse = () => {
   }, []);
 
   useEffect(() => {
-    // Aquí obtén la categoría correspondiente al id seleccionado
     const selectedCategory = categorys.find(
       (category) => category.idcategoria === id
     );
@@ -106,6 +97,10 @@ const FormAddCourse = () => {
 
   return (
     <>
+      <Typography variant="h6" paddingY={1}>
+        {id ? "Editar curso" : "Agregar curso"}
+      </Typography>
+      <Divider sx={{ marginBottom: 2 }} />
       {error && (
         <Alert severity="error" sx={{ marginBottom: 2 }}>
           {error}
@@ -121,24 +116,18 @@ const FormAddCourse = () => {
           onChange={(e) => setTitulo(e.target.value)}
         />
         <Typography variant="body1">Categoría</Typography>
-        <Autocomplete
-          disablePortal
-          id="combo-box-demo"
-          options={categorys}
-          //observacion
-          getOptionLabel={(category) => `${category.categoria} `}
-          onChange={(e, value) => setIdcategoria(value.idcategoria)}
-          sx={{ flex: 2 }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              size="small"
-              placeholder="Selecciona una categoría"
-              fullWidth
-              value={idcategoria}
-            />
-          )}
-        />
+        <Select
+          fullWidth
+          value={idcategoria}
+          onChange={(e) => setIdcategoria(e.target.value)}
+          size="small"
+        >
+          {categorys.map((category) => (
+            <MenuItem key={category.idcategoria} value={category.idcategoria}>
+              {category.categoria}
+            </MenuItem>
+          ))}
+        </Select>
         <Typography variant="body1">Descripción corta</Typography>
         <TextField
           size="small"
@@ -195,7 +184,7 @@ const FormAddCourse = () => {
         >
           <Stack direction="row" spacing={2}>
             <Button variant="contained" onClick={handleSubmit}>
-              Guardar
+              {id ? "Guardar cambios" : "Agregar curso"}
             </Button>
             <Link to="/dashboard/courses" style={{ textDecoration: "none" }}>
               <Button variant="contained" color={"error"}>
