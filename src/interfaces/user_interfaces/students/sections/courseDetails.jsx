@@ -1,23 +1,67 @@
-import { Box, Container, Grid } from "@mui/material";
+import * as React from "react";
+import { Box, Container, Drawer } from "@mui/material";
 import SideBarStudent from "../components/sideBarStudent";
 import CourseContentSection from "./courseContentSection";
+import { useParams } from "react-router-dom";
+
+import useCourse from "../../../../hooks/useCourse";
 
 const CourseDetails = () => {
+  const [detailCourse, setDetailCourse] = React.useState({});
+  const [sectionSelected, setSectionSelected] = React.useState(null);
+  const [selectedContentId, setSelectedContentId] = React.useState(null);
+
+  const { getDetailCourse } = useCourse();
+  const idCourse = useParams();
+  const id = idCourse.id;
+
+  React.useEffect(() => {
+    getDetailCourse(id).then((data) => {
+      setDetailCourse(data);
+    });
+  }, [getDetailCourse, id]);
+  console.log(detailCourse);
+
+  const handleSelectContent = (sesionId, contenidoId) => {
+    setSectionSelected(sesionId);
+    setSelectedContentId(contenidoId);
+  };
+
   return (
     <>
       <Box
-      padding={4}
+        display={"flex"}
+        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
       >
-        <Container maxWidth={"2xl"}>
-          <Grid container spacing={4}>
-            <Grid item xs={3}>
-              <SideBarStudent />
-            </Grid>
-            <Grid item xs={9}>
-              <CourseContentSection />
-            </Grid>
-          </Grid>
+        <Container maxWidth={"xl"}>
+          <Box component={"main"} flexGrow={4} paddingX={3} paddingY={1}>
+            <CourseContentSection
+              detailCourse={detailCourse}
+              contentSelected={selectedContentId}
+              sectionSelected={sectionSelected}
+            />
+          </Box>
         </Container>
+        <Drawer
+          variant="permanent"
+          open={false}
+          sx={{
+            width: 500,
+            flexShrink: 0,
+            [`& .MuiDrawer-paper`]: {
+              width: 500,
+              boxSizing: "border-box",
+            },
+          }}
+          anchor="right"
+        >
+          <Box sx={{ overflow: "auto" }}>
+            <SideBarStudent
+              detailCourse={detailCourse}
+              contenidoSelect={handleSelectContent}
+            />
+          </Box>
+        </Drawer>
       </Box>
     </>
   );

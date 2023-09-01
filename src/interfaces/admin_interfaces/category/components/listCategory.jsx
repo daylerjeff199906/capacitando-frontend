@@ -13,34 +13,26 @@ import {
   Tooltip,
 } from "@mui/material";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
-import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
-import useCourse from "../../../../hooks/useCourse";
-import { Link } from "react-router-dom";
-import ModalDetailCourse from "./modalDetailCourse";
-import { RemoveRedEyeOutlined } from "@mui/icons-material";
+import useCategory from "../../../../hooks/useCategory";
+import { DeleteOutlineOutlined } from "@mui/icons-material";
 
 const columns = [
   { id: "name", label: "Nombre" },
-  { id: "category", label: "Categoría" },
-  { id: "units", label: "Unidades", minWidth: 50 },
-  { id: "hours", label: "Horas", minWidth: 50 },
   { id: "status", label: "Estado" },
   { id: "action", label: "Acción", align: "center" },
 ];
 
-const TableListCourses = () => {
+const TableListCategorys = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [courseSelected, setCourseSelected] = React.useState({});
-  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const { courses, editCourse, editStateCourse, getDetailCourse } = useCourse();
+  const { categorys, editCategory, editStateCategory } = useCategory();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
       return "Activo";
-    } else if (estadoId === 0) {
+    } else if (estadoId === 2) {
       return "Inactivo";
     }
     return "";
@@ -55,20 +47,9 @@ const TableListCourses = () => {
     setPage(0);
   };
 
-  const handleCourseSelected = (id) => {
-    getDetailCourse(id).then((data) => {
-      setCourseSelected(data);
-    });
-  };
-
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 300 }}>
+      <TableContainer sx={{ maxHeight: 300, minHeight: 300 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
@@ -76,11 +57,7 @@ const TableListCourses = () => {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{
-                    minWidth: column.minWidth,
-                    fontWeight: "bold",
-                    fontFamily: "poppins",
-                  }}
+                  style={{ minWidth: column.minWidth }}
                 >
                   {column.label}
                 </TableCell>
@@ -88,22 +65,22 @@ const TableListCourses = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {courses
+            {categorys
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((course, index) => (
+              .map((category, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell align="left">{course.titulo}</TableCell>
-                  <TableCell align="left">{course.categoria}</TableCell>
-                  <TableCell align="left">{course.total_clases}</TableCell>
-                  <TableCell align="left">{course.hora_duracion}</TableCell>
+                  <TableCell align="left">{category.categoria}</TableCell>
                   <TableCell align="left">
-                    <Tooltip title="Cambiar estado">
+                    <Tooltip title={"Cambiar de estado"}>
                       <Chip
-                        label={getEstadoLabel(course.estado)}
-                        color={course.estado === 1 ? "success" : "error"}
+                        label={getEstadoLabel(category.estado)}
+                        color={
+                          getEstadoLabel(category.estado) === "Activo"
+                            ? "success"
+                            : "error"
+                        }
                         size="small"
                         variant="outlined"
-                        onClick={() => editStateCourse(course)}
                       />
                     </Tooltip>
                   </TableCell>
@@ -114,22 +91,19 @@ const TableListCourses = () => {
                     <Chip
                       icon={<EditNoteRoundedIcon />}
                       label="Editar"
-                      component={Link}
-                      to={`/dashboard/courses/add`}
-                      onClick={() => editCourse(course)}
-                      color="success"
+                      to={`/dashboard/users/add`}
+                      onClick={() => editCategory(category)}
+                      color="primary"
                       size="small"
-                      sx={{ marginRight: 1 }}
+                      sx={{ marginLeft: 1 }}
                     />
                     <Chip
-                      icon={<RemoveRedEyeOutlined />}
-                      label="Ver"
-                      color="warning"
+                      icon={<DeleteOutlineOutlined />}
+                      label="Eliminar"
+                      onClick={() => editStateCategory(category)}
+                      color="error"
                       size="small"
-                      onClick={() => {
-                        handleCourseSelected(course.idcurso);
-                        handleOpenModal();
-                      }}
+                      sx={{ marginLeft: 1 }}
                     />
                   </TableCell>
                 </TableRow>
@@ -140,19 +114,14 @@ const TableListCourses = () => {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={courses.length}
+        count={categorys.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <ModalDetailCourse
-        modalOpen={isModalOpen}
-        course={courseSelected}
-        onClose={handleCloseModal}
-      />
     </Paper>
   );
 };
 
-export default TableListCourses;
+export default TableListCategorys;

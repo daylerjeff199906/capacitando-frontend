@@ -1,94 +1,83 @@
-import { Box, Divider, Typography } from "@mui/material";
+/* eslint-disable react/prop-types */
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Divider,
+  Typography,
+} from "@mui/material";
 
-const SideBarStudent = () => {
+import { ExpandMore } from "@mui/icons-material";
+
+const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
+  const handleContenidoSelect = (idSesion, id) => {
+    contenidoSelect(idSesion, id);
+  };
+
   return (
     <>
-      <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
-        <Typography
-          variant="h5"
-          component="h4"
-          fontWeight={700}
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Detalles del curso
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography
-          variant="h6"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          fontWeight={900}
-          gutterBottom
-        >
-          Nombre del curso
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Descripción del curso
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          fontWeight={900}
-          gutterBottom
-        >
-          Doncente(s):
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          * Doncente 1
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography
-          variant="h6"
-          component="h4"
-          fontWeight={700}
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Contenido
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Introducción
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Sesion 1
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Sesion 2
-        </Typography>
+      <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={8}>
+        <Box paddingX={3} paddingTop={3}>
+          <Typography
+            variant="h6"
+            component="h6"
+            fontFamily={"Poppins"}
+            fontWeight={900}
+            gutterBottom
+          >
+            Contenido del curso
+          </Typography>
+        </Box>
+        <Divider />
+        <Box paddingX={3}>
+          <Typography
+            variant="h6"
+            component="h6"
+            align="justify"
+            fontFamily={"Poppins"}
+            gutterBottom
+            paddingY={1}
+          >
+            Introducción
+          </Typography>
+        </Box>
+        {detailCourse?.sesiones?.map((sesion) => (
+          <Accordion key={sesion.idsesion}>
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                fontFamily={"Poppins"}
+              >
+                {sesion.nombre_sesion}
+              </Typography>
+            </AccordionSummary>
+            {sesion?.contenido?.map((contenido) => (
+              <AccordionDetails
+                key={contenido.idcontenido}
+                onClick={() =>
+                  handleContenidoSelect(sesion.idsesion, contenido.idcontenido)
+                }
+                sx={{
+                  cursor: "pointer",
+                  ":hover": {
+                    backgroundColor: "#F5F5F5",
+                  },
+                }}
+              >
+                <Typography fontWeight={700} fontFamily={"Poppins"}>
+                  {contenido.titulo}
+                </Typography>
+                <Typography fontWeight={500}>{contenido.minutos}</Typography>
+              </AccordionDetails>
+            ))}
+          </Accordion>
+        ))}
       </Box>
     </>
   );

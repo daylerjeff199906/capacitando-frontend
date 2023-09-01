@@ -5,34 +5,80 @@ import {
   CardMedia,
   CardContent,
   Typography,
+  Tooltip,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
-const CardCourse = ({ name, description, image, units, time }) => {
+const CardCourse = ({
+  name,
+  category,
+  description,
+  image,
+  units,
+  time,
+  url,
+}) => {
   return (
-    <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={image}
-          alt="Course Image"
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Units: {units}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Time: {time}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+    <>
+      <Tooltip
+        title={
+          <>
+            <Typography
+              variant="h6"
+              color="text.secondary"
+              fontWeight={700}
+              sx={{ color: "#ffffff" }}
+            >
+              {name}
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              color="text.secondary"
+              sx={{ color: "#ffffff" }}
+            >
+              {description}
+            </Typography>
+          </>
+        }
+        followCursor
+      >
+        <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
+          <CardActionArea LinkComponent={Link} to={url}>
+            <CardMedia component="img" image={image} alt="Course Image" />
+            <CardContent sx={{ height: "auto" }}>
+              <Typography
+                gutterBottom
+                variant="h5"
+                component="div"
+                fontWeight={700}
+                fontFamily={"poppins"}
+                sx={{
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {name}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                fontWeight={700}
+                fontFamily={"poppins"}
+              >
+                {category}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Unidades: {units}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Total de horas: {time}
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Tooltip>
+    </>
   );
 };
 

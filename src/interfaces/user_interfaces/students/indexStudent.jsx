@@ -1,15 +1,34 @@
+import { useState, useEffect } from "react";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CardCourse from "../../../components/CardCourse";
 import { Link } from "react-router-dom";
-import courses from "../../../infraestructures/data/coursesArray";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-const indexStudent = () => {
+
+import useUsers from "../../../hooks/useUsers";
+import useCourse from "../../../hooks/useCourse";
+
+const IndexStudent = () => {
+  const { getProfile, detailUser } = useUsers();
+  const { courses } = useCourse();
+
+  const [perfilUser, setPerfilUser] = useState({});
+
+  useEffect(() => {
+    getProfile().then((data) => {
+      detailUser(data.idusuario).then((data) => {
+        setPerfilUser(data);
+      });
+    });
+  }, [getProfile, detailUser]);
+
   return (
     <>
-      <Box bgcolor="#FFFFFF" paddingTop={8}>
-        <Container maxWidth={"lg"}>
+
+      <Box bgcolor="#FFFFFF" paddingTop={8} paddingBottom={8}>
+        <Container maxWidth={"xl"}>
           <Grid container spacing={4} sx={{ paddingY: 4 }}>
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
               <Typography
                 variant="h3"
                 component="h4"
@@ -17,7 +36,7 @@ const indexStudent = () => {
                 fontFamily={"Poppins"}
                 gutterBottom
               >
-                Bienvenido, Nombre de ususario
+                Bienvenido, {perfilUser.nombre}
               </Typography>
               <Typography
                 variant="body1"
@@ -33,15 +52,19 @@ const indexStudent = () => {
               </Typography>
               <Box sx={{ paddingY: 4 }}>
                 <Link to="/home/miscursos">
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    endIcon={<KeyboardArrowRightIcon />}
+                  >
                     Ir a mis cursos
                   </Button>
                 </Link>
               </Box>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
               <iframe
-                width="560"
+                width={"100%"}
                 height="315"
                 src="https://www.youtube.com/embed/VTJImsnuO6A"
                 title="YouTube video player"
@@ -50,7 +73,7 @@ const indexStudent = () => {
               ></iframe>
             </Grid>
           </Grid>
-          <Grid container spacing={2} sx={{ paddingY: 4 }}>
+          <Grid container spacing={4} sx={{ paddingY: 2 }}>
             <Grid item xs={12}>
               <Box display={"flex"}>
                 <Typography
@@ -64,18 +87,36 @@ const indexStudent = () => {
                   Cursos más recientes
                 </Typography>
                 <Link to="/home/miscursos" style={{ textDecoration: "none" }}>
-                  <Button variant="outline" color="primary">
+                  <Button
+                    variant="outline"
+                    color="secondary"
+                    endIcon={<KeyboardArrowRightIcon />}
+                  >
                     Ver todos los cursos
                   </Button>
                 </Link>
               </Box>
             </Grid>
-            {courses.slice(0,4).map((course) => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
+          </Grid>
+          <Grid container spacing={4} sx={{ paddingY: 2 }}>
+            {courses.slice(0, 4).map((course) => (
+              <Grid
+                item
+                direction={"row"}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                key={course.id}
+              >
                 <CardCourse
-                  name={course.name}
-                  description={course.description}
-                  image={course.image}
+                  name={course.titulo}
+                  description={course.descripcion}
+                  image="https://img.freepik.com/foto-gratis/mujer-vista-lateral-que-usa-tableta_23-2149557251.jpg?w=996&t=st=1693521065~exp=1693521665~hmac=9cf874f285d6af14794df820ee870ac2e257a0958ca3ddda7d04bc4b01c59744"
+                  time={course.hora_duracion + " horas"}
+                  units={course.total_clases + " clases"}
+                  url={`/home/miscursos/${course.idcurso}`}
+                  category={course.categoria}
                 />
               </Grid>
             ))}
@@ -85,4 +126,4 @@ const indexStudent = () => {
     </>
   );
 };
-export default indexStudent;
+export default IndexStudent;
