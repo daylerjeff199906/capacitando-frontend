@@ -1,6 +1,11 @@
 import { Box, Typography, Divider } from "@mui/material";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
+const routesArray = [
+  { name: "Mis cursos", path: "/home/miscursos" },
+  { name: "Detalles de curso" },
+];
+
 const CourseContentSection = () => {
   return (
     <>
@@ -14,7 +19,7 @@ const CourseContentSection = () => {
         >
           Contenido del curso
         </Typography>
-        <CustomBreadcrumb />
+        <CustomBreadcrumb routesArray={routesArray} />
         <Divider sx={{ marginY: 2 }} />
         <Typography
           variant="h4"

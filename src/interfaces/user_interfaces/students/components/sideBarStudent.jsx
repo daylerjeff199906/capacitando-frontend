@@ -30,82 +30,77 @@ const SideBarStudent = () => {
 
   return (
     <>
-      <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
-        <Typography
-          variant="h5"
-          component="h4"
-          fontWeight={700}
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Detalles del curso
-        </Typography>
+      <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={10}>
+        <Box padding={3}>
+          <Typography
+            variant="h5"
+            component="h6"
+            fontFamily={"Poppins"}
+            fontWeight={900}
+            gutterBottom
+          >
+            {detailCourse.titulo}
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            fontFamily={"Poppins"}
+            gutterBottom
+          >
+            {detailCourse.descripcion}
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            align="justify"
+            fontFamily={"Poppins"}
+            fontWeight={900}
+            gutterBottom
+          >
+            Doncente(s):
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            fontFamily={"Poppins"}
+            gutterBottom
+          >
+            {detailCourse.docentes &&
+              detailCourse.docentes.map((docente) => (
+                <Typography
+                  key={docente.id_docentes}
+                  variant="body1"
+                  component="h6"
+                  fontFamily={"Poppins"}
+                  gutterBottom
+                >
+                  {docente.docente}
+                </Typography>
+              ))}
+          </Typography>
+        </Box>
         <Divider sx={{ marginY: 2 }} />
-        <Typography
-          variant="h6"
-          component="h6"
-          fontFamily={"Poppins"}
-          fontWeight={900}
-          gutterBottom
-        >
-          {detailCourse.titulo}
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          {detailCourse.descripcion}
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          fontWeight={900}
-          gutterBottom
-        >
-          Doncente(s):
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          {detailCourse.docentes &&
-            detailCourse.docentes.map((docente) => (
-              <Typography
-                key={docente.id_docentes}
-                variant="body1"
-                component="h6"
-                fontFamily={"Poppins"}
-                gutterBottom
-              >
-                {docente.docente}
-              </Typography>
-            ))}
-        </Typography>
-        <Divider sx={{ marginY: 2 }} />
-        <Typography
-          variant="h6"
-          component="h4"
-          fontWeight={700}
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Contenido
-        </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Introducción
-        </Typography>
+        <Box paddingX={3}>
+          <Typography
+            variant="h6"
+            component="h4"
+            fontWeight={700}
+            fontFamily={"Poppins"}
+            gutterBottom
+          >
+            Contenido
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            align="justify"
+            fontFamily={"Poppins"}
+            gutterBottom
+            paddingBottom={2}
+          >
+            Introducción
+          </Typography>
+        </Box>
         {detailCourse?.sesiones?.map((sesion) => (
           <Accordion key={sesion.idsesion}>
             <AccordionSummary
@@ -123,15 +118,6 @@ const SideBarStudent = () => {
             ))}
           </Accordion>
         ))}
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Sesion 2
-        </Typography>
       </Box>
     </>
   );

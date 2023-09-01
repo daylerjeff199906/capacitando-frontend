@@ -30,6 +30,7 @@ const CourseDetails = () => {
           <Box sx={{ overflow: "auto" }}>
             <SideBarStudent />
           </Box>
+          {/* <Toolbar /> */}
         </Drawer>
       </Box>
     </>
