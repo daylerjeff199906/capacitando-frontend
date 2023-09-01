@@ -1,65 +1,75 @@
-import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
+import { useState } from "react";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Chip,
+  Tooltip,
+} from "@mui/material";
+
+import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+
+import useUsers from "../../../../hooks/useUsers";
+import ModalViewUser from "./modalViewUser";
+import { Link } from "react-router-dom";
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  { id: "code", label: "Usuario" },
   {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "names",
+    label: "Nombres y apellidos",
+    align: "center",
   },
   {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "email",
+    label: "Correo",
+    align: "center",
   },
   {
-    id: "density",
-    label: "Density",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    id: "rol",
+    label: "Rol",
+    align: "center",
   },
-];
-
-function createData(name, code, population, size) {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
-
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
+  {
+    id: "Estado",
+    label: "Estado",
+    align: "center",
+  },
+  {
+    id: "actions",
+    label: "Acciones",
+    align: "center",
+  },
 ];
 
 const TableListUsers = () => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
+
+  const { users, editUsers, editStateUser } = useUsers();
+
+  const getRolLabel = (rolId) => {
+    if (rolId === 2) {
+      return "Docente";
+    } else if (rolId === 3) {
+      return "Alumno";
+    }
+    return "";
+  };
+
+  const getEstadoLabel = (estadoId) => {
+    if (estadoId === 1) {
+      return "Activo";
+    } else if (estadoId === 0) {
+      return "Inactivo";
+    }
+    return "";
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -73,7 +83,7 @@ const TableListUsers = () => {
   return (
     <>
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
-        <TableContainer sx={{ maxHeight: 300 }}>
+        <TableContainer sx={{ maxHeight: 300, minHeight: 300 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -81,7 +91,12 @@ const TableListUsers = () => {
                   <TableCell
                     key={column.id}
                     align={column.align}
-                    style={{ minWidth: column.minWidth }}
+                    style={{
+                      minWidth: column.minWidth,
+                      fontWeight: "bold",
+                      whiteSpace: "nowrap",
+                      verticalAlign: "middle",
+                    }}
                   >
                     {column.label}
                   </TableCell>
@@ -89,36 +104,54 @@ const TableListUsers = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
+              {users
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
+                .map((user, index) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableCell align="left">{user.usuario}</TableCell>
+                    <TableCell align="left">
+                      {user.apellido} {user.nombre}
+                    </TableCell>
+                    <TableCell align="left">{user.correo}</TableCell>
+                    <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
+                    <TableCell align="right">
+                      <Tooltip title="Cambiar estado">
+                        <Chip
+                          label={getEstadoLabel(user.estado)}
+                          color={user.estado === 1 ? "success" : "error"}
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {
+                            editStateUser(user);
+                          }}
+                        />
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ display: "flex", justifyContent: "center" }}
                     >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+                      <ModalViewUser user={user} />
+                      <Chip
+                        icon={<EditNoteRoundedIcon />}
+                        label="Editar"
+                        component={Link}
+                        to={`/dashboard/users/add`}
+                        onClick={() => editUsers(user)}
+                        color="primary"
+                        size="small"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -128,4 +161,5 @@ const TableListUsers = () => {
     </>
   );
 };
+
 export default TableListUsers;

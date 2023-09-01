@@ -1,6 +1,33 @@
-import { Box, Divider, Typography } from "@mui/material";
+import * as React from "react";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Divider,
+  Typography,
+} from "@mui/material";
+
+import useCourse from "../../../../hooks/useCourse";
+import { useParams } from "react-router-dom";
+import { ExpandMore } from "@mui/icons-material";
 
 const SideBarStudent = () => {
+  const [detailCourse, setDetailCourse] = React.useState({});
+  const { getDetailCourse } = useCourse();
+  const idCourse = useParams();
+  const id = idCourse.id;
+
+  // getDetailCourse(id).then((data) => {
+  //   setDetailCourse(data);
+  // });
+  React.useEffect(() => {
+    getDetailCourse(id).then((data) => {
+      setDetailCourse(data);
+    });
+  }, [getDetailCourse, id]);
+  console.log(detailCourse);
+
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
@@ -17,21 +44,19 @@ const SideBarStudent = () => {
         <Typography
           variant="h6"
           component="h6"
-          align="justify"
           fontFamily={"Poppins"}
           fontWeight={900}
           gutterBottom
         >
-          Nombre del curso
+          {detailCourse.titulo}
         </Typography>
         <Typography
           variant="body1"
           component="h6"
-          align="justify"
           fontFamily={"Poppins"}
           gutterBottom
         >
-          Descripción del curso
+          {detailCourse.descripcion}
         </Typography>
         <Typography
           variant="body1"
@@ -46,11 +71,21 @@ const SideBarStudent = () => {
         <Typography
           variant="body1"
           component="h6"
-          align="justify"
           fontFamily={"Poppins"}
           gutterBottom
         >
-          * Doncente 1
+          {detailCourse.docentes &&
+            detailCourse.docentes.map((docente) => (
+              <Typography
+                key={docente.id_docentes}
+                variant="body1"
+                component="h6"
+                fontFamily={"Poppins"}
+                gutterBottom
+              >
+                {docente.docente}
+              </Typography>
+            ))}
         </Typography>
         <Divider sx={{ marginY: 2 }} />
         <Typography
@@ -71,15 +106,23 @@ const SideBarStudent = () => {
         >
           Introducción
         </Typography>
-        <Typography
-          variant="body1"
-          component="h6"
-          align="justify"
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Sesion 1
-        </Typography>
+        {detailCourse?.sesiones?.map((sesion) => (
+          <Accordion key={sesion.idsesion}>
+            <AccordionSummary
+              expandIcon={<ExpandMore />}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography>{sesion.nombre_sesion}</Typography>
+            </AccordionSummary>
+            {sesion?.contenido?.map((contenido) => (
+              <AccordionDetails key={contenido.idcontenido}>
+                <Typography>{contenido.titulo}</Typography>
+                <Typography>{contenido.url_video}</Typography>
+              </AccordionDetails>
+            ))}
+          </Accordion>
+        ))}
         <Typography
           variant="body1"
           component="h6"

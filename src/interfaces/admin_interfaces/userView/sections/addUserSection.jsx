@@ -11,9 +11,6 @@ const AddUserSection = () => {
       <Grid container spacing={2} sx={{ paddingRight: 4 }}>
         <Grid item xs={12}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
-            <Typography variant="h6" paddingY={3}>
-              Añadir datos de usuario
-            </Typography>
             <FormAddUser />
           </Box>
         </Grid>

@@ -13,6 +13,7 @@ import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
+import CategoryIcon from "@mui/icons-material/Category";
 
 const Sidebar = () => {
   return (
@@ -47,6 +48,17 @@ const Sidebar = () => {
             </MenuItem>
           </Link>
           <Link
+            to="/dashboard/category"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="Categorias" />
+            </MenuItem>
+          </Link>
+          <Link
             to="/dashboard/courses/add"
             style={{ textDecoration: "none", color: "gray" }}
           >
@@ -57,7 +69,10 @@ const Sidebar = () => {
               <ListItemText primary="Añadir curso" />
             </MenuItem>
           </Link>
-          <Link to="/dashboard/courses/1" style={{ textDecoration: "none", color: "gray" }}>
+          <Link
+            to="/dashboard/courses/1"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
             <MenuItem>
               <ListItemIcon>
                 <PostAddOutlinedIcon />
