@@ -1,49 +1,116 @@
-/* eslint-disable react/prop-types */
 import {
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
+  Box,
+  ListItemIcon,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  Paper,
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
+import CategoryIcon from "@mui/icons-material/Category";
 
-const CardCourse = ({ name, description, image, units, time, url }) => {
+const Sidebar = () => {
   return (
-    <Card sx={{ maxWidth: 345, borderRadius: 4 }}>
-      <CardActionArea LinkComponent={Link} to={url}>
-        <CardMedia component="img" image={image} alt="Course Image" />
-        <CardContent sx={{ height: "auto" }}>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="div"
-            fontWeight={700}
-            fontFamily={"poppins"}
+    <Paper sx={{ height: "100vh", position: "fixed", paddingRight: "24px" }}>
+      <Box>
+        <MenuList>
+          <Link
+            to="/dashboard"
+            style={{ textDecoration: "none", color: "gray" }}
           >
-            {name}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Units: {units}
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Time: {time}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-    </Card>
+            <MenuItem>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Dashboard" />
+            </MenuItem>
+          </Link>
+          <MenuItem>
+            <Typography fontWeight={700} color={"gray"}>
+              Cursos
+            </Typography>
+          </MenuItem>
+          <Link
+            to="/dashboard/courses"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <FormatListBulletedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Lista de cursos" />
+            </MenuItem>
+          </Link>
+          <Link
+            to="/dashboard/category"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="Categorias" />
+            </MenuItem>
+          </Link>
+          <Link
+            to="/dashboard/courses/add"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <PlaylistAddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Añadir curso" />
+            </MenuItem>
+          </Link>
+          <Link
+            to="/dashboard/courses/1"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <PostAddOutlinedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Añadir contendio" />
+            </MenuItem>
+          </Link>
+          <MenuItem>
+            <Typography fontWeight={700} color={"gray"}>
+              Usuarios
+            </Typography>
+          </MenuItem>
+          <Link
+            to="/dashboard/users"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <FormatListBulletedIcon />
+              </ListItemIcon>
+              <ListItemText primary="Lista de usuarios" />
+            </MenuItem>
+          </Link>
+          <Link
+            to="/dashboard/users/add"
+            style={{ textDecoration: "none", color: "gray" }}
+          >
+            <MenuItem>
+              <ListItemIcon>
+                <PersonAddIcon />
+              </ListItemIcon>
+              <ListItemText primary="Agregar usuario" />
+            </MenuItem>
+          </Link>
+        </MenuList>
+      </Box>
+    </Paper>
   );
 };
 
-CardCourse.defaultProps = {
-  name: "",
-  description: "",
-  image: "",
-  units: 0,
-  time: "20 horas",
-};
-
-export default CardCourse;
+export default Sidebar;
