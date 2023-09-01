@@ -10,31 +10,37 @@ import {
   TablePagination,
   TableRow,
   Chip,
+  Tooltip,
 } from "@mui/material";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useCourse from "../../../../hooks/useCourse";
 import { Link } from "react-router-dom";
+import ModalDetailCourse from "./modalDetailCourse";
+import { RemoveRedEyeOutlined } from "@mui/icons-material";
 
 const columns = [
   { id: "name", label: "Nombre" },
-  { id: "units", label: "Unidades", minWidth: 100 },
-  { id: "hours", label: "Horas", minWidth: 100 },
-  { id: "status", label: "Estado", minWidth: 100 },
-  { id: "action", label: "Acción", minWidth: 100, align: "center" },
+  { id: "category", label: "Categoría" },
+  { id: "units", label: "Unidades", minWidth: 50 },
+  { id: "hours", label: "Horas", minWidth: 50 },
+  { id: "status", label: "Estado" },
+  { id: "action", label: "Acción", align: "center" },
 ];
 
 const TableListCourses = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [courseSelected, setCourseSelected] = React.useState({});
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const { courses, editCourse } = useCourse();
+  const { courses, editCourse, editStateCourse, getDetailCourse } = useCourse();
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {
       return "Activo";
-    } else if (estadoId === 2) {
+    } else if (estadoId === 0) {
       return "Inactivo";
     }
     return "";
@@ -49,6 +55,17 @@ const TableListCourses = () => {
     setPage(0);
   };
 
+  const handleCourseSelected = (id) => {
+    getDetailCourse(id).then((data) => {
+      setCourseSelected(data);
+    });
+  };
+
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 300 }}>
@@ -59,7 +76,11 @@ const TableListCourses = () => {
                 <TableCell
                   key={column.id}
                   align={column.align}
-                  style={{ minWidth: column.minWidth }}
+                  style={{
+                    minWidth: column.minWidth,
+                    fontWeight: "bold",
+                    fontFamily: "poppins",
+                  }}
                 >
                   {column.label}
                 </TableCell>
@@ -72,10 +93,19 @@ const TableListCourses = () => {
               .map((course, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align="left">{course.titulo}</TableCell>
+                  <TableCell align="left">{course.categoria}</TableCell>
                   <TableCell align="left">{course.total_clases}</TableCell>
                   <TableCell align="left">{course.hora_duracion}</TableCell>
                   <TableCell align="left">
-                    {getEstadoLabel(course.estado)}
+                    <Tooltip title="Cambiar estado">
+                      <Chip
+                        label={getEstadoLabel(course.estado)}
+                        color={course.estado === 1 ? "success" : "error"}
+                        size="small"
+                        variant="outlined"
+                        onClick={() => editStateCourse(course)}
+                      />
+                    </Tooltip>
                   </TableCell>
                   <TableCell
                     align="center"
@@ -87,17 +117,19 @@ const TableListCourses = () => {
                       component={Link}
                       to={`/dashboard/courses/add`}
                       onClick={() => editCourse(course)}
-                      color="primary"
+                      color="success"
                       size="small"
-                      sx={{ marginLeft: 1 }}
+                      sx={{ marginRight: 1 }}
                     />
                     <Chip
-                      icon={<DeleteRoundedIcon />}
-                      label="Eliminar"
+                      icon={<RemoveRedEyeOutlined />}
+                      label="Ver"
+                      color="warning"
                       size="small"
-                      // onClick={() => handleDeleteAction(row.id)} // Implement the handleDeleteAction function
-                      color="error"
-                      sx={{ marginLeft: 1 }}
+                      onClick={() => {
+                        handleCourseSelected(course.idcurso);
+                        handleOpenModal();
+                      }}
                     />
                   </TableCell>
                 </TableRow>
@@ -113,6 +145,11 @@ const TableListCourses = () => {
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <ModalDetailCourse
+        modalOpen={isModalOpen}
+        course={courseSelected}
+        onClose={handleCloseModal}
       />
     </Paper>
   );
