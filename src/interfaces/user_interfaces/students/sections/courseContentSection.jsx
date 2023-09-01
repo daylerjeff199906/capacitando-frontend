@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-
-import { Box, Typography, Divider } from "@mui/material";
+import { useState } from "react";
+import { Box, Typography, Divider, Tabs, Tab } from "@mui/material";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
 const routesArray = [
@@ -13,6 +13,7 @@ const CourseContentSection = ({
   sectionSelected,
   contentSelected,
 }) => {
+  const [value, setValue] = useState(0);
   const findSesion = detailCourse?.sesiones?.find(
     (sesion) => sesion?.idsesion === sectionSelected
   );
@@ -20,6 +21,10 @@ const CourseContentSection = ({
     (contenido) => contenido?.idcontenido === contentSelected
   );
   console.log(findContenido);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <>
@@ -61,6 +66,61 @@ const CourseContentSection = ({
             ? findContenido?.titulo
             : " Introducción"}
         </Typography>
+
+        <Box paddingY={2}>
+          <Typography
+            variant="h6"
+            component="h6"
+            align="justify"
+            fontFamily={"Poppins"}
+            fontWeight={900}
+            gutterBottom
+          >
+            Detalles del curso
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            align="justify"
+            fontFamily={"Poppins"}
+            fontWeight={900}
+            gutterBottom
+          >
+            Descripción:
+          </Typography>
+          <Typography variant="body1" component="h6" gutterBottom>
+            {detailCourse?.descripcion}
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            align="justify"
+            fontFamily={"Poppins"}
+            fontWeight={900}
+            gutterBottom
+          >
+            Doncente(s):
+          </Typography>
+          <Typography
+            variant="body1"
+            component="h6"
+            fontFamily={"Poppins"}
+            gutterBottom
+          >
+            {detailCourse.docentes &&
+              detailCourse?.docentes?.map((docente) => (
+                <Typography
+                  key={docente.id_docentes}
+                  variant="body1"
+                  component="h6"
+                  fontFamily={"Poppins"}
+                  gutterBottom
+                >
+                  {docente.docente}
+                </Typography>
+              ))}
+          </Typography>
+        </Box>
       </Box>
     </>
   );

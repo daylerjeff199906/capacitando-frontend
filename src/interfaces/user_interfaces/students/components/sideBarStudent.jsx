@@ -18,7 +18,7 @@ const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={8}>
-        <Box padding={3}>
+        <Box paddingX={3} paddingTop={3}>
           <Typography
             variant="h6"
             component="h6"
@@ -28,45 +28,8 @@ const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
           >
             Contenido del curso
           </Typography>
-          <Typography
-            variant="body1"
-            component="h6"
-            fontFamily={"Poppins"}
-            gutterBottom
-          >
-            {detailCourse?.descripcion}
-          </Typography>
-          <Typography
-            variant="body1"
-            component="h6"
-            align="justify"
-            fontFamily={"Poppins"}
-            fontWeight={900}
-            gutterBottom
-          >
-            Doncente(s):
-          </Typography>
-          <Typography
-            variant="body1"
-            component="h6"
-            fontFamily={"Poppins"}
-            gutterBottom
-          >
-            {detailCourse.docentes &&
-              detailCourse?.docentes?.map((docente) => (
-                <Typography
-                  key={docente.id_docentes}
-                  variant="body1"
-                  component="h6"
-                  fontFamily={"Poppins"}
-                  gutterBottom
-                >
-                  {docente.docente}
-                </Typography>
-              ))}
-          </Typography>
         </Box>
-        <Divider sx={{ marginY: 2 }} />
+        <Divider />
         <Box paddingX={3}>
           <Typography
             variant="h6"
@@ -74,7 +37,7 @@ const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
             align="justify"
             fontFamily={"Poppins"}
             gutterBottom
-            paddingBottom={1}
+            paddingY={1}
           >
             Introducción
           </Typography>
@@ -110,7 +73,9 @@ const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
                 <Typography fontWeight={700} fontFamily={"Poppins"}>
                   {contenido.titulo}
                 </Typography>
-                <Typography>{contenido.url_video}</Typography>
+                <Typography fontWeight={500}>
+                  {contenido.minutos}
+                </Typography>
               </AccordionDetails>
             ))}
           </Accordion>
