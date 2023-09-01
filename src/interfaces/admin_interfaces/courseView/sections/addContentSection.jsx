@@ -1,13 +1,49 @@
+import * as React from "react";
+import { useParams } from "react-router-dom";
 import { Box, Divider, Grid, Typography } from "@mui/material";
 import FormAddSection from "../components/formAddSection";
 import TableListSection from "../components/tableListSection";
 import FormAddClass from "../components/formAddClass";
 import TableListClass from "../components/tableListClass";
+
+import useCourse from "../../../../hooks/useCourse";
+
 const AddContentSection = () => {
+  const [detailCourse, setDetailCourse] = React.useState({});
+  const [sectionSelected, setSectionSelected] = React.useState({});
+  // const [selectedContentId, setSelectedContentId] = React.useState(null);
+
+  const { getDetailCourse } = useCourse();
+  const idCourse = useParams();
+  const id = idCourse.id;
+
+  React.useEffect(() => {
+    getDetailCourse(id).then((data) => {
+      setDetailCourse(data);
+      setSectionSelected(data?.sesiones);
+    });
+  }, [getDetailCourse, id]);
+
+
+  console.log(detailCourse);
+
+  // const handleSelectContent = (sesionId, contenidoId) => {
+  //   setSectionSelected(sesionId);
+  //   setSelectedContentId(contenidoId);
+  // };
+
   return (
     <>
-      <Box>
-        <Typography variant="h4" paddingY={4} fontFamily={"Poppins"}>
+      <Box paddingY={6}>
+        <Typography
+          variant="h4"
+          component={"h6"}
+          fontFamily={"Poppins"}
+          fontWeight={700}
+        >
+          {detailCourse.titulo}
+        </Typography>
+        <Typography variant="h6" component={"h6"} fontFamily={"Poppins"}>
           Gestionar Contenido de Cursos
         </Typography>
       </Box>
@@ -23,7 +59,7 @@ const AddContentSection = () => {
                 <FormAddSection />
               </Grid>
               <Grid item xs={12}>
-                <TableListSection />
+                <TableListSection listSections={sectionSelected} />
               </Grid>
             </Grid>
           </Box>

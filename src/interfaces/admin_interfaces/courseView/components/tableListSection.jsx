@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+import * as React from "react";
 import {
   Table,
   TableBody,
@@ -8,10 +10,15 @@ import {
   Typography,
 } from "@mui/material";
 
-const TableListSection = () => {
+const TableListSection = ({ listSections }) => {
+  const [sections, setSections] = React.useState([]);
+  React.useEffect(() => {
+    setSections(listSections);
+  }, [listSections]);
+  console.log(sections);
   return (
     <>
-      <Typography variant="h6"  fontFamily={"Poppins"}>
+      <Typography variant="h6" fontFamily={"Poppins"}>
         Lista de sesiones
       </Typography>
       <TableContainer sx={{ maxHeight: 300 }}>
@@ -23,7 +30,14 @@ const TableListSection = () => {
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {/* {sections?.map((section, index) => (
+              <TableRow key={index}>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{section?.nombre_sesion}</TableCell>
+              </TableRow>
+            ))} */}
+          </TableBody>
         </Table>
       </TableContainer>
     </>
