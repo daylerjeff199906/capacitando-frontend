@@ -11,8 +11,8 @@ import {
 import { ExpandMore } from "@mui/icons-material";
 
 const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
-  const handleContenidoSelect = (id) => {
-    contenidoSelect(id);
+  const handleContenidoSelect = (idSesion, id) => {
+    contenidoSelect(idSesion, id);
   };
 
   return (
@@ -97,7 +97,9 @@ const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
             {sesion?.contenido?.map((contenido) => (
               <AccordionDetails
                 key={contenido.idcontenido}
-                onClick={() => handleContenidoSelect(contenido.idcontenido)}
+                onClick={() =>
+                  handleContenidoSelect(sesion.idsesion, contenido.idcontenido)
+                }
                 sx={{
                   cursor: "pointer",
                   ":hover": {

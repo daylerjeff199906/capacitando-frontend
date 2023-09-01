@@ -8,6 +8,9 @@ import useCourse from "../../../../hooks/useCourse";
 
 const CourseDetails = () => {
   const [detailCourse, setDetailCourse] = React.useState({});
+  const [sectionSelected, setSectionSelected] = React.useState(null);
+  const [selectedContentId, setSelectedContentId] = React.useState(null);
+
   const { getDetailCourse } = useCourse();
   const idCourse = useParams();
   const id = idCourse.id;
@@ -19,6 +22,11 @@ const CourseDetails = () => {
   }, [getDetailCourse, id]);
   console.log(detailCourse);
 
+  const handleSelectContent = (sesionId, contenidoId) => {
+    setSectionSelected(sesionId);
+    setSelectedContentId(contenidoId);
+  };
+
   return (
     <>
       <Box
@@ -27,7 +35,11 @@ const CourseDetails = () => {
       >
         <Container maxWidth={"xl"}>
           <Box component={"main"} flexGrow={4} padding={3}>
-            <CourseContentSection detailCourse={detailCourse} />
+            <CourseContentSection
+              detailCourse={detailCourse}
+              contentSelected={selectedContentId}
+              sectionSelected={sectionSelected}
+            />
           </Box>
         </Container>
         <Drawer
@@ -44,7 +56,10 @@ const CourseDetails = () => {
           anchor="right"
         >
           <Box sx={{ overflow: "auto" }}>
-            <SideBarStudent detailCourse={detailCourse} />
+            <SideBarStudent
+              detailCourse={detailCourse}
+              contenidoSelect={handleSelectContent}
+            />
           </Box>
         </Drawer>
       </Box>

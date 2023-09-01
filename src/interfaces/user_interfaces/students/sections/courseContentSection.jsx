@@ -7,7 +7,12 @@ const routesArray = [
   { name: "Detalles de curso" },
 ];
 
-const CourseContentSection = ({ detailCourse }) => {
+const CourseContentSection = ({
+  detailCourse,
+  sectionSelected,
+  contentSelected,
+}) => {
+  console.log(sectionSelected, contentSelected);
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
@@ -39,7 +44,9 @@ const CourseContentSection = ({ detailCourse }) => {
           fontFamily={"Poppins"}
           gutterBottom
         >
-          Tema: Introducción
+          {contentSelected !== null
+            ? `Titulo: ${detailCourse?.sesion?.contenido?.titulo}`
+            : "Introducción"}
         </Typography>
       </Box>
     </>
