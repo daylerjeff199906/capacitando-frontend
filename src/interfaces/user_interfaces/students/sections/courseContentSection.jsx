@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Box, Typography, Divider } from "@mui/material";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
@@ -6,7 +7,7 @@ const routesArray = [
   { name: "Detalles de curso" },
 ];
 
-const CourseContentSection = () => {
+const CourseContentSection = ({ detailCourse }) => {
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
@@ -34,7 +35,7 @@ const CourseContentSection = () => {
           <iframe
             width="100%"
             height="420"
-            src="https://www.youtube.com/embed/YpAQ_bYM6NE"
+            src={detailCourse?.url_video_intro}
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen

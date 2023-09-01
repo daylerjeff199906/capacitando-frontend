@@ -1,4 +1,4 @@
-import * as React from "react";
+/* eslint-disable react/prop-types */
 import {
   Accordion,
   AccordionDetails,
@@ -8,26 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 
-import useCourse from "../../../../hooks/useCourse";
-import { useParams } from "react-router-dom";
 import { ExpandMore } from "@mui/icons-material";
 
-const SideBarStudent = () => {
-  const [detailCourse, setDetailCourse] = React.useState({});
-  const { getDetailCourse } = useCourse();
-  const idCourse = useParams();
-  const id = idCourse.id;
-
-  // getDetailCourse(id).then((data) => {
-  //   setDetailCourse(data);
-  // });
-  React.useEffect(() => {
-    getDetailCourse(id).then((data) => {
-      setDetailCourse(data);
-    });
-  }, [getDetailCourse, id]);
-  console.log(detailCourse);
-
+const SideBarStudent = ({ detailCourse }) => {
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={10}>
@@ -39,7 +22,7 @@ const SideBarStudent = () => {
             fontWeight={900}
             gutterBottom
           >
-            {detailCourse.titulo}
+            {detailCourse?.titulo}
           </Typography>
           <Typography
             variant="body1"
@@ -47,7 +30,7 @@ const SideBarStudent = () => {
             fontFamily={"Poppins"}
             gutterBottom
           >
-            {detailCourse.descripcion}
+            {detailCourse?.descripcion}
           </Typography>
           <Typography
             variant="body1"
@@ -66,7 +49,7 @@ const SideBarStudent = () => {
             gutterBottom
           >
             {detailCourse.docentes &&
-              detailCourse.docentes.map((docente) => (
+              detailCourse?.docentes?.map((docente) => (
                 <Typography
                   key={docente.id_docentes}
                   variant="body1"

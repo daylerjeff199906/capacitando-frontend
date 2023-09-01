@@ -1,8 +1,24 @@
+import * as React from "react";
 import { Box, Container, Drawer } from "@mui/material";
 import SideBarStudent from "../components/sideBarStudent";
 import CourseContentSection from "./courseContentSection";
+import { useParams } from "react-router-dom";
+
+import useCourse from "../../../../hooks/useCourse";
 
 const CourseDetails = () => {
+  const [detailCourse, setDetailCourse] = React.useState({});
+  const { getDetailCourse } = useCourse();
+  const idCourse = useParams();
+  const id = idCourse.id;
+
+  React.useEffect(() => {
+    getDetailCourse(id).then((data) => {
+      setDetailCourse(data);
+    });
+  }, [getDetailCourse, id]);
+  console.log(detailCourse);
+
   return (
     <>
       <Box
@@ -28,7 +44,7 @@ const CourseDetails = () => {
           anchor="right"
         >
           <Box sx={{ overflow: "auto" }}>
-            <SideBarStudent />
+            <SideBarStudent detailCourse={detailCourse} />
           </Box>
           {/* <Toolbar /> */}
         </Drawer>
