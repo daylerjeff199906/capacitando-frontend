@@ -20,6 +20,11 @@ const CardCourse = ({ name, description, image, units, time, url }) => {
             component="div"
             fontWeight={700}
             fontFamily={"poppins"}
+            sx={{
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+            }}
           >
             {name}
           </Typography>
