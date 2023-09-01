@@ -12,25 +12,16 @@ const CourseContentSection = ({ detailCourse }) => {
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
         <Typography
-          variant="h5"
+          variant="h4"
           component="h4"
-          fontWeight={700}
+          fontWeight={900}
           fontFamily={"Poppins"}
           gutterBottom
         >
-          Contenido del curso
+          {detailCourse?.titulo}
         </Typography>
         <CustomBreadcrumb routesArray={routesArray} />
         <Divider sx={{ marginY: 2 }} />
-        <Typography
-          variant="h4"
-          component="h4"
-          fontWeight={700}
-          fontFamily={"Poppins"}
-          gutterBottom
-        >
-          Título de la clase
-        </Typography>
         <Box paddingX={8} paddingY={2}>
           <iframe
             width="100%"

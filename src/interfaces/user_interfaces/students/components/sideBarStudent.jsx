@@ -13,16 +13,16 @@ import { ExpandMore } from "@mui/icons-material";
 const SideBarStudent = ({ detailCourse }) => {
   return (
     <>
-      <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={10}>
+      <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={8}>
         <Box padding={3}>
           <Typography
-            variant="h5"
+            variant="h6"
             component="h6"
             fontFamily={"Poppins"}
             fontWeight={900}
             gutterBottom
           >
-            {detailCourse?.titulo}
+            Contenido del curso
           </Typography>
           <Typography
             variant="body1"
@@ -79,7 +79,7 @@ const SideBarStudent = ({ detailCourse }) => {
             align="justify"
             fontFamily={"Poppins"}
             gutterBottom
-            paddingBottom={2}
+            paddingBottom={1}
           >
             Introducción
           </Typography>

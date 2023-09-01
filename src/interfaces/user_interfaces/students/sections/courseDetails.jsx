@@ -27,7 +27,7 @@ const CourseDetails = () => {
       >
         <Container maxWidth={"xl"}>
           <Box component={"main"} flexGrow={4} padding={3}>
-            <CourseContentSection />
+            <CourseContentSection detailCourse={detailCourse} />
           </Box>
         </Container>
         <Drawer
@@ -46,7 +46,6 @@ const CourseDetails = () => {
           <Box sx={{ overflow: "auto" }}>
             <SideBarStudent detailCourse={detailCourse} />
           </Box>
-          {/* <Toolbar /> */}
         </Drawer>
       </Box>
     </>
