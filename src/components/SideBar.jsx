@@ -18,8 +18,10 @@ import CategoryIcon from "@mui/icons-material/Category";
 const Sidebar = () => {
   return (
     <>
-      <Paper sx={{ height: "100vh", position: "fixed", paddingRight: "24px" }}>
-        <Box>
+      <Paper sx={{ height: "100vh" }}>
+        <Box
+        paddingTop={10}
+        >
           <MenuList>
             <Link
               to="/dashboard"
