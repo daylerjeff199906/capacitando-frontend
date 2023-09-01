@@ -5,9 +5,7 @@ import CourseContentSection from "./courseContentSection";
 const CourseDetails = () => {
   return (
     <>
-      <Box
-      padding={4}
-      >
+      <Box padding={4}>
         <Container maxWidth={"2xl"}>
           <Grid container spacing={4}>
             <Grid item xs={3}>
