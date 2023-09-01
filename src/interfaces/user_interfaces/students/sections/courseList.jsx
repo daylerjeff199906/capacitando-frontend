@@ -29,11 +29,13 @@ const CourseList = () => {
             <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
               <CardCourse
                 name={course.titulo}
-                description={course.categoria}
+                description={course.descripcion}
                 image="https://img.freepik.com/foto-gratis/mujer-vista-lateral-que-usa-tableta_23-2149557251.jpg?w=996&t=st=1693521065~exp=1693521665~hmac=9cf874f285d6af14794df820ee870ac2e257a0958ca3ddda7d04bc4b01c59744"
                 time={course.hora_duracion + " horas"}
                 units={course.total_clases + " clases"}
                 url={`/home/miscursos/${course.idcurso}`}
+                category={course.categoria}
+
               />
             </Grid>
           ))}
