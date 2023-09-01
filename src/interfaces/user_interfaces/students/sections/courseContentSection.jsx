@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-import { Box, Typography, Divider, Tabs, Tab } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
 const routesArray = [
@@ -13,7 +12,6 @@ const CourseContentSection = ({
   sectionSelected,
   contentSelected,
 }) => {
-  const [value, setValue] = useState(0);
   const findSesion = detailCourse?.sesiones?.find(
     (sesion) => sesion?.idsesion === sectionSelected
   );
@@ -21,10 +19,6 @@ const CourseContentSection = ({
     (contenido) => contenido?.idcontenido === contentSelected
   );
   console.log(findContenido);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <>

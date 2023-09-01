@@ -73,9 +73,7 @@ const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
                 <Typography fontWeight={700} fontFamily={"Poppins"}>
                   {contenido.titulo}
                 </Typography>
-                <Typography fontWeight={500}>
-                  {contenido.minutos}
-                </Typography>
+                <Typography fontWeight={500}>{contenido.minutos}</Typography>
               </AccordionDetails>
             ))}
           </Accordion>
