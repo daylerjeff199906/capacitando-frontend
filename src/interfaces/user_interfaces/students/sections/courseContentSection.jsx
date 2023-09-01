@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import { Box, Typography, Divider } from "@mui/material";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
@@ -12,7 +13,14 @@ const CourseContentSection = ({
   sectionSelected,
   contentSelected,
 }) => {
-  console.log(sectionSelected, contentSelected);
+  const findSesion = detailCourse?.sesiones?.find(
+    (sesion) => sesion?.idsesion === sectionSelected
+  );
+  const findContenido = findSesion?.contenido?.find(
+    (contenido) => contenido?.idcontenido === contentSelected
+  );
+  console.log(findContenido);
+
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} padding={3}>
@@ -31,7 +39,11 @@ const CourseContentSection = ({
           <iframe
             width="100%"
             height="420"
-            src={detailCourse?.url_video_intro}
+            src={
+              findContenido?.url_video !== undefined
+                ? findContenido?.url_video + "?autoplay=1&mute=1"
+                : "https://www.youtube.com/embed/1y_kfWUCFDQ?autoplay=1&mute=1"
+            }
             title="YouTube video player"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
@@ -44,9 +56,10 @@ const CourseContentSection = ({
           fontFamily={"Poppins"}
           gutterBottom
         >
-          {contentSelected !== null
-            ? `Titulo: ${detailCourse?.sesion?.contenido?.titulo}`
-            : "Introducción"}
+          Tema:{" "}
+          {findContenido?.titulo !== undefined
+            ? findContenido?.titulo
+            : " Introducción"}
         </Typography>
       </Box>
     </>
