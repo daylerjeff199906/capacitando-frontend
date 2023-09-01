@@ -1,32 +1,27 @@
 import { Box, Container, Drawer } from "@mui/material";
 import SideBarStudent from "../components/sideBarStudent";
 import CourseContentSection from "./courseContentSection";
-import Navbar from "../../../../components/NavBar";
 
 const CourseDetails = () => {
   return (
     <>
-    <Navbar 
-    widthNavBAr={300}
-    />
-      <Box display={"flex"}>
+      <Box
+        display={"flex"}
+        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+      >
         <Container maxWidth={"xl"}>
-          <Box
-            component={"main"}
-            flexGrow={4}
-            padding={3}
-            // sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
-          >
+          <Box component={"main"} flexGrow={4} padding={3}>
             <CourseContentSection />
           </Box>
         </Container>
         <Drawer
           variant="permanent"
+          open={false}
           sx={{
-            width: 300,
+            width: 500,
             flexShrink: 0,
-            "& .MuiDrawer-paper": {
-              width: 300,
+            [`& .MuiDrawer-paper`]: {
+              width: 500,
               boxSizing: "border-box",
             },
           }}

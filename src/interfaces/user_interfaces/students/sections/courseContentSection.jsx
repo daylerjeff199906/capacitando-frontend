@@ -1,4 +1,5 @@
 import { Box, Typography, Divider } from "@mui/material";
+import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
 const CourseContentSection = () => {
   return (
@@ -13,6 +14,7 @@ const CourseContentSection = () => {
         >
           Contenido del curso
         </Typography>
+        <CustomBreadcrumb />
         <Divider sx={{ marginY: 2 }} />
         <Typography
           variant="h4"

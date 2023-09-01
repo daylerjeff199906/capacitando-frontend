@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-// Navbar.js
 import * as React from "react";
 import {
   AppBar,
@@ -13,7 +11,7 @@ import {
 import { Menu as MenuIcon, AccountCircle } from "@mui/icons-material";
 import useAuth from "../hooks/useAuth";
 
-const Navbar = ({ widthNavBAr }) => {
+const Navbar = () => {
   const [auth, setAuth] = React.useState(false);
   const [user, setUser] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,7 +38,7 @@ const Navbar = ({ widthNavBAr }) => {
   return (
     <AppBar
       position="fixed"
-      sx={{ width: `calc(100% - ${widthNavBAr}px)`, mr: `${widthNavBAr}px` }}
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar>
         <IconButton

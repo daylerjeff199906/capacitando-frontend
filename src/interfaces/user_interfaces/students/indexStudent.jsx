@@ -3,7 +3,7 @@ import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CardCourse from "../../../components/CardCourse";
 import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
-import Navbar from "../../../components/NavBar";
+
 
 import useUsers from "../../../hooks/useUsers";
 import useCourse from "../../../hooks/useCourse";
@@ -24,7 +24,7 @@ const IndexStudent = () => {
 
   return (
     <>
-     <Navbar />
+
       <Box bgcolor="#FFFFFF" paddingTop={8} paddingBottom={8}>
         <Container maxWidth={"xl"}>
           <Grid container spacing={4} sx={{ paddingY: 4 }}>

@@ -19,7 +19,7 @@ export default function CustomBreadcrumb({ routesArray }) {
         >
           {option[0].name}
         </Link>
-        {routesArray.map((route, index) => (
+        {routesArray?.map((route, index) => (
           <Link
             key={index}
             to={route.path}

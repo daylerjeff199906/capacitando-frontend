@@ -3,7 +3,7 @@ import CardCourse from "../../../../components/CardCourse";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
 import useCourse from "../../../../hooks/useCourse";
-import Navbar from "../../../../components/NavBar";
+
 
 const routesArray = [{ name: "Mis cursos", path: "/home/miscursos" }];
 
@@ -13,7 +13,7 @@ const CourseList = () => {
 
   return (
     <>
-      <Navbar />
+ 
       <Box bgcolor="#FFFFFF">
         <Container maxWidth={"xl"}>
           <Typography
