@@ -1,9 +1,23 @@
 import * as React from "react";
 import { Typography, TextField, Box, Button } from "@mui/material";
 
+import useContent from "../../../../hooks/useContent";
+
 const FormAddSection = () => {
   const [nombre_sesion, setNombreSesion] = React.useState("");
-  const [descripcion_sesion, setDescripcionSesion] = React.useState("");
+  const [descripcion, setDescripcionSesion] = React.useState("");
+
+  const { saveSesion } = useContent();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const sesion = {
+
+      nombre_sesion,
+      descripcion,
+    };
+    saveSesion(sesion);
+  };
 
   return (
     <>
@@ -25,12 +39,12 @@ const FormAddSection = () => {
         placeholder="Opcional ..."
         fullWidth
         multiline
-        value={descripcion_sesion}
+        value={descripcion}
         onChange={(e) => setDescripcionSesion(e.target.value)}
         rows={4}
       />
       <Box marginTop={2}>
-        <Button variant="contained" component="label">
+        <Button variant="contained" component="label" onClick={handleSubmit}>
           Guardar
         </Button>
       </Box>

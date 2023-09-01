@@ -8,7 +8,15 @@ import {
   TableRow,
   TableCell,
   Typography,
+  Tooltip,
+  Stack,
+  IconButton,
 } from "@mui/material";
+import {
+  AddCircleOutline,
+  DeleteOutline,
+  EditOutlined,
+} from "@mui/icons-material";
 
 const TableListSection = ({ listSections }) => {
   const [sections, setSections] = React.useState([]);
@@ -16,7 +24,6 @@ const TableListSection = ({ listSections }) => {
     setSections(listSections);
     console.log(listSections);
   }, [listSections]);
-  // console.log(sections);
 
   return (
     <>
@@ -59,7 +66,26 @@ const TableListSection = ({ listSections }) => {
               sections.map((section, index) => (
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
-                  <TableCell>{section.nombre_sesion}</TableCell>
+                  <TableCell width={"100%"}>{section.nombre_sesion}</TableCell>
+                  <TableCell>
+                    <Stack direction={"row"} spacing={1}>
+                      <Tooltip title="Añadir contenido">
+                        <IconButton color="primary">
+                          <AddCircleOutline />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Editar sesión">
+                        <IconButton color="success">
+                          <EditOutlined />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Eliminar sesión">
+                        <IconButton color="error">
+                          <DeleteOutline />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
