@@ -6,11 +6,7 @@ import SideBar from "../components/SideBar";
 import { Box, Drawer } from "@mui/material";
 
 const ProtectedRoute = () => {
-  const { auth, loading } = useAuth();
-
-  if (loading) {
-    return "Cargando...";
-  }
+  const { auth } = useAuth();
 
   return (
     <>
@@ -29,19 +25,10 @@ const ProtectedRoute = () => {
         >
           <SideBar />
         </Drawer>
-        <Box component="main" sx={{ flexGrow: 1, p: 3, pt:6 }}>
+        <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 6 }}>
           {auth?.idusuario ? <Outlet /> : <Navigate to="/" />}
         </Box>
       </Box>
-      {/* <Navbar />
-      <Grid container spacing={4} sx={{ paddingTop: 8 }}>
-        <Grid item xs={2}>
-          
-        </Grid>
-        <Grid item xs={10}>
-        
-        </Grid>
-      </Grid> */}
     </>
   );
 };
