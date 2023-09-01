@@ -33,13 +33,13 @@ const CourseContentSection = ({ detailCourse }) => {
           ></iframe>
         </Box>
         <Typography
-          variant="h4"
+          variant="h5"
           component="h4"
           fontWeight={700}
           fontFamily={"Poppins"}
           gutterBottom
         >
-          Recursos
+          Tema: Introducción
         </Typography>
       </Box>
     </>

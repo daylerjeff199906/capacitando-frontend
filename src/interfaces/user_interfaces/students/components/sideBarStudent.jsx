@@ -10,7 +10,11 @@ import {
 
 import { ExpandMore } from "@mui/icons-material";
 
-const SideBarStudent = ({ detailCourse }) => {
+const SideBarStudent = ({ detailCourse, contenidoSelect }) => {
+  const handleContenidoSelect = (id) => {
+    contenidoSelect(id);
+  };
+
   return (
     <>
       <Box bgcolor={"#FFFFFF"} borderRadius={4} paddingTop={8}>
@@ -66,15 +70,6 @@ const SideBarStudent = ({ detailCourse }) => {
         <Box paddingX={3}>
           <Typography
             variant="h6"
-            component="h4"
-            fontWeight={700}
-            fontFamily={"Poppins"}
-            gutterBottom
-          >
-            Contenido
-          </Typography>
-          <Typography
-            variant="body1"
             component="h6"
             align="justify"
             fontFamily={"Poppins"}
@@ -91,11 +86,28 @@ const SideBarStudent = ({ detailCourse }) => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography>{sesion.nombre_sesion}</Typography>
+              <Typography
+                variant="subtitle1"
+                fontWeight={700}
+                fontFamily={"Poppins"}
+              >
+                {sesion.nombre_sesion}
+              </Typography>
             </AccordionSummary>
             {sesion?.contenido?.map((contenido) => (
-              <AccordionDetails key={contenido.idcontenido}>
-                <Typography>{contenido.titulo}</Typography>
+              <AccordionDetails
+                key={contenido.idcontenido}
+                onClick={() => handleContenidoSelect(contenido.idcontenido)}
+                sx={{
+                  cursor: "pointer",
+                  ":hover": {
+                    backgroundColor: "#F5F5F5",
+                  },
+                }}
+              >
+                <Typography fontWeight={700} fontFamily={"Poppins"}>
+                  {contenido.titulo}
+                </Typography>
                 <Typography>{contenido.url_video}</Typography>
               </AccordionDetails>
             ))}
