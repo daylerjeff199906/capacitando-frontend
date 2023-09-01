@@ -24,8 +24,7 @@ const AddContentSection = () => {
     });
   }, [getDetailCourse, id]);
 
-
-  console.log(detailCourse);
+  // console.log(detailCourse?.sesiones);
 
   // const handleSelectContent = (sesionId, contenidoId) => {
   //   setSectionSelected(sesionId);
@@ -46,6 +45,15 @@ const AddContentSection = () => {
         <Typography variant="h6" component={"h6"} fontFamily={"Poppins"}>
           Gestionar Contenido de Cursos
         </Typography>
+        {/* {detailCourse?.sesiones?.length > 0 ? (
+          <Typography variant="body1" component={"p"} fontFamily={"Poppins"}>
+            {detailCourse?.sesiones?.length} Sesiones
+          </Typography>
+        ) : (
+          <Typography variant="body1" component={"p"} fontFamily={"Poppins"}>
+            No hay sesiones
+          </Typography>
+        )} */}
       </Box>
       <Grid container spacing={4} sx={{ paddingRight: 4 }}>
         <Grid item xs={12} md={6}>
