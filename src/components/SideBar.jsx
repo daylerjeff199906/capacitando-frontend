@@ -12,16 +12,13 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 
 const Sidebar = () => {
   return (
     <>
       <Paper sx={{ height: "100vh" }}>
-        <Box
-        paddingTop={10}
-        >
+        <Box paddingTop={10}>
           <MenuList>
             <Link
               to="/dashboard"
@@ -72,7 +69,7 @@ const Sidebar = () => {
                 <ListItemText primary="Añadir curso" />
               </MenuItem>
             </Link>
-            <Link
+            {/* <Link
               to="/dashboard/courses/1"
               style={{ textDecoration: "none", color: "gray" }}
             >
@@ -82,7 +79,7 @@ const Sidebar = () => {
                 </ListItemIcon>
                 <ListItemText primary="Añadir contendio" />
               </MenuItem>
-            </Link>
+            </Link> */}
             <MenuItem>
               <Typography fontWeight={700} color={"gray"}>
                 Usuarios

@@ -24,13 +24,6 @@ const AddContentSection = () => {
     });
   }, [getDetailCourse, id]);
 
-  // console.log(detailCourse?.sesiones);
-
-  // const handleSelectContent = (sesionId, contenidoId) => {
-  //   setSectionSelected(sesionId);
-  //   setSelectedContentId(contenidoId);
-  // };
-
   return (
     <>
       <Box paddingY={6}>
