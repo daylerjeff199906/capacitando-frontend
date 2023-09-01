@@ -1,14 +1,17 @@
-import { Box, Container, Typography, Grid, Breadcrumbs } from "@mui/material";
+import { Box, Container, Typography, Grid } from "@mui/material";
 import CardCourse from "../../../../components/CardCourse";
+import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
 import useCourse from "../../../../hooks/useCourse";
 
+const routesArray = [{ name: "Mis cursos", path: "/home/miscursos" }];
+
 const CourseList = () => {
   const { courses } = useCourse();
-  console.log(courses)
+  console.log(courses);
 
   return (
-    <Box>
+    <Box bgcolor="#FFFFFF">
       <Container maxWidth={"xl"}>
         <Typography
           variant="h4"
@@ -20,10 +23,9 @@ const CourseList = () => {
         >
           Mis cursos asignados
         </Typography>
-        <Breadcrumbs aria-label="breadcrumb" sx={{ marginBottom: 2 }}>
-          <Typography color="text.primary">Home</Typography>
-          <Typography color="text.primary">Mis cursos</Typography>
-        </Breadcrumbs>
+        <Box sx={{ paddingY: 2 }}>
+          <CustomBreadcrumb routesArray={routesArray} />
+        </Box>
         <Grid container spacing={2}>
           {courses.map((course) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={course.id}>
@@ -35,7 +37,6 @@ const CourseList = () => {
                 units={course.total_clases + " clases"}
                 url={`/home/miscursos/${course.idcurso}`}
                 category={course.categoria}
-
               />
             </Grid>
           ))}
