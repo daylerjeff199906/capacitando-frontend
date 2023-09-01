@@ -1,4 +1,3 @@
-// Navbar.js
 import * as React from "react";
 import {
   AppBar,
@@ -17,14 +16,14 @@ const Navbar = () => {
   const [user, setUser] = React.useState("");
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-const { logout } = useAuth();
-  
+  const { logout } = useAuth();
+
   React.useEffect(() => {
     const token = localStorage.getItem("token");
     const storedUser = localStorage.getItem("user");
     if (token) {
       setAuth(true);
-      setUser(storedUser)
+      setUser(storedUser);
     }
   }, []);
 
@@ -37,7 +36,10 @@ const { logout } = useAuth();
   };
 
   return (
-    <AppBar position="fixed">
+    <AppBar
+      position="fixed"
+      sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
+    >
       <Toolbar>
         <IconButton
           size="large"

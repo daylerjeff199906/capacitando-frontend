@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { Outlet, Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import Navbar from "../components/NavBar";
 import { Grid } from "@mui/material";
+import NavBar from "../components/NavBar";
 
 const ProtectedRouteUser = () => {
   const { auth } = useAuth();
@@ -13,7 +13,7 @@ const ProtectedRouteUser = () => {
 
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Grid container spacing={4} sx={{ paddingTop: 8 }}>
         <Grid item xs={12}>
           {auth?.idusuario ? <Outlet /> : <Navigate to="/" />}
