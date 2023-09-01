@@ -12,29 +12,33 @@ const AddContentSection = () => {
         </Typography>
       </Box>
       <Grid container spacing={4} sx={{ paddingRight: 4 }}>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
+            <Typography variant="h6" paddingY={2}>
+              Añadir Sesión
+            </Typography>
+            <Divider sx={{ marginBottom: 2 }} />
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <FormAddSection />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <TableListSection />
               </Grid>
             </Grid>
           </Box>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
             <Typography variant="h6" paddingY={2}>
               Añadir contenido
             </Typography>
             <Divider sx={{ marginBottom: 2 }} />
             <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <FormAddClass />
               </Grid>
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12}>
                 <TableListClass />
               </Grid>
             </Grid>
