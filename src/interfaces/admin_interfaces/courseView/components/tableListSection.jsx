@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import * as React from "react";
+import { useParams } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -21,13 +22,14 @@ import {
 import useContent from "../../../../hooks/useContent";
 
 const TableListSection = () => {
-  const [sections, setSections] = React.useState([]);
+  const { getSesions, sesions, editSesion } = useContent();
 
-  const { sesions, editSesion } = useContent();
+  const id = useParams();
+  const idcurso = id.id;
 
   React.useEffect(() => {
-    setSections(sesions);
-  }, [sesions]);
+    getSesions(idcurso);
+  }, [idcurso, getSesions]);
 
   return (
     <>
@@ -35,9 +37,9 @@ const TableListSection = () => {
         Lista de sesiones
       </Typography>
 
-      {sections.length > 0 ? (
+      {sesions.length > 0 ? (
         <Typography variant="body1" fontFamily={"Poppins"}>
-          {sections.length} Sesiones
+          {sesions.length} Sesiones
         </Typography>
       ) : (
         <Typography variant="body1" fontFamily={"Poppins"}>
@@ -66,8 +68,8 @@ const TableListSection = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sections.length > 0 ? (
-              sections.map((section, index) => (
+            {sesions.length > 0 ? (
+              sesions.map((section, index) => (
                 <TableRow key={index} hover>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell width={"100%"}>{section.nombre_sesion}</TableCell>

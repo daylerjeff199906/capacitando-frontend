@@ -38,7 +38,7 @@ const ContentProvider = ({ children }) => {
     };
     if (sesion.idsesion) {
       try {
-        const { data } = await userAxios.put(
+        const { data } = await userAxios.patch(
           `/sessions/update/${sesion.idsesion}`,
           sesion,
           config

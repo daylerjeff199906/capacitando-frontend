@@ -97,12 +97,12 @@ const FormAddSection = () => {
           Cancelar
         </Button>
       </Box>
-      <Snackbar
+      {/* <Snackbar
         open={messageContent ? true : false}
         message={messageContent}
         autoHideDuration={3000}
         onClose={() => setMessageContent("")}
-      />
+      /> */}
     </>
   );
 };
