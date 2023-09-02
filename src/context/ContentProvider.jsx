@@ -13,7 +13,6 @@ const ContentProvider = ({ children }) => {
 
   const getIdCurso = (id) => {
     setIdCurso(id);
-    console.log(idCurso);
   };
 
   const getSesions = async (id) => {
@@ -75,7 +74,7 @@ const ContentProvider = ({ children }) => {
     setSesionId(sesion);
   };
 
-  const editStateSesion = async (sesion) => {
+  const deleteSesion = async (sesion) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -111,7 +110,7 @@ const ContentProvider = ({ children }) => {
         sesionId,
         clearSesionId,
         editSesion,
-        editStateSesion,
+        deleteSesion,
       }}
     >
       {children}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import * as React from "react";
 import { useParams } from "react-router-dom";
@@ -12,14 +13,14 @@ import {
   Tooltip,
   Stack,
   IconButton,
-  Chip,
 } from "@mui/material";
 import { AddCircleOutline, EditOutlined } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import useContent from "../../../../hooks/useContent";
 
 const TableListSection = () => {
-  const { getIdCurso, getSesions, sesions, editSesion, editStateSesion } =
+  const { getIdCurso, getSesions, sesions, editSesion, deleteSesion } =
     useContent();
 
   const id = useParams();
@@ -60,11 +61,6 @@ const TableListSection = () => {
               </TableCell>
               <TableCell>
                 <Typography fontWeight={700} fontFamily={"poppins"}>
-                  Estado
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight={700} fontFamily={"poppins"}>
                   Sesiones
                 </Typography>
               </TableCell>
@@ -76,7 +72,7 @@ const TableListSection = () => {
                 <TableRow key={index} hover>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell width={"100%"}>{section.nombre_sesion}</TableCell>
-                  <TableCell width={"100%"}>
+                  {/* <TableCell width={"100%"}>
                     {
                       <Tooltip title="Cambiar estado">
                         <Chip
@@ -88,7 +84,7 @@ const TableListSection = () => {
                         />
                       </Tooltip>
                     }
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell>
                     <Stack direction={"row"} spacing={1}>
                       <Tooltip title="Añadir contenido">
@@ -102,6 +98,14 @@ const TableListSection = () => {
                           onClick={() => editSesion(section)}
                         >
                           <EditOutlined />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Eliminar sesión">
+                        <IconButton
+                          color="error"
+                          onClick={() => deleteSesion(section)}
+                        >
+                          <DeleteIcon />
                         </IconButton>
                       </Tooltip>
                     </Stack>
