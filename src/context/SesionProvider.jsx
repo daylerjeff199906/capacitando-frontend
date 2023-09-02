@@ -3,9 +3,9 @@ import { useState } from "react";
 import { createContext } from "react";
 import userAxios from "../config/axios";
 
-const ContentContext = createContext();
+const SesionContext = createContext();
 
-const ContentProvider = ({ children }) => {
+const SesionProvider = ({ children }) => {
   const [idCurso, setIdCurso] = useState("");
   const [message, setMessage] = useState("");
   const [sesions, setSesions] = useState([]);
@@ -100,7 +100,7 @@ const ContentProvider = ({ children }) => {
   };
 
   return (
-    <ContentContext.Provider
+    <SesionContext.Provider
       value={{
         getIdCurso,
         saveSesion,
@@ -114,9 +114,9 @@ const ContentProvider = ({ children }) => {
       }}
     >
       {children}
-    </ContentContext.Provider>
+    </SesionContext.Provider>
   );
 };
 
-export { ContentProvider };
-export default ContentContext;
+export { SesionProvider };
+export default SesionContext;

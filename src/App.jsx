@@ -18,9 +18,9 @@ import { AuthProvider } from "./context/AuthProvider";
 import { UserProvider } from "./context/UserProvider";
 import { CourseProvider } from "./context/CourseProvider";
 import { CategoryProvider } from "./context/CategoryProvider";
+import { SesionProvider } from "./context/SesionProvider";
 import ProtectedRouteUser from "./layouts/protectedRouteUser";
 import IndexCategory from "./interfaces/admin_interfaces/category/indexCategory";
-import { ContentProvider } from "./context/ContentProvider";
 
 function App() {
   return (
@@ -29,7 +29,7 @@ function App() {
         <UserProvider>
           <CategoryProvider>
             <CourseProvider>
-              <ContentProvider>
+              <SesionProvider>
                 <Routes>
                   <Route path="/" element={<LoginIndex />} />
                   <Route path="/dashboard/*" element={<ProtectedRoute />}>
@@ -48,7 +48,7 @@ function App() {
                     <Route path="miscursos/:id" element={<CourseDetails />} />
                   </Route>
                 </Routes>
-              </ContentProvider>
+              </SesionProvider>
             </CourseProvider>
           </CategoryProvider>
         </UserProvider>

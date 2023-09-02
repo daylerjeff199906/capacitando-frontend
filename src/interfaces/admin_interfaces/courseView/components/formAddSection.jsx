@@ -2,15 +2,15 @@
 import * as React from "react";
 import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 
-import useContent from "../../../../hooks/useContent";
 import { useParams } from "react-router-dom";
+import useSesion from "../../../../hooks/useSesion";
 
 const FormAddSection = () => {
   const [idcurso, setIdCurso] = React.useState("");
   const [nombre_sesion, setNombreSesion] = React.useState("");
   const [descripcion, setDescripcionSesion] = React.useState("");
 
-  const { saveSesion, getSesions, sesionId, clearSesionId } = useContent();
+  const { saveSesion, getSesions, sesionId, clearSesionId } = useSesion();
   const id = useParams();
 
   React.useEffect(() => {

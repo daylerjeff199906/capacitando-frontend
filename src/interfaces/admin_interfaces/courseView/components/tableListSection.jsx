@@ -17,11 +17,11 @@ import {
 import { AddCircleOutline, EditOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import useContent from "../../../../hooks/useContent";
+import useSesion from "../../../../hooks/useSesion";
 
 const TableListSection = () => {
   const { getIdCurso, getSesions, sesions, editSesion, deleteSesion } =
-    useContent();
+    useSesion();
 
   const id = useParams();
   getIdCurso(id.id);
