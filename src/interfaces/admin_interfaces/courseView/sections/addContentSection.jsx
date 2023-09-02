@@ -12,24 +12,23 @@ import useContent from "../../../../hooks/useContent";
 const AddContentSection = () => {
   const [detailCourse, setDetailCourse] = React.useState({});
   const [sectionSelected, setSectionSelected] = React.useState({});
-  // const [selectedContentId, setSelectedContentId] = React.useState(null);
 
   const { getDetailCourse } = useCourse();
-  const { getSesions, sesions } = useContent();
+  const { getSesions } = useContent();
   const idCourse = useParams();
   const id = idCourse.id;
-  console.log(id);
 
   React.useEffect(() => {
     getDetailCourse(id).then((data) => {
       setDetailCourse(data);
     });
-    getSesions(id);
   }, [getDetailCourse, id, getSesions]);
 
   React.useEffect(() => {
-    setSectionSelected(sesions);
-  }, [sesions]);
+    getSesions(id).then((data) => {
+      setSectionSelected(data);
+    });
+  }, [getSesions, id]);
 
   return (
     <>

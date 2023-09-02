@@ -64,9 +64,7 @@ const TableListSection = ({ listSections }) => {
           <TableBody>
             {sections.length > 0 ? (
               sections.map((section, index) => (
-                <TableRow key={index}
-                hover
-                >
+                <TableRow key={index} hover>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell width={"100%"}>{section.nombre_sesion}</TableCell>
                   <TableCell>

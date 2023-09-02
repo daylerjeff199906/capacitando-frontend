@@ -7,7 +7,7 @@ const ContentContext = createContext();
 
 const ContentProvider = ({ children }) => {
   const [message, setMessage] = useState("");
-  const [sesions, setSesions] = useState([]);
+//   const [sesions, setSesions] = useState([]);
 
   const getSesions = async (id) => {
     try {
@@ -21,7 +21,7 @@ const ContentProvider = ({ children }) => {
         },
       };
       const { data } = await userAxios.get(`/sessions/list/${id}`, config);
-      setSesions(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -69,7 +69,7 @@ const ContentProvider = ({ children }) => {
         saveSesion,
         message,
         getSesions,
-        sesions,
+        // sesions,
       }}
     >
       {children}
