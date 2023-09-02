@@ -9,8 +9,8 @@ const ClassProvider = ({ children }) => {
   const [clases, setClases] = useState([]);
 
   const getIdSesion = (id) => {
-    setIdSesion(id);
-    console.log(idSesion)
+    // setIdSesion(id);
+    console.log(id)
   };
 
   const getClases = async (id) => {

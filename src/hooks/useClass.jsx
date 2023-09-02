@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import SesionContext from "../context/SesionProvider";
+import ClassContext from "../context/ClassProvider";
 
 const useClass = () => {
-  return useContext(SesionContext);
+  return useContext(ClassContext);
 };
 
 export default useClass;

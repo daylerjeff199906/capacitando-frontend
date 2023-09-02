@@ -18,10 +18,12 @@ import { AddCircleOutline, EditOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import useSesion from "../../../../hooks/useSesion";
+import useClass from "../../../../hooks/useClass";
 
 const TableListSection = () => {
   const { getIdCurso, getSesions, sesions, editSesion, deleteSesion } =
     useSesion();
+  const { getIdSesion } = useClass();
 
   const id = useParams();
   getIdCurso(id.id);
@@ -88,7 +90,10 @@ const TableListSection = () => {
                   <TableCell>
                     <Stack direction={"row"} spacing={1}>
                       <Tooltip title="Añadir contenido">
-                        <IconButton color="primary">
+                        <IconButton
+                          color="primary"
+                          onClick={() => getIdSesion(section.idsesion)}
+                        >
                           <AddCircleOutline />
                         </IconButton>
                       </Tooltip>
