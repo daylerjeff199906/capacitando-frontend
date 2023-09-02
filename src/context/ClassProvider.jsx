@@ -37,7 +37,7 @@ const ClassProvider = ({ children }) => {
     }
   };
 
-  const saveClase = async (clase) => {
+  const saveClass = async (clase) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -73,6 +73,10 @@ const ClassProvider = ({ children }) => {
     }
   };
 
+  const clearClases = () => {
+    setClases([]);
+  };
+
   return (
     <ClassContext.Provider
       value={{
@@ -81,7 +85,8 @@ const ClassProvider = ({ children }) => {
         clearIdSesion,
         getClases,
         clases,
-        saveClase,
+        saveClass,
+        clearClases,
       }}
     >
       {children}

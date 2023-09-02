@@ -1,5 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import * as React from "react";
-import { Typography, TextField, Box, Button, Divider } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Box,
+  Button,
+  Divider,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 
 import useClass from "../../../../hooks/useClass";
 import useSesion from "../../../../hooks/useSesion";
@@ -12,7 +21,7 @@ const FormAddClass = () => {
   const [url_video, setUrlVideo] = React.useState("");
 
   const { getDetailsSesion } = useSesion();
-  const { saveClass, idSesion } = useClass();
+  const { saveClass, idSesion, clearIdSesion } = useClass();
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -32,32 +41,53 @@ const FormAddClass = () => {
 
     saveClass({
       idsesion: idSesion,
-      idcontenido,
       titulo,
       url_video,
+      minutos_video: 2,
     });
     // setMessageContent(message);
-    clearTextField();
+    setTitulo("");
+    setUrlVideo("");
   };
 
   const clearTextField = () => {
     setTitulo("");
     setUrlVideo("");
+    clearIdSesion();
   };
+
+  React.useEffect(() => {
+    return () => {
+      clearTextField();
+    };
+  }, []);
 
   return (
     <>
       {detailSesion === undefined ? (
-        <Typography variant="h6" paddingY={1} fontFamily={"Poppins"}>
-          Selecciona una sesión
-        </Typography>
+        <Alert severity="warning">
+          <AlertTitle>Seleccionar sesión</AlertTitle>
+          <Typography variant="body2" fontFamily={"Poppins"}>
+            Selecciona en añadir contenido en la lista de sesiones
+          </Typography>
+        </Alert>
       ) : (
-        <Typography variant="h6" paddingY={1} fontFamily={"Poppins"}>
-          Sesión: {detailSesion.nombre_sesion}
-        </Typography>
+        <Box>
+          <Typography variant="h6" paddingTop={1} fontFamily={"Poppins"}>
+            Sesión: {detailSesion.nombre_sesion}
+          </Typography>
+          <Typography
+            variant="body1"
+            marginBottom={1}
+            color={"GrayText"}
+            fontFamily={"poppins"}
+          >
+            Añadir clase
+          </Typography>
+          <Divider sx={{ marginBottom: 2 }} />
+        </Box>
       )}
-      <Typography variant="body1" marginBottom={1} >Añadir clase</Typography>
-      <Divider sx={{ marginBottom: 2 }} />
+
       <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
         Título de la clase
       </Typography>
@@ -67,6 +97,7 @@ const FormAddClass = () => {
         fullWidth
         value={titulo}
         onChange={(e) => setTitulo(e.target.value)}
+        disabled={idSesion === "" || detailSesion === undefined ? true : false}
       />
       <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
         Url del video
@@ -77,6 +108,7 @@ const FormAddClass = () => {
         fullWidth
         value={url_video}
         onChange={(e) => setUrlVideo(e.target.value)}
+        disabled={idSesion === "" || detailSesion === undefined ? true : false}
       />
       <Box marginTop={2} display={"flex"} justifyContent="right">
         <Button variant="contained" component="label" onClick={handleSubmit}>

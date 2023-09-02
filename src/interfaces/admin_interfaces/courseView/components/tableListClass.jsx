@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Table,
   TableBody,
@@ -6,9 +7,14 @@ import {
   TableRow,
   TableCell,
   Typography,
+  IconButton,
+  Tooltip,
+  Stack,
 } from "@mui/material";
 import useClass from "../../../../hooks/useClass";
 import { useEffect } from "react";
+import { EditOutlined } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableListClass = () => {
   const { idSesion, getClases, clases } = useClass();
@@ -48,6 +54,26 @@ const TableListClass = () => {
                 <TableRow key={clase.idcontenido}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{clase.titulo}</TableCell>
+                  <TableCell>
+                    <Stack direction={"row"} spacing={1}>
+                      <Tooltip title="Editar sesión">
+                        <IconButton
+                          color="success"
+                          // onClick={() => editSesion(section)}
+                        >
+                          <EditOutlined />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Eliminar sesión">
+                        <IconButton
+                          color="error"
+                          // onClick={() => deleteSesion(section)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
