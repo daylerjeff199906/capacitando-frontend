@@ -11,7 +11,6 @@ import useContent from "../../../../hooks/useContent";
 
 const AddContentSection = () => {
   const [detailCourse, setDetailCourse] = React.useState({});
-  const [sectionSelected, setSectionSelected] = React.useState({});
 
   const { getDetailCourse } = useCourse();
   const { getSesions } = useContent();
@@ -19,16 +18,13 @@ const AddContentSection = () => {
   const id = idCourse.id;
 
   React.useEffect(() => {
-    getDetailCourse(id).then((data) => {
-      setDetailCourse(data);
-    });
-  }, [getDetailCourse, id, getSesions]);
-
-  React.useEffect(() => {
-    getSesions(id).then((data) => {
-      setSectionSelected(data);
-    });
-  }, [getSesions, id]);
+    const fetchData = async () => {
+      const courseData = await getDetailCourse(id);
+      setDetailCourse(courseData);
+      getSesions(id);
+    };
+    fetchData();
+  }, [id, getDetailCourse, getSesions]);
 
   return (
     <>
@@ -66,7 +62,7 @@ const AddContentSection = () => {
                 <FormAddSection />
               </Grid>
               <Grid item xs={12}>
-                <TableListSection listSections={sectionSelected} />
+                <TableListSection />
               </Grid>
             </Grid>
           </Box>

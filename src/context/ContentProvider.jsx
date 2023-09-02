@@ -7,7 +7,8 @@ const ContentContext = createContext();
 
 const ContentProvider = ({ children }) => {
   const [message, setMessage] = useState("");
-//   const [sesions, setSesions] = useState([]);
+  const [sesions, setSesions] = useState([]);
+  const [sesionId, setSesionId] = useState({});
 
   const getSesions = async (id) => {
     try {
@@ -21,7 +22,7 @@ const ContentProvider = ({ children }) => {
         },
       };
       const { data } = await userAxios.get(`/sessions/list/${id}`, config);
-      return data;
+      setSesions(data);
     } catch (error) {
       console.log(error);
     }
@@ -38,14 +39,12 @@ const ContentProvider = ({ children }) => {
     if (sesion.id) {
       try {
         const { data } = await userAxios.put(
-          `/sessions/update/${sesion.id}`,
+          `/sessions/update/${sesion.idsesion}`,
           sesion,
           config
         );
+
         setMessage(data);
-        // setSesions((prevState) =>
-        //   prevState.map((sesion) => (sesion.id === data.id ? data : sesion))
-        // );
       } catch (error) {
         console.log(error);
       }
@@ -56,11 +55,16 @@ const ContentProvider = ({ children }) => {
           sesion,
           config
         );
+        setSesions([...sesions, data]);
         setMessage(data.message);
       } catch (error) {
         console.log(error);
       }
     }
+  };
+
+  const editSesion = (sesion) => {
+    setSesionId(sesion);
   };
 
   return (
@@ -69,7 +73,9 @@ const ContentProvider = ({ children }) => {
         saveSesion,
         message,
         getSesions,
-        // sesions,
+        sesions,
+        sesionId,
+        editSesion,
       }}
     >
       {children}

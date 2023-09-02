@@ -18,12 +18,16 @@ import {
   EditOutlined,
 } from "@mui/icons-material";
 
-const TableListSection = ({ listSections }) => {
+import useContent from "../../../../hooks/useContent";
+
+const TableListSection = () => {
   const [sections, setSections] = React.useState([]);
+
+  const { sesions, editSesion } = useContent();
+
   React.useEffect(() => {
-    setSections(listSections);
-    console.log(listSections);
-  }, [listSections]);
+    setSections(sesions);
+  }, [sesions]);
 
   return (
     <>
@@ -75,7 +79,10 @@ const TableListSection = ({ listSections }) => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Editar sesión">
-                        <IconButton color="success">
+                        <IconButton
+                          color="success"
+                          onClick={() => editSesion(section)}
+                        >
                           <EditOutlined />
                         </IconButton>
                       </Tooltip>
