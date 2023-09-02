@@ -58,12 +58,12 @@ const TableListSection = () => {
               </TableCell>
               <TableCell>
                 <Typography fontWeight={700} fontFamily={"poppins"}>
-                  Nombres
+                  Sesiones
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography fontWeight={700} fontFamily={"poppins"}>
-                  Sesiones
+                  Acciones
                 </Typography>
               </TableCell>
             </TableRow>
