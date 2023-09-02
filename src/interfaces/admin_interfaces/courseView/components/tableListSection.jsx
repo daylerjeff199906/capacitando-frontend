@@ -12,24 +12,22 @@ import {
   Tooltip,
   Stack,
   IconButton,
+  Chip,
 } from "@mui/material";
-import {
-  AddCircleOutline,
-  DeleteOutline,
-  EditOutlined,
-} from "@mui/icons-material";
+import { AddCircleOutline, EditOutlined } from "@mui/icons-material";
 
 import useContent from "../../../../hooks/useContent";
 
 const TableListSection = () => {
-  const { getSesions, sesions, editSesion } = useContent();
+  const { getIdCurso, getSesions, sesions, editSesion, editStateSesion } =
+    useContent();
 
   const id = useParams();
-  const idcurso = id.id;
+  getIdCurso(id.id);
 
   React.useEffect(() => {
-    getSesions(idcurso);
-  }, [idcurso, getSesions]);
+    getSesions(id.id);
+  }, []);
 
   return (
     <>
@@ -62,6 +60,11 @@ const TableListSection = () => {
               </TableCell>
               <TableCell>
                 <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Estado
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
                   Sesiones
                 </Typography>
               </TableCell>
@@ -73,6 +76,19 @@ const TableListSection = () => {
                 <TableRow key={index} hover>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell width={"100%"}>{section.nombre_sesion}</TableCell>
+                  <TableCell width={"100%"}>
+                    {
+                      <Tooltip title="Cambiar estado">
+                        <Chip
+                          label={section.estado ? "Activo" : "Inactivo"}
+                          color={section.estado ? "success" : "error"}
+                          size="small"
+                          variant="outlined"
+                          onClick={() => editStateSesion(section)}
+                        />
+                      </Tooltip>
+                    }
+                  </TableCell>
                   <TableCell>
                     <Stack direction={"row"} spacing={1}>
                       <Tooltip title="Añadir contenido">
@@ -86,11 +102,6 @@ const TableListSection = () => {
                           onClick={() => editSesion(section)}
                         >
                           <EditOutlined />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Eliminar sesión">
-                        <IconButton color="error">
-                          <DeleteOutline />
                         </IconButton>
                       </Tooltip>
                     </Stack>

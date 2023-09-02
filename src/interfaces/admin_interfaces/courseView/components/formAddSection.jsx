@@ -1,13 +1,6 @@
 /* eslint-disable react/prop-types */
 import * as React from "react";
-import {
-  Typography,
-  TextField,
-  Box,
-  Button,
-  Snackbar,
-  Divider,
-} from "@mui/material";
+import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 
 import useContent from "../../../../hooks/useContent";
 import { useParams } from "react-router-dom";
@@ -17,10 +10,9 @@ const FormAddSection = () => {
   const [nombre_sesion, setNombreSesion] = React.useState("");
   const [descripcion, setDescripcionSesion] = React.useState("");
 
-  const { saveSesion, message, getSesions, sesionId, clearSesionId } =
-    useContent();
+  const { saveSesion, getSesions, sesionId, clearSesionId } = useContent();
   const id = useParams();
-  
+
   React.useEffect(() => {
     setIdCurso(id.id);
   }, [id]);
@@ -106,12 +98,12 @@ const FormAddSection = () => {
           Cancelar
         </Button>
       </Box>
-      <Snackbar
+      {/* <Snackbar
         open={message ? true : false}
         message={message}
         autoHideDuration={3000}
         // onClose={() => setMessageContent("")}
-      />
+      /> */}
     </>
   );
 };

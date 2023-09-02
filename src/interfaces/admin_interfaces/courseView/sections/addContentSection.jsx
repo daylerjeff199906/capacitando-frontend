@@ -49,7 +49,6 @@ const AddContentSection = () => {
       <Grid container spacing={4} sx={{ paddingRight: 4 }}>
         <Grid item xs={12} md={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
-           
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormAddSection />
