@@ -36,7 +36,7 @@ const ContentProvider = ({ children }) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if (sesion.id) {
+    if (sesion.idsesion) {
       try {
         const { data } = await userAxios.put(
           `/sessions/update/${sesion.idsesion}`,
@@ -67,6 +67,10 @@ const ContentProvider = ({ children }) => {
     setSesionId(sesion);
   };
 
+  const clearSesionId = () => {
+    setSesionId({});
+  };
+
   return (
     <ContentContext.Provider
       value={{
@@ -75,6 +79,7 @@ const ContentProvider = ({ children }) => {
         getSesions,
         sesions,
         sesionId,
+        clearSesionId,
         editSesion,
       }}
     >

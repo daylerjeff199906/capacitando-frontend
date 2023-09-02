@@ -12,21 +12,42 @@ const FormAddSection = () => {
 
   const [messageContent, setMessageContent] = React.useState("");
 
-  const { saveSesion, message, getSesions } = useContent();
+  const { saveSesion, message, getSesions, sesionId, clearSesionId } =
+    useContent();
   const id = useParams();
   React.useEffect(() => {
     setIdCurso(id.id);
   }, [id]);
 
+  React.useEffect(() => {
+    if (sesionId?.idsesion) {
+      setNombreSesion(sesionId.nombre_sesion);
+      setDescripcionSesion(sesionId.descripcion);
+    }
+  }, [sesionId]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const sesion = {
-      idcurso,
-      nombre_sesion,
-      descripcion,
-    };
-    saveSesion(sesion);
+    if ([nombre_sesion].includes("")) {
+      setMessageContent("Todos los campos son obligatorios");
+      return;
+    }
+
+    if (sesionId?.idsesion) {
+      saveSesion({
+        idsesion: sesionId.idsesion,
+        nombre_sesion,
+        descripcion,
+      });
+    } else {
+      saveSesion({
+        idcurso,
+        nombre_sesion,
+        descripcion,
+      });
+    }
+
     setMessageContent(message);
     getSesions(idcurso);
     clearTextField();
@@ -35,6 +56,7 @@ const FormAddSection = () => {
   const clearTextField = () => {
     setNombreSesion("");
     setDescripcionSesion("");
+    clearSesionId();
   };
 
   return (

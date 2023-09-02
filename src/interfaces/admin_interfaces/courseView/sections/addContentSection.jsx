@@ -7,24 +7,20 @@ import FormAddClass from "../components/formAddClass";
 import TableListClass from "../components/tableListClass";
 
 import useCourse from "../../../../hooks/useCourse";
-import useContent from "../../../../hooks/useContent";
-
 const AddContentSection = () => {
   const [detailCourse, setDetailCourse] = React.useState({});
 
   const { getDetailCourse } = useCourse();
-  const { getSesions } = useContent();
   const idCourse = useParams();
-  const id = idCourse.id;
+  const idcurso = idCourse.id;
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const courseData = await getDetailCourse(id);
+      const courseData = await getDetailCourse(idcurso);
       setDetailCourse(courseData);
-      getSesions(id);
     };
     fetchData();
-  }, [id, getDetailCourse, getSesions]);
+  }, [idcurso, getDetailCourse]);
 
   return (
     <>
