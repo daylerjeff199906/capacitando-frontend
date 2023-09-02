@@ -42,7 +42,20 @@ const TableListClass = () => {
               <TableCell>Acciones</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {clases.length > 0 ? (
+              clases.map((clase, index) => (
+                <TableRow key={clase.idcontenido}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{clase.titulo}</TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3}>No hay clases</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </>

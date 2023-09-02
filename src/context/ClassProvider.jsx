@@ -11,7 +11,7 @@ const ClassProvider = ({ children }) => {
 
   const getIdSesion = (id) => {
     setIdSesion(id);
-    console.log(idSesion)
+    console.log(idSesion);
   };
 
   const getClases = async (id) => {
@@ -28,6 +28,7 @@ const ClassProvider = ({ children }) => {
       const { data } = await userAxios.get(`/contents/list/${id}`, config);
       setClases(data);
     } catch (error) {
+      setClases([]);
       console.log(error);
     }
   };
