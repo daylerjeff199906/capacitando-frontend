@@ -14,6 +14,10 @@ const ClassProvider = ({ children }) => {
     console.log(idSesion);
   };
 
+  const clearIdSesion = () => {
+    setIdSesion("");
+  };
+
   const getClases = async (id) => {
     try {
       const token = localStorage.getItem("token");
@@ -33,13 +37,51 @@ const ClassProvider = ({ children }) => {
     }
   };
 
+  const saveClase = async (clase) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    if (clase.idclase) {
+      try {
+        const { data } = await userAxios.patch(
+          `/contents/update/${clase.idclase}`,
+          clase,
+          config
+        );
+        setClases([...clases, data]);
+        getClases(idSesion);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await userAxios.post(
+          "/contents/create",
+          clase,
+          config
+        );
+        setClases([...clases, data]);
+
+        getClases(idSesion);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <ClassContext.Provider
       value={{
         getIdSesion,
         idSesion,
+        clearIdSesion,
         getClases,
         clases,
+        saveClase,
       }}
     >
       {children}

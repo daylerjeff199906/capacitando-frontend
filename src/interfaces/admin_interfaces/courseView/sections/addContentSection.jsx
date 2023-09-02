@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useParams } from "react-router-dom";
-import { Box, Divider, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import FormAddSection from "../components/formAddSection";
 import TableListSection from "../components/tableListSection";
 import FormAddClass from "../components/formAddClass";
@@ -61,10 +61,6 @@ const AddContentSection = () => {
         </Grid>
         <Grid item xs={12} md={6}>
           <Box padding={3} backgroundColor="#ffffff" borderRadius={4}>
-            <Typography variant="h6" paddingY={2}>
-              Añadir contenido
-            </Typography>
-            <Divider sx={{ marginBottom: 2 }} />
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormAddClass />

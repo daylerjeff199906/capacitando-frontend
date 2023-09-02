@@ -33,6 +33,25 @@ const SesionProvider = ({ children }) => {
     }
   };
 
+  const getDetailsSesion = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get(`/sessions/detail/${id}`, config);
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const saveSesion = async (sesion) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -106,6 +125,7 @@ const SesionProvider = ({ children }) => {
         saveSesion,
         message,
         getSesions,
+        getDetailsSesion,
         sesions,
         sesionId,
         clearSesionId,
