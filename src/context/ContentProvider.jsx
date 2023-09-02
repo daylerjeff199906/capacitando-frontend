@@ -43,7 +43,6 @@ const ContentProvider = ({ children }) => {
           sesion,
           config
         );
-
         setMessage(data);
       } catch (error) {
         console.log(error);
@@ -58,6 +57,7 @@ const ContentProvider = ({ children }) => {
         setSesions([...sesions, data]);
         setMessage(data.message);
       } catch (error) {
+        setMessage(error.response.data.message);
         console.log(error);
       }
     }
