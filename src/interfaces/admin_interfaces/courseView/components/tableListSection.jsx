@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+import * as React from "react";
+import { useParams } from "react-router-dom";
 import {
   Table,
   TableBody,
@@ -6,24 +9,100 @@ import {
   TableRow,
   TableCell,
   Typography,
+  Tooltip,
+  Stack,
+  IconButton,
 } from "@mui/material";
+import {
+  AddCircleOutline,
+  DeleteOutline,
+  EditOutlined,
+} from "@mui/icons-material";
+
+import useContent from "../../../../hooks/useContent";
 
 const TableListSection = () => {
+  const { getSesions, sesions, editSesion } = useContent();
+
+  const id = useParams();
+  const idcurso = id.id;
+
+  React.useEffect(() => {
+    getSesions(idcurso);
+  }, [idcurso, getSesions]);
+
   return (
     <>
-      <Typography variant="h6"  fontFamily={"Poppins"}>
+      <Typography variant="h6" fontFamily={"Poppins"}>
         Lista de sesiones
       </Typography>
-      <TableContainer sx={{ maxHeight: 300 }}>
+
+      {sesions.length > 0 ? (
+        <Typography variant="body1" fontFamily={"Poppins"}>
+          {sesions.length} Sesiones
+        </Typography>
+      ) : (
+        <Typography variant="body1" fontFamily={"Poppins"}>
+          No hay sesiones
+        </Typography>
+      )}
+      <TableContainer sx={{ maxHeight: 280, minHeight: 280 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  #
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Nombres
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Sesiones
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {sesions.length > 0 ? (
+              sesions.map((section, index) => (
+                <TableRow key={index} hover>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell width={"100%"}>{section.nombre_sesion}</TableCell>
+                  <TableCell>
+                    <Stack direction={"row"} spacing={1}>
+                      <Tooltip title="Añadir contenido">
+                        <IconButton color="primary">
+                          <AddCircleOutline />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Editar sesión">
+                        <IconButton
+                          color="success"
+                          onClick={() => editSesion(section)}
+                        >
+                          <EditOutlined />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Eliminar sesión">
+                        <IconButton color="error">
+                          <DeleteOutline />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3}>No hay sesiones</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </>

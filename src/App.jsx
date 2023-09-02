@@ -20,6 +20,7 @@ import { CourseProvider } from "./context/CourseProvider";
 import { CategoryProvider } from "./context/CategoryProvider";
 import ProtectedRouteUser from "./layouts/protectedRouteUser";
 import IndexCategory from "./interfaces/admin_interfaces/category/indexCategory";
+import { ContentProvider } from "./context/ContentProvider";
 
 function App() {
   return (
@@ -28,24 +29,26 @@ function App() {
         <UserProvider>
           <CategoryProvider>
             <CourseProvider>
-              <Routes>
-                <Route path="/" element={<LoginIndex />} />
-                <Route path="/dashboard/*" element={<ProtectedRoute />}>
-                  <Route index element={<Dashboard />} />
-                  <Route path="users/add" element={<AddUserSection />} />
-                  <Route path="users" element={<IndexUser />} />
-                  <Route path="category" element={<IndexCategory />} />
-                  <Route path="courses" element={<IndexCourse />} />
-                  <Route path="courses/add" element={<AddCourseSection />} />
-                  <Route path="courses/:id" element={<AddContentSection />} />
-                </Route>
+              <ContentProvider>
+                <Routes>
+                  <Route path="/" element={<LoginIndex />} />
+                  <Route path="/dashboard/*" element={<ProtectedRoute />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="users/add" element={<AddUserSection />} />
+                    <Route path="users" element={<IndexUser />} />
+                    <Route path="category" element={<IndexCategory />} />
+                    <Route path="courses" element={<IndexCourse />} />
+                    <Route path="courses/add" element={<AddCourseSection />} />
+                    <Route path="courses/:id" element={<AddContentSection />} />
+                  </Route>
 
-                <Route path="/home/*" element={<ProtectedRouteUser />}>
-                  <Route index element={<IndexStudent />} />
-                  <Route path="miscursos" element={<CourseList />} />
-                  <Route path="miscursos/:id" element={<CourseDetails />} />
-                </Route>
-              </Routes>
+                  <Route path="/home/*" element={<ProtectedRouteUser />}>
+                    <Route index element={<IndexStudent />} />
+                    <Route path="miscursos" element={<CourseList />} />
+                    <Route path="miscursos/:id" element={<CourseDetails />} />
+                  </Route>
+                </Routes>
+              </ContentProvider>
             </CourseProvider>
           </CategoryProvider>
         </UserProvider>

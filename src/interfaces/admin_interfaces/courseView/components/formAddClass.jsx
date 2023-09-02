@@ -11,16 +11,6 @@ const FormAddClass = () => {
         fullWidth
       />
       <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
-        Descripción de sesión
-      </Typography>
-      <TextField
-        size="small"
-        placeholder="Opcional ..."
-        fullWidth
-        multiline
-        rows={4}
-      />
-      <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
         Url del video
       </Typography>
       <TextField
