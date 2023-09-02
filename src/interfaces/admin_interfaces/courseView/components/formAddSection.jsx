@@ -20,6 +20,7 @@ const FormAddSection = () => {
   const { saveSesion, message, getSesions, sesionId, clearSesionId } =
     useContent();
   const id = useParams();
+  
   React.useEffect(() => {
     setIdCurso(id.id);
   }, [id]);
@@ -52,7 +53,6 @@ const FormAddSection = () => {
         descripcion,
       });
     }
-
     // setMessageContent(message);
     getSesions(idcurso);
     clearTextField();
