@@ -7,6 +7,7 @@ import FormAddClass from "../components/formAddClass";
 import TableListClass from "../components/tableListClass";
 
 import useCourse from "../../../../hooks/useCourse";
+import useContent from "../../../../hooks/useContent";
 
 const AddContentSection = () => {
   const [detailCourse, setDetailCourse] = React.useState({});
@@ -14,15 +15,21 @@ const AddContentSection = () => {
   // const [selectedContentId, setSelectedContentId] = React.useState(null);
 
   const { getDetailCourse } = useCourse();
+  const { getSesions, sesions } = useContent();
   const idCourse = useParams();
   const id = idCourse.id;
+  console.log(id);
 
   React.useEffect(() => {
     getDetailCourse(id).then((data) => {
       setDetailCourse(data);
-      setSectionSelected(data?.sesiones);
     });
-  }, [getDetailCourse, id]);
+    getSesions(id);
+  }, [getDetailCourse, id, getSesions]);
+
+  React.useEffect(() => {
+    setSectionSelected(sesions);
+  }, [sesions]);
 
   return (
     <>
