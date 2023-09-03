@@ -12,104 +12,105 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
-import PostAddOutlinedIcon from "@mui/icons-material/PostAddOutlined";
 import CategoryIcon from "@mui/icons-material/Category";
 
 const Sidebar = () => {
   return (
-    <Paper sx={{ height: "100vh", position: "fixed", paddingRight: "24px" }}>
-      <Box>
-        <MenuList>
-          <Link
-            to="/dashboard"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
+    <>
+      <Paper sx={{ height: "100vh" }}>
+        <Box paddingTop={10}>
+          <MenuList>
+            <Link
+              to="/dashboard"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <DashboardIcon />
+                </ListItemIcon>
+                <ListItemText primary="Dashboard" />
+              </MenuItem>
+            </Link>
             <MenuItem>
-              <ListItemIcon>
-                <DashboardIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <Typography fontWeight={700} color={"gray"}>
+                Cursos
+              </Typography>
             </MenuItem>
-          </Link>
-          <MenuItem>
-            <Typography fontWeight={700} color={"gray"}>
-              Cursos
-            </Typography>
-          </MenuItem>
-          <Link
-            to="/dashboard/courses"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
+            <Link
+              to="/dashboard/courses"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <FormatListBulletedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Lista de cursos" />
+              </MenuItem>
+            </Link>
+            <Link
+              to="/dashboard/category"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <CategoryIcon />
+                </ListItemIcon>
+                <ListItemText primary="Categorias" />
+              </MenuItem>
+            </Link>
+            <Link
+              to="/dashboard/courses/add"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <PlaylistAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Añadir curso" />
+              </MenuItem>
+            </Link>
+            {/* <Link
+              to="/dashboard/courses/1"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <PostAddOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Añadir contendio" />
+              </MenuItem>
+            </Link> */}
             <MenuItem>
-              <ListItemIcon>
-                <FormatListBulletedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Lista de cursos" />
+              <Typography fontWeight={700} color={"gray"}>
+                Usuarios
+              </Typography>
             </MenuItem>
-          </Link>
-          <Link
-            to="/dashboard/category"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
-            <MenuItem>
-              <ListItemIcon>
-                <CategoryIcon />
-              </ListItemIcon>
-              <ListItemText primary="Categorias" />
-            </MenuItem>
-          </Link>
-          <Link
-            to="/dashboard/courses/add"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
-            <MenuItem>
-              <ListItemIcon>
-                <PlaylistAddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Añadir curso" />
-            </MenuItem>
-          </Link>
-          <Link
-            to="/dashboard/courses/1"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
-            <MenuItem>
-              <ListItemIcon>
-                <PostAddOutlinedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Añadir contendio" />
-            </MenuItem>
-          </Link>
-          <MenuItem>
-            <Typography fontWeight={700} color={"gray"}>
-              Usuarios
-            </Typography>
-          </MenuItem>
-          <Link
-            to="/dashboard/users"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
-            <MenuItem>
-              <ListItemIcon>
-                <FormatListBulletedIcon />
-              </ListItemIcon>
-              <ListItemText primary="Lista de usuarios" />
-            </MenuItem>
-          </Link>
-          <Link
-            to="/dashboard/users/add"
-            style={{ textDecoration: "none", color: "gray" }}
-          >
-            <MenuItem>
-              <ListItemIcon>
-                <PersonAddIcon />
-              </ListItemIcon>
-              <ListItemText primary="Agregar usuario" />
-            </MenuItem>
-          </Link>
-        </MenuList>
-      </Box>
-    </Paper>
+            <Link
+              to="/dashboard/users"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <FormatListBulletedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Lista de usuarios" />
+              </MenuItem>
+            </Link>
+            <Link
+              to="/dashboard/users/add"
+              style={{ textDecoration: "none", color: "gray" }}
+            >
+              <MenuItem>
+                <ListItemIcon>
+                  <PersonAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Agregar usuario" />
+              </MenuItem>
+            </Link>
+          </MenuList>
+        </Box>
+      </Paper>
+    </>
   );
 };
 

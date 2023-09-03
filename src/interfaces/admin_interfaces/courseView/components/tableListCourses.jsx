@@ -18,7 +18,7 @@ import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import useCourse from "../../../../hooks/useCourse";
 import { Link } from "react-router-dom";
 import ModalDetailCourse from "./modalDetailCourse";
-import { RemoveRedEyeOutlined } from "@mui/icons-material";
+import { PostAddRounded, RemoveRedEyeOutlined } from "@mui/icons-material";
 
 const columns = [
   { id: "name", label: "Nombre" },
@@ -111,6 +111,18 @@ const TableListCourses = () => {
                     align="center"
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
+                    <Tooltip title="Agregar contenido">
+                      <Chip
+                        icon={<PostAddRounded />}
+                        label="Agregar"
+                        color="info"
+                        size="small"
+                        sx={{ marginRight: 1 }}
+                        component={Link}
+                        to={`/dashboard/courses/${course.idcurso}`}
+                        // onClick={() => editCourse(course)}
+                      />
+                    </Tooltip>
                     <Chip
                       icon={<EditNoteRoundedIcon />}
                       label="Editar"

@@ -7,10 +7,6 @@ import NavBar from "../components/NavBar";
 const ProtectedRouteUser = () => {
   const { auth } = useAuth();
 
-  // if (loading) {
-  //   return "Cargando...";
-  // }
-
   return (
     <>
       <NavBar />
