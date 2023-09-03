@@ -78,18 +78,16 @@ const TableListCategorys = () => {
                   <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     <TableCell align="left">{category.categoria}</TableCell>
                     <TableCell align="left">
-                      <Tooltip title={"Cambiar de estado"}>
-                        <Chip
-                          label={getEstadoLabel(category.estado)}
-                          color={
-                            getEstadoLabel(category.estado) === "Activo"
-                              ? "success"
-                              : "error"
-                          }
-                          size="small"
-                          variant="outlined"
-                        />
-                      </Tooltip>
+                      <Chip
+                        label={getEstadoLabel(category.estado)}
+                        color={
+                          getEstadoLabel(category.estado) === "Activo"
+                            ? "success"
+                            : "error"
+                        }
+                        size="small"
+                        variant="outlined"
+                      />
                     </TableCell>
                     <TableCell
                       align="center"
