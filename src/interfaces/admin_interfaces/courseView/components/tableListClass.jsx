@@ -17,7 +17,7 @@ import { EditOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableListClass = () => {
-  const { idSesion, getClases, clases } = useClass();
+  const { idSesion, getClases, clases, editClass } = useClass();
 
   useEffect(() => {
     if (idSesion !== "") {
@@ -59,7 +59,7 @@ const TableListClass = () => {
                       <Tooltip title="Editar sesión">
                         <IconButton
                           color="success"
-                          // onClick={() => editSesion(section)}
+                          onClick={() => editClass(clase)}
                         >
                           <EditOutlined />
                         </IconButton>

@@ -14,14 +14,21 @@ import useClass from "../../../../hooks/useClass";
 import useSesion from "../../../../hooks/useSesion";
 
 const FormAddClass = () => {
-  // const [idcontenido, setIdcontenido] = React.useState("");
+  const [idcontenido, setIdcontenido] = React.useState("");
   const [detailSesion, setDetailSesion] = React.useState({});
 
   const [titulo, setTitulo] = React.useState("");
   const [url_video, setUrlVideo] = React.useState("");
 
   const { getDetailsSesion } = useSesion();
-  const { saveClass, idSesion, clearIdSesion, clearClases } = useClass();
+  const {
+    saveClass,
+    idSesion,
+    clearIdSesion,
+    clearClases,
+    claseId,
+    clearClaseId,
+  } = useClass();
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +38,17 @@ const FormAddClass = () => {
     fetchData();
   }, [idSesion, getDetailsSesion]);
 
+  React.useEffect(() => {
+    setIdcontenido(claseId?.idcontenido);
+  }, [claseId]);
+
+  React.useEffect(() => {
+    if (claseId?.idcontenido) {
+      setTitulo(claseId.titulo);
+      setUrlVideo(claseId.url_video);
+    }
+  }, [claseId]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -39,12 +57,23 @@ const FormAddClass = () => {
       return;
     }
 
-    saveClass({
-      idsesion: idSesion,
-      titulo,
-      url_video,
-      minutos_video: 2,
-    });
+    if (claseId?.idcontenido) {
+      saveClass({
+        idcontenido: claseId.idcontenido,
+        idsesion: idSesion,
+        titulo,
+        url_video,
+        minutos_video: 2,
+      });
+    } else {
+      saveClass({
+        idsesion: idSesion,
+        titulo,
+        url_video,
+        minutos_video: 2,
+      });
+    }
+
     // setMessageContent(message);
     setTitulo("");
     setUrlVideo("");
@@ -59,12 +88,14 @@ const FormAddClass = () => {
   const handlecancel = () => {
     clearTextField();
     clearClases();
+    clearClaseId();
   };
 
   React.useEffect(() => {
     return () => {
       clearTextField();
       clearClases();
+      clearClaseId();
     };
   }, []);
 
@@ -88,7 +119,7 @@ const FormAddClass = () => {
             color={"GrayText"}
             fontFamily={"poppins"}
           >
-            Añadir clase
+            {idcontenido !== "" ? "Editar clase" : "Añadir clase"}
           </Typography>
           <Divider sx={{ marginBottom: 2 }} />
         </Box>
@@ -125,7 +156,7 @@ const FormAddClass = () => {
             idSesion === "" || detailSesion === undefined ? true : false
           }
         >
-          Añadir clase
+          {idcontenido !== "" ? "Editar" : "Añadir"}
         </Button>
         <Button
           variant="contained"

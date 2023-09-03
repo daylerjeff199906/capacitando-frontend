@@ -76,6 +76,11 @@ const ClassProvider = ({ children }) => {
 
   const editClass = (clase) => {
     setClaseId(clase);
+    console.log(claseId);
+  };
+
+  const clearClaseId = () => {
+    setClaseId({});
   };
 
   const clearClases = () => {
@@ -93,6 +98,7 @@ const ClassProvider = ({ children }) => {
         saveClass,
         editClass,
         claseId,
+        clearClaseId,
         clearClases,
       }}
     >
