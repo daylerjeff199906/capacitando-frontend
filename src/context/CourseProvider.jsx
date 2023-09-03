@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import userAxios from "../config/axios";
 
 const CourseContext = createContext();
@@ -8,27 +8,23 @@ const CourseProvider = ({ children }) => {
   const [courses, setCourses] = useState([]);
   const [courseId, setCourseId] = useState({});
 
-  useEffect(() => {
-    const getCourses = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
+  const getCourses = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-        const config = {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await userAxios.get("/courses/list", config);
-        console.log(data);
-        setCourses(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCourses();
-  }, []);
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get("/courses/list", config);
+      setCourses(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const getDetailCourse = async (id) => {
     try {
@@ -56,18 +52,15 @@ const CourseProvider = ({ children }) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if (course.id) {
+    if (course.idcurso) {
       try {
         const { data } = await userAxios.patch(
-          `/courses/update/${course.id}`,
+          `/courses/update/${course.idcurso}`,
           course,
           config
         );
-
-        const newCourses = courses.map((courseState) =>
-          courseState.id === course.id ? data : courseState
-        );
-        setCourses(newCourses);
+        setCourses(data);
+        getCourses();
       } catch (error) {
         console.log(error);
       }
@@ -79,6 +72,7 @@ const CourseProvider = ({ children }) => {
           config
         );
         setCourses([...courses, data]);
+        getCourses();
       } catch (error) {
         console.log(error);
       }
@@ -104,11 +98,8 @@ const CourseProvider = ({ children }) => {
         config
       );
       console.log(data);
-      setCourses((prevCourses) =>
-        prevCourses.map((course) =>
-          course.idcurso === data.id ? data : course
-        )
-      );
+      setCourses([...courses, data]);
+      getCourses();
     } catch (error) {
       console.log(error);
     }
@@ -158,9 +149,14 @@ const CourseProvider = ({ children }) => {
     setCourseId({});
   };
 
+  // const clearCourses = () => {
+  //   setCourses([]);
+  // };
+
   return (
     <CourseContext.Provider
       value={{
+        getCourses,
         courses,
         courseId,
         editCourse,
