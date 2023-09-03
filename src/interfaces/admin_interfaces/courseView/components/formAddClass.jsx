@@ -14,14 +14,14 @@ import useClass from "../../../../hooks/useClass";
 import useSesion from "../../../../hooks/useSesion";
 
 const FormAddClass = () => {
-  const [idcontenido, setIdcontenido] = React.useState("");
+  // const [idcontenido, setIdcontenido] = React.useState("");
   const [detailSesion, setDetailSesion] = React.useState({});
 
   const [titulo, setTitulo] = React.useState("");
   const [url_video, setUrlVideo] = React.useState("");
 
   const { getDetailsSesion } = useSesion();
-  const { saveClass, idSesion, clearIdSesion } = useClass();
+  const { saveClass, idSesion, clearIdSesion, clearClases } = useClass();
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -56,9 +56,15 @@ const FormAddClass = () => {
     clearIdSesion();
   };
 
+  const handlecancel = () => {
+    clearTextField();
+    clearClases();
+  };
+
   React.useEffect(() => {
     return () => {
       clearTextField();
+      clearClases();
     };
   }, []);
 
@@ -111,15 +117,25 @@ const FormAddClass = () => {
         disabled={idSesion === "" || detailSesion === undefined ? true : false}
       />
       <Box marginTop={2} display={"flex"} justifyContent="right">
-        <Button variant="contained" component="label" onClick={handleSubmit}>
+        <Button
+          variant="contained"
+          component="label"
+          onClick={handleSubmit}
+          disabled={
+            idSesion === "" || detailSesion === undefined ? true : false
+          }
+        >
           Añadir clase
         </Button>
         <Button
           variant="contained"
           component="label"
-          onClick={clearTextField}
+          onClick={handlecancel}
           color="error"
           sx={{ marginLeft: 2 }}
+          disabled={
+            idSesion === "" || detailSesion === undefined ? true : false
+          }
         >
           Cancelar
         </Button>

@@ -8,6 +8,7 @@ const ClassContext = createContext();
 const ClassProvider = ({ children }) => {
   const [idSesion, setIdSesion] = useState("");
   const [clases, setClases] = useState([]);
+  const [claseId, setClaseId] = useState({});
 
   const getIdSesion = (id) => {
     setIdSesion(id);
@@ -73,6 +74,10 @@ const ClassProvider = ({ children }) => {
     }
   };
 
+  const editClass = (clase) => {
+    setClaseId(clase);
+  };
+
   const clearClases = () => {
     setClases([]);
   };
@@ -86,6 +91,8 @@ const ClassProvider = ({ children }) => {
         getClases,
         clases,
         saveClass,
+        editClass,
+        claseId,
         clearClases,
       }}
     >
