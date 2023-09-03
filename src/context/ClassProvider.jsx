@@ -45,10 +45,10 @@ const ClassProvider = ({ children }) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if (clase.idclase) {
+    if (clase.idcontenido) {
       try {
         const { data } = await userAxios.patch(
-          `/contents/update/${clase.idclase}`,
+          `/contents/update/${clase.idcontenido}`,
           clase,
           config
         );
@@ -65,7 +65,6 @@ const ClassProvider = ({ children }) => {
           config
         );
         setClases([...clases, data]);
-
         getClases(idSesion);
       } catch (error) {
         console.log(error);
