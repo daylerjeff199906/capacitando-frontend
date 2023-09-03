@@ -23,13 +23,17 @@ const FormAddCourse = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   console.log(selectedFile);
 
-  const { categorys } = useCategory();
+  const { getCategory, categorys } = useCategory();
   const { saveCourses, courseId, clearCourseId } = useCourse();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [url_video_intro, setUrl_video_intro] = useState("");
   const [idcategoria, setIdcategoria] = useState("");
+
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   useEffect(() => {
     if (courseId?.titulo) {
