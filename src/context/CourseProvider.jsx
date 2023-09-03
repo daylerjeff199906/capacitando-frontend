@@ -60,11 +60,8 @@ const CourseProvider = ({ children }) => {
           course,
           config
         );
-
-        const newCourses = courses.map((courseState) =>
-          courseState.id === course.id ? data : courseState
-        );
-        setCourses(newCourses);
+        setCourses(data);
+        getCourses();
       } catch (error) {
         console.log(error);
       }
@@ -76,6 +73,7 @@ const CourseProvider = ({ children }) => {
           config
         );
         setCourses([...courses, data]);
+        getCourses();
       } catch (error) {
         console.log(error);
       }
