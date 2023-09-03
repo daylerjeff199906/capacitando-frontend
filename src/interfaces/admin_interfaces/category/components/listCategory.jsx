@@ -71,48 +71,50 @@ const TableListCategorys = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categorys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((category, index) => (
-                <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                  <TableCell align="left">{category.categoria}</TableCell>
-                  <TableCell align="left">
-                    <Tooltip title={"Cambiar de estado"}>
+            {Array.isArray(categorys) &&
+              categorys
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((category, index) => (
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                    <TableCell align="left">{category.categoria}</TableCell>
+                    <TableCell align="left">
+                      <Tooltip title={"Cambiar de estado"}>
+                        <Chip
+                          label={getEstadoLabel(category.estado)}
+                          color={
+                            getEstadoLabel(category.estado) === "Activo"
+                              ? "success"
+                              : "error"
+                          }
+                          size="small"
+                          variant="outlined"
+                        />
+                      </Tooltip>
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{ display: "flex", justifyContent: "center" }}
+                    >
                       <Chip
-                        label={getEstadoLabel(category.estado)}
-                        color={
-                          getEstadoLabel(category.estado) === "Activo"
-                            ? "success"
-                            : "error"
-                        }
+                        icon={<EditNoteRoundedIcon />}
+                        label="Editar"
+                        to={`/dashboard/users/add`}
+                        onClick={() => editCategory(category)}
+                        color="primary"
                         size="small"
-                        variant="outlined"
+                        sx={{ marginLeft: 1 }}
                       />
-                    </Tooltip>
-                  </TableCell>
-                  <TableCell
-                    align="center"
-                    sx={{ display: "flex", justifyContent: "center" }}
-                  >
-                    <Chip
-                      icon={<EditNoteRoundedIcon />}
-                      label="Editar"
-                      to={`/dashboard/users/add`}
-                      onClick={() => editCategory(category)}
-                      color="primary"
-                      size="small"
-                      sx={{ marginLeft: 1 }}
-                    />
-                    <Chip
-                      icon={<DeleteOutlineOutlined />}
-                      label="Eliminar"
-                      onClick={() => editStateCategory(category)}
-                      color="error"
-                      size="small"
-                      sx={{ marginLeft: 1 }}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
+                      <Chip
+                        icon={<DeleteOutlineOutlined />}
+                        label="Eliminar"
+                        onClick={() => editStateCategory(category)}
+                        color="error"
+                        size="small"
+                        sx={{ marginLeft: 1 }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </TableContainer>

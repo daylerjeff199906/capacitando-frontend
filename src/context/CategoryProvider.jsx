@@ -20,7 +20,6 @@ const CategoryProvider = ({ children }) => {
         },
       };
       const { data } = await userAxios.get("/categories/list", config);
-      console.log(data);
       setCategorys(data);
     } catch (error) {
       console.log(error);
