@@ -9,6 +9,7 @@ import {
   Alert,
   AlertTitle,
   Chip,
+  Tooltip,
 } from "@mui/material";
 
 import useClass from "../../../../hooks/useClass";
@@ -31,6 +32,15 @@ const FormAddClass = () => {
     claseId,
     clearClaseId,
   } = useClass();
+
+  React.useEffect(() => {
+    return () => {
+      clearTextField();
+      clearClases();
+      clearClaseId();
+      setIdcontenido("");
+    };
+  }, []);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -81,22 +91,17 @@ const FormAddClass = () => {
   const clearTextField = () => {
     setTitulo("");
     setUrlVideo("");
-    clearIdSesion();
+    // clearIdSesion();
+    clearClaseId();
+    setIdcontenido("");
   };
 
   const handlecancel = () => {
     clearTextField();
     clearClaseId();
     clearClases();
+    clearIdSesion();
   };
-
-  React.useEffect(() => {
-    return () => {
-      clearTextField();
-      clearClases();
-      clearClaseId();
-    };
-  }, []);
 
   return (
     <>
@@ -129,14 +134,17 @@ const FormAddClass = () => {
           Título de la clase
         </Typography>
         {idcontenido !== "" ? (
-          <Chip
-            label="Limpiar"
-            color="success"
-            size="small"
-            variant="outlined"
-            sx={{ marginBottom: 2 }}
-            icon={<Delete/>}
-          />
+          <Tooltip title="Limpiar campos">
+            <Chip
+              label="Limpiar"
+              color="success"
+              size="small"
+              variant="outlined"
+              sx={{ marginBottom: 2 }}
+              icon={<Delete />}
+              onClick={clearTextField}
+            />
+          </Tooltip>
         ) : null}
       </Box>
       <TextField
