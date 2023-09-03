@@ -17,7 +17,7 @@ import useCategory from "../../../../hooks/useCategory";
 import useCourse from "../../../../hooks/useCourse";
 
 const FormAddCourse = () => {
-  const [id, setId] = useState(null);
+  const [idcurso, setId] = useState(null);
   const [error, setError] = useState(null);
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -36,7 +36,8 @@ const FormAddCourse = () => {
   }, []);
 
   useEffect(() => {
-    if (courseId?.titulo) {
+    if (courseId?.idcurso) {
+      console.log(courseId.idcurso);
       setTitulo(courseId.titulo);
       setDescripcion(courseId.descripcion);
       setUrl_video_intro(courseId.url_video_intro);
@@ -53,13 +54,23 @@ const FormAddCourse = () => {
     }
 
     setError(null);
-    saveCourses({
-      id,
-      titulo,
-      descripcion,
-      url_video_intro,
-      idcategoria,
-    });
+
+    if (courseId?.idcurso) {
+      saveCourses({
+        idcurso,
+        titulo,
+        descripcion,
+        url_video_intro,
+        idcategoria,
+      });
+    } else {
+      saveCourses({
+        titulo,
+        descripcion,
+        url_video_intro,
+        idcategoria,
+      });
+    }
 
     clearTextFields();
   };
@@ -92,17 +103,17 @@ const FormAddCourse = () => {
 
   useEffect(() => {
     const selectedCategory = categorys.find(
-      (category) => category.idcategoria === id
+      (category) => category.idcategoria === idcurso
     );
     if (selectedCategory) {
       setIdcategoria(selectedCategory.categoria);
     }
-  }, [id, categorys]);
+  }, [idcurso, categorys]);
 
   return (
     <>
       <Typography variant="h6" paddingY={1}>
-        {id ? "Editar curso" : "Agregar curso"}
+        {idcurso ? "Editar curso" : "Agregar curso"}
       </Typography>
       <Divider sx={{ marginBottom: 2 }} />
       {error && (
@@ -188,7 +199,7 @@ const FormAddCourse = () => {
         >
           <Stack direction="row" spacing={2}>
             <Button variant="contained" onClick={handleSubmit}>
-              {id ? "Guardar cambios" : "Agregar curso"}
+              {idcurso ? "Guardar cambios" : "Agregar curso"}
             </Button>
             <Link to="/dashboard/courses" style={{ textDecoration: "none" }}>
               <Button variant="contained" color={"error"}>

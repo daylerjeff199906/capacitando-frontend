@@ -53,10 +53,10 @@ const CourseProvider = ({ children }) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    if (course.id) {
+    if (course.idcurso) {
       try {
         const { data } = await userAxios.patch(
-          `/courses/update/${course.id}`,
+          `/courses/update/${course.idcurso}`,
           course,
           config
         );
