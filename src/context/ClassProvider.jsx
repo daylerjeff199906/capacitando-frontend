@@ -12,7 +12,6 @@ const ClassProvider = ({ children }) => {
 
   const getIdSesion = (id) => {
     setIdSesion(id);
-    console.log(idSesion);
   };
 
   const clearIdSesion = () => {
@@ -76,7 +75,6 @@ const ClassProvider = ({ children }) => {
 
   const editClass = (clase) => {
     setClaseId(clase);
-    console.log(claseId);
   };
 
   const clearClaseId = () => {

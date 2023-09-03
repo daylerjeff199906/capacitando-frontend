@@ -8,10 +8,12 @@ import {
   Divider,
   Alert,
   AlertTitle,
+  Chip,
 } from "@mui/material";
 
 import useClass from "../../../../hooks/useClass";
 import useSesion from "../../../../hooks/useSesion";
+import { Delete } from "@mui/icons-material";
 
 const FormAddClass = () => {
   const [idcontenido, setIdcontenido] = React.useState("");
@@ -39,11 +41,8 @@ const FormAddClass = () => {
   }, [idSesion, getDetailsSesion]);
 
   React.useEffect(() => {
-    setIdcontenido(claseId?.idcontenido);
-  }, [claseId]);
-
-  React.useEffect(() => {
     if (claseId?.idcontenido) {
+      setIdcontenido(claseId?.idcontenido);
       setTitulo(claseId.titulo);
       setUrlVideo(claseId.url_video);
     }
@@ -87,8 +86,8 @@ const FormAddClass = () => {
 
   const handlecancel = () => {
     clearTextField();
-    clearClases();
     clearClaseId();
+    clearClases();
   };
 
   React.useEffect(() => {
@@ -119,15 +118,27 @@ const FormAddClass = () => {
             color={"GrayText"}
             fontFamily={"poppins"}
           >
-            {idcontenido !== "" ? "Editar clase" : "Añadir clase"}
+            {claseId.idcontenido !== "" ? "Editar clase" : "Añadir clase"}
           </Typography>
           <Divider sx={{ marginBottom: 2 }} />
         </Box>
       )}
 
-      <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
-        Título de la clase
-      </Typography>
+      <Box display={"flex"} justifyContent={"space-between"} pt={1}>
+        <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
+          Título de la clase
+        </Typography>
+        {idcontenido !== "" ? (
+          <Chip
+            label="Limpiar"
+            color="success"
+            size="small"
+            variant="outlined"
+            sx={{ marginBottom: 2 }}
+            icon={<Delete/>}
+          />
+        ) : null}
+      </Box>
       <TextField
         size="small"
         placeholder="Ingrese el título de clase ..."
@@ -156,7 +167,7 @@ const FormAddClass = () => {
             idSesion === "" || detailSesion === undefined ? true : false
           }
         >
-          {idcontenido !== "" ? "Editar" : "Añadir"}
+          {claseId.idcontenido !== "" ? "Editar" : "Añadir"}
         </Button>
         <Button
           variant="contained"

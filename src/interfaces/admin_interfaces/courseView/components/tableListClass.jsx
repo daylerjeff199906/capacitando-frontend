@@ -17,11 +17,12 @@ import { EditOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableListClass = () => {
-  const { idSesion, getClases, clases, editClass } = useClass();
+  const { idSesion, getClases, clases, editClass, clearClaseId } = useClass();
 
   useEffect(() => {
     if (idSesion !== "") {
       getClases(idSesion);
+      clearClaseId();
     }
   }, [idSesion]);
 
