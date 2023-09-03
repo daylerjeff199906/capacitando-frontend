@@ -76,6 +76,26 @@ const ClassProvider = ({ children }) => {
     setClaseId(clase);
   };
 
+  const deleteClass = async (clase) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      await userAxios.put(
+        `/contents/status/${clase.idcontenido}`,
+        clase,
+        config
+      );
+      getClases(idSesion);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const clearClaseId = () => {
     setClaseId({});
   };
@@ -97,6 +117,7 @@ const ClassProvider = ({ children }) => {
         claseId,
         clearClaseId,
         clearClases,
+        deleteClass,
       }}
     >
       {children}

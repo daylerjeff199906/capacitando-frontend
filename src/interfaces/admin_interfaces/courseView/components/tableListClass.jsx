@@ -17,7 +17,21 @@ import { EditOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const TableListClass = () => {
-  const { idSesion, getClases, clases, editClass, clearClaseId } = useClass();
+  const {
+    idSesion,
+    clearIdSesion,
+    getClases,
+    clases,
+    editClass,
+    clearClaseId,
+    deleteClass,
+    clearClases,
+  } = useClass();
+
+  useEffect(() => {
+    clearClases();
+    clearIdSesion();
+  }, []);
 
   useEffect(() => {
     if (idSesion !== "") {
@@ -25,6 +39,10 @@ const TableListClass = () => {
       clearClaseId();
     }
   }, [idSesion]);
+
+  const handleDelete = (idcontenido) => {
+    deleteClass({ idcontenido, idSesion });
+  };
 
   return (
     <>
@@ -69,7 +87,7 @@ const TableListClass = () => {
                   <TableCell>{clase.titulo}</TableCell>
                   <TableCell>
                     <Stack direction={"row"} spacing={1}>
-                      <Tooltip title="Editar sesión">
+                      <Tooltip title="Editar clase">
                         <IconButton
                           color="success"
                           onClick={() => editClass(clase)}
@@ -77,10 +95,10 @@ const TableListClass = () => {
                           <EditOutlined />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Eliminar sesión">
+                      <Tooltip title="Eliminar clase">
                         <IconButton
                           color="error"
-                          // onClick={() => deleteSesion(section)}
+                          onClick={() => handleDelete(clase.idcontenido)}
                         >
                           <DeleteIcon />
                         </IconButton>
