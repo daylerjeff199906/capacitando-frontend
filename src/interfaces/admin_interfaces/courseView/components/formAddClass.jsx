@@ -38,6 +38,7 @@ const FormAddClass = () => {
       clearTextField();
       clearClases();
       clearClaseId();
+      clearIdSesion();
       setIdcontenido("");
     };
   }, []);
@@ -84,8 +85,9 @@ const FormAddClass = () => {
     }
 
     // setMessageContent(message);
-    setTitulo("");
-    setUrlVideo("");
+    // setTitulo("");
+    // setUrlVideo("");
+    clearTextField();
   };
 
   const clearTextField = () => {
@@ -123,7 +125,7 @@ const FormAddClass = () => {
             color={"GrayText"}
             fontFamily={"poppins"}
           >
-            {claseId.idcontenido !== "" ? "Editar clase" : "Añadir clase"}
+            {idcontenido !== "" ? "Editar clase" : "Añadir clase"}
           </Typography>
           <Divider sx={{ marginBottom: 2 }} />
         </Box>
@@ -175,7 +177,7 @@ const FormAddClass = () => {
             idSesion === "" || detailSesion === undefined ? true : false
           }
         >
-          {claseId.idcontenido !== "" ? "Editar" : "Añadir"}
+          {idcontenido !== "" ? "Editar" : "Añadir"}
         </Button>
         <Button
           variant="contained"

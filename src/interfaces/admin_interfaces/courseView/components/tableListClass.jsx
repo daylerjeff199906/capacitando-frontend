@@ -44,9 +44,21 @@ const TableListClass = () => {
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  #
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Título de clase
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Acciones
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
