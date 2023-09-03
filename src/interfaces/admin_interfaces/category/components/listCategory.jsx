@@ -71,8 +71,7 @@ const TableListCategorys = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categorys
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            {categorys.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((category, index) => (
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align="left">{category.categoria}</TableCell>

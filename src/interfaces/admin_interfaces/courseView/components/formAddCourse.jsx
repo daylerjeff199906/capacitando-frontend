@@ -21,7 +21,6 @@ const FormAddCourse = () => {
   const [error, setError] = useState(null);
 
   const [selectedFile, setSelectedFile] = useState(null);
-  console.log(selectedFile);
 
   const { getCategory, categorys } = useCategory();
   const { saveCourses, courseId, clearCourseId } = useCourse();

@@ -20,7 +20,6 @@ const CourseProvider = ({ children }) => {
         },
       };
       const { data } = await userAxios.get("/courses/list", config);
-      console.log(data);
       setCourses(data);
     } catch (error) {
       console.log(error);

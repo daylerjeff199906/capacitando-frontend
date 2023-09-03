@@ -12,7 +12,7 @@ import {
 import useCategory from "../../../../hooks/useCategory";
 
 const FormAddCategory = () => {
-  const [id, setId] = useState("");
+  const [idcategoria, setId] = useState("");
   const { saveCategory, categoryId, clearCategoryId } = useCategory();
 
   const [categoria, setCategoria] = useState("");
@@ -29,8 +29,9 @@ const FormAddCategory = () => {
     if ([categoria].includes("")) {
       return;
     }
+
     saveCategory({
-      id,
+      idcategoria,
       categoria,
     });
 
@@ -59,7 +60,7 @@ const FormAddCategory = () => {
           fontFamily={"poppins"}
           fontWeight={600}
         >
-          {id ? "Editar categoría" : "Añadir categoría"}
+          {idcategoria ? "Editar categoría" : "Añadir categoría"}
         </Typography>
         <Divider />
         <FormGroup>
@@ -81,7 +82,7 @@ const FormAddCategory = () => {
                 color="primary"
                 onClick={handleSubmit}
               >
-                {id ? "Guardar cambios" : "Guardar"}
+                {idcategoria ? "Guardar cambios" : "Guardar"}
               </Button>
               <Button
                 variant="contained"

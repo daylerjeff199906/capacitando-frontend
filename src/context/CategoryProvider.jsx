@@ -36,9 +36,9 @@ const CategoryProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      if (category.id) {
+      if (category.idcategoria) {
         const { data } = await userAxios.patch(
-          `/categories/update/${category.id}`,
+          `/categories/update/${category.idcategoria}`,
           category,
           config
         );
