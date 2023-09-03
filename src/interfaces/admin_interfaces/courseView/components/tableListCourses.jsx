@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React from "react";
 import {
@@ -35,7 +36,12 @@ const TableListCourses = () => {
   const [courseSelected, setCourseSelected] = React.useState({});
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  const { courses, editCourse, editStateCourse, getDetailCourse } = useCourse();
+  const { getCourses, courses, editCourse, editStateCourse, getDetailCourse } =
+    useCourse();
+
+  React.useEffect(() => {
+    getCourses();
+  }, []);
 
   const getEstadoLabel = (estadoId) => {
     if (estadoId === 1) {

@@ -14,7 +14,9 @@ const style = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   minWidth: 256,
+  minHeight: 256,
   width: "70%",
+  height: "70%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   borderRadius: 8,
@@ -111,7 +113,7 @@ export default function ModalDetailCourse({ modalOpen, onClose, course }) {
                   Alumnos asignados
                 </Typography>
                 {course?.estudiantes?.length > 0 && (
-                  <Stack >
+                  <Stack>
                     {course?.estudiantes.map((estudiante) => (
                       <Typography
                         key={estudiante.id_estudiante}
@@ -125,37 +127,43 @@ export default function ModalDetailCourse({ modalOpen, onClose, course }) {
                 )}
               </Grid>
               <Grid item xs={7}>
-                <Stack spacing={2} sx={{ paddingTop: 2 }}>
-                  <Typography
-                    variant="body1"
-                    fontWeight={700}
-                    fontFamily={"poppins"}
-                  >
-                    Sesiones
-                  </Typography>
-                  {course?.sesiones?.length > 0 &&
-                    course?.sesiones.map((sesion) => (
-                      <Stack
-                        key={sesion.idsesion}
-                        spacing={1}
-                        sx={{
-                          paddingTop: 2,
-                          border: "1px solid #ccc",
-                          borderRadius: 4,
-                          padding: 2,
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
-                          fontWeight={700}
-                          fontFamily={"poppins"}
+                <Box sx={{
+                  overflowY: "scroll",
+                  height: "50%",
+                }}
+                >
+                  <Stack spacing={2} sx={{ paddingTop: 2 }}>
+                    <Typography
+                      variant="body1"
+                      fontWeight={700}
+                      fontFamily={"poppins"}
+                    >
+                      Sesiones
+                    </Typography>
+                    {course?.sesiones?.length > 0 &&
+                      course?.sesiones.map((sesion) => (
+                        <Stack
+                          key={sesion.idsesion}
+                          spacing={1}
+                          sx={{
+                            paddingTop: 2,
+                            border: "1px solid #ccc",
+                            borderRadius: 4,
+                            padding: 2,
+                          }}
                         >
-                          {sesion.nombre_sesion}
-                        </Typography>
-                        {/* Otros detalles de la sesión aquí */}
-                      </Stack>
-                    ))}
-                </Stack>
+                          <Typography
+                            variant="body1"
+                            fontWeight={700}
+                            fontFamily={"poppins"}
+                          >
+                            {sesion.nombre_sesion}
+                          </Typography>
+                          {/* Otros detalles de la sesión aquí */}
+                        </Stack>
+                      ))}
+                  </Stack>
+                </Box>
               </Grid>
             </Grid>
           </Box>

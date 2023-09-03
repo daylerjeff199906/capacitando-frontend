@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import userAxios from "../config/axios";
 
 const CategoryContext = createContext();
@@ -8,27 +8,23 @@ const CategoryProvider = ({ children }) => {
   const [categorys, setCategorys] = useState([]);
   const [categoryId, setCategoryId] = useState({});
 
-  useEffect(() => {
-    const getCategory = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
+  const getCategory = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-        const config = {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await userAxios.get("/categories/list", config);
-        console.log(data);
-        setCategorys(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getCategory();
-  }, []);
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get("/categories/list", config);
+      setCategorys(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const saveCategory = async (category) => {
     try {
@@ -39,25 +35,22 @@ const CategoryProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       };
-      if (category.id) {
+      if (category.idcategoria) {
         const { data } = await userAxios.patch(
-          `/categories/update/${category.id}`,
+          `/categories/update/${category.idcategoria}`,
           category,
           config
         );
-        console.log(data);
-        setCategorys((prevCategorys) =>
-          prevCategorys.map((category) =>
-            category.id === data.id ? data : category
-          )
-        );
+        setCategorys(data);
+        getCategory();
       } else {
         const { data } = await userAxios.post(
           "/categories/create",
           category,
           config
         );
-        setCategorys((prevCategorys) => [...prevCategorys, data]);
+        setCategorys([...categorys, data]);
+        getCategory();
       }
     } catch (error) {
       console.log(error);
@@ -82,11 +75,8 @@ const CategoryProvider = ({ children }) => {
         category,
         config
       );
-      setCategorys((prevCategorys) =>
-        prevCategorys.map((category) =>
-          category.id === data.id ? data : category
-        )
-      );
+      setCategorys(data);
+      getCategory();
     } catch (error) {
       console.log(error);
     }
@@ -99,6 +89,7 @@ const CategoryProvider = ({ children }) => {
   return (
     <CategoryContext.Provider
       value={{
+        getCategory,
         categorys,
         categoryId,
         saveCategory,
