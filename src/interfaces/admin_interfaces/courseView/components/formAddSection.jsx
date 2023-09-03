@@ -1,20 +1,18 @@
 /* eslint-disable react/prop-types */
 import * as React from "react";
-import { Typography, TextField, Box, Button, Snackbar } from "@mui/material";
+import { Typography, TextField, Box, Button, Divider } from "@mui/material";
 
-import useContent from "../../../../hooks/useContent";
 import { useParams } from "react-router-dom";
+import useSesion from "../../../../hooks/useSesion";
 
 const FormAddSection = () => {
   const [idcurso, setIdCurso] = React.useState("");
   const [nombre_sesion, setNombreSesion] = React.useState("");
   const [descripcion, setDescripcionSesion] = React.useState("");
 
-  const [messageContent, setMessageContent] = React.useState("");
-
-  const { saveSesion, message, getSesions, sesionId, clearSesionId } =
-    useContent();
+  const { saveSesion, getSesions, sesionId, clearSesionId } = useSesion();
   const id = useParams();
+
   React.useEffect(() => {
     setIdCurso(id.id);
   }, [id]);
@@ -30,7 +28,7 @@ const FormAddSection = () => {
     e.preventDefault();
 
     if ([nombre_sesion].includes("")) {
-      setMessageContent("Todos los campos son obligatorios");
+      // setMessageContent("Todos los campos son obligatorios");
       return;
     }
 
@@ -47,8 +45,7 @@ const FormAddSection = () => {
         descripcion,
       });
     }
-
-    setMessageContent(message);
+    // setMessageContent(message);
     getSesions(idcurso);
     clearTextField();
   };
@@ -61,6 +58,10 @@ const FormAddSection = () => {
 
   return (
     <>
+      <Typography variant="h6" paddingY={2}>
+        {sesionId?.idsesion ? "Editar sesión" : "Añadir sesión"}
+      </Typography>
+      <Divider sx={{ marginBottom: 2 }} />
       <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
         Título de sesión
       </Typography>
@@ -85,7 +86,7 @@ const FormAddSection = () => {
       />
       <Box marginTop={2} display={"flex"} justifyContent={"right"}>
         <Button variant="contained" component="label" onClick={handleSubmit}>
-          Guardar
+          {sesionId?.idsesion ? "Editar" : "Añadir"}
         </Button>
         <Button
           variant="contained"
@@ -98,10 +99,10 @@ const FormAddSection = () => {
         </Button>
       </Box>
       {/* <Snackbar
-        open={messageContent ? true : false}
-        message={messageContent}
+        open={message ? true : false}
+        message={message}
         autoHideDuration={3000}
-        onClose={() => setMessageContent("")}
+        // onClose={() => setMessageContent("")}
       /> */}
     </>
   );

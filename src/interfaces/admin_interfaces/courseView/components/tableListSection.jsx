@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
 import * as React from "react";
 import { useParams } from "react-router-dom";
@@ -13,23 +14,23 @@ import {
   Stack,
   IconButton,
 } from "@mui/material";
-import {
-  AddCircleOutline,
-  DeleteOutline,
-  EditOutlined,
-} from "@mui/icons-material";
+import { AddCircleOutline, EditOutlined } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import useContent from "../../../../hooks/useContent";
+import useSesion from "../../../../hooks/useSesion";
+import useClass from "../../../../hooks/useClass";
 
 const TableListSection = () => {
-  const { getSesions, sesions, editSesion } = useContent();
+  const { getIdCurso, getSesions, sesions, editSesion, deleteSesion } =
+    useSesion();
+  const { getIdSesion } = useClass();
 
   const id = useParams();
-  const idcurso = id.id;
+  getIdCurso(id.id);
 
   React.useEffect(() => {
-    getSesions(idcurso);
-  }, [idcurso, getSesions]);
+    getSesions(id.id);
+  }, []);
 
   return (
     <>
@@ -57,12 +58,12 @@ const TableListSection = () => {
               </TableCell>
               <TableCell>
                 <Typography fontWeight={700} fontFamily={"poppins"}>
-                  Nombres
+                  Sesiones
                 </Typography>
               </TableCell>
               <TableCell>
                 <Typography fontWeight={700} fontFamily={"poppins"}>
-                  Sesiones
+                  Acciones
                 </Typography>
               </TableCell>
             </TableRow>
@@ -76,7 +77,10 @@ const TableListSection = () => {
                   <TableCell>
                     <Stack direction={"row"} spacing={1}>
                       <Tooltip title="Añadir contenido">
-                        <IconButton color="primary">
+                        <IconButton
+                          color="primary"
+                          onClick={() => getIdSesion(section.idsesion)}
+                        >
                           <AddCircleOutline />
                         </IconButton>
                       </Tooltip>
@@ -89,8 +93,11 @@ const TableListSection = () => {
                         </IconButton>
                       </Tooltip>
                       <Tooltip title="Eliminar sesión">
-                        <IconButton color="error">
-                          <DeleteOutline />
+                        <IconButton
+                          color="error"
+                          onClick={() => deleteSesion(section)}
+                        >
+                          <DeleteIcon />
                         </IconButton>
                       </Tooltip>
                     </Stack>

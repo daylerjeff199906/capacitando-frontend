@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Table,
   TableBody,
@@ -6,23 +7,112 @@ import {
   TableRow,
   TableCell,
   Typography,
+  IconButton,
+  Tooltip,
+  Stack,
 } from "@mui/material";
+import useClass from "../../../../hooks/useClass";
+import { useEffect } from "react";
+import { EditOutlined } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+
 const TableListClass = () => {
+  const {
+    idSesion,
+    clearIdSesion,
+    getClases,
+    clases,
+    editClass,
+    clearClaseId,
+    deleteClass,
+    clearClases,
+  } = useClass();
+
+  useEffect(() => {
+    clearClases();
+    clearIdSesion();
+  }, []);
+
+  useEffect(() => {
+    if (idSesion !== "") {
+      getClases(idSesion);
+      clearClaseId();
+    }
+  }, [idSesion]);
+
+  const handleDelete = (idcontenido) => {
+    deleteClass({ idcontenido, idSesion });
+  };
+
   return (
     <>
       <Typography variant="h6" fontFamily={"Poppins"}>
         Lista de clases
       </Typography>
+      {clases.length > 0 ? (
+        <Typography variant="body1" fontFamily={"Poppins"}>
+          {clases.length} Clases
+        </Typography>
+      ) : (
+        <Typography variant="body1" fontFamily={"Poppins"}>
+          No hay clases
+        </Typography>
+      )}
       <TableContainer sx={{ maxHeight: 300 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              <TableCell>#</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Acciones</TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  #
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Título de clase
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight={700} fontFamily={"poppins"}>
+                  Acciones
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody></TableBody>
+          <TableBody>
+            {clases.length > 0 ? (
+              clases.map((clase, index) => (
+                <TableRow key={clase.idcontenido}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{clase.titulo}</TableCell>
+                  <TableCell>
+                    <Stack direction={"row"} spacing={1}>
+                      <Tooltip title="Editar clase">
+                        <IconButton
+                          color="success"
+                          onClick={() => editClass(clase)}
+                        >
+                          <EditOutlined />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Eliminar clase">
+                        <IconButton
+                          color="error"
+                          onClick={() => handleDelete(clase.idcontenido)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={3}>No hay clases</TableCell>
+              </TableRow>
+            )}
+          </TableBody>
         </Table>
       </TableContainer>
     </>

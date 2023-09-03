@@ -3,12 +3,17 @@ import { useState } from "react";
 import { createContext } from "react";
 import userAxios from "../config/axios";
 
-const ContentContext = createContext();
+const SesionContext = createContext();
 
-const ContentProvider = ({ children }) => {
+const SesionProvider = ({ children }) => {
+  const [idCurso, setIdCurso] = useState("");
   const [message, setMessage] = useState("");
   const [sesions, setSesions] = useState([]);
   const [sesionId, setSesionId] = useState({});
+
+  const getIdCurso = (id) => {
+    setIdCurso(id);
+  };
 
   const getSesions = async (id) => {
     try {
@@ -23,6 +28,25 @@ const ContentProvider = ({ children }) => {
       };
       const { data } = await userAxios.get(`/sessions/list/${id}`, config);
       setSesions(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getDetailsSesion = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get(`/sessions/detail/${id}`, config);
+      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
@@ -43,8 +67,8 @@ const ContentProvider = ({ children }) => {
           sesion,
           config
         );
-
         setMessage(data);
+        getSesions(idCurso);
       } catch (error) {
         console.log(error);
       }
@@ -57,7 +81,9 @@ const ContentProvider = ({ children }) => {
         );
         setSesions([...sesions, data]);
         setMessage(data.message);
+        getSesions(idCurso);
       } catch (error) {
+        setMessage(error.response.data.message);
         console.log(error);
       }
     }
@@ -67,26 +93,50 @@ const ContentProvider = ({ children }) => {
     setSesionId(sesion);
   };
 
+  const deleteSesion = async (sesion) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await userAxios.put(
+        `/sessions/status/${sesion.idsesion}`,
+        sesion,
+        config
+      );
+      setMessage(data);
+      getSesions(idCurso);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const clearSesionId = () => {
     setSesionId({});
   };
 
   return (
-    <ContentContext.Provider
+    <SesionContext.Provider
       value={{
+        getIdCurso,
         saveSesion,
         message,
         getSesions,
+        getDetailsSesion,
         sesions,
         sesionId,
         clearSesionId,
         editSesion,
+        deleteSesion,
       }}
     >
       {children}
-    </ContentContext.Provider>
+    </SesionContext.Provider>
   );
 };
 
-export { ContentProvider };
-export default ContentContext;
+export { SesionProvider };
+export default SesionContext;
