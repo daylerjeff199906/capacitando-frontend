@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
   Select,
+  Snackbar,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -19,11 +20,12 @@ import useCourse from "../../../../hooks/useCourse";
 const FormAddCourse = () => {
   const [idcurso, setId] = useState(null);
   const [error, setError] = useState(null);
+  const [msg, setMsg] = useState("");
 
   const [selectedFile, setSelectedFile] = useState(null);
 
   const { getCategory, categorys } = useCategory();
-  const { saveCourses, courseId, clearCourseId } = useCourse();
+  const { saveCourses, courseId, clearCourseId, message } = useCourse();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -70,9 +72,14 @@ const FormAddCourse = () => {
         idcategoria,
       });
     }
-
     clearTextFields();
   };
+
+  useEffect(() => {
+    if (message) {
+      setMsg(message);
+    }
+  }, [message]);
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -208,6 +215,12 @@ const FormAddCourse = () => {
           </Stack>
         </Box>
       </Stack>
+      <Snackbar
+        open={msg ? true : false}
+        autoHideDuration={3000}
+        onClose={() => setMsg("")}
+        message={msg}
+      />
     </>
   );
 };
