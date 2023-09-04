@@ -4,13 +4,12 @@ import CardCourse from "../../../components/CardCourse";
 import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
-
 import useUsers from "../../../hooks/useUsers";
 import useCourse from "../../../hooks/useCourse";
 
 const IndexStudent = () => {
   const { getProfile, detailUser } = useUsers();
-  const { courses } = useCourse();
+  const { getCourses, courses } = useCourse();
 
   const [perfilUser, setPerfilUser] = useState({});
 
@@ -22,9 +21,12 @@ const IndexStudent = () => {
     });
   }, [getProfile, detailUser]);
 
+  useEffect(() => {
+    getCourses();
+  }, []);
+
   return (
     <>
-
       <Box bgcolor="#FFFFFF" paddingTop={8} paddingBottom={8}>
         <Container maxWidth={"xl"}>
           <Grid container spacing={4} sx={{ paddingY: 4 }}>

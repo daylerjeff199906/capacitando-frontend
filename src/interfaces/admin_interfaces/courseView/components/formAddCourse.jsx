@@ -10,20 +10,24 @@ import {
   TextField,
   Typography,
   Select,
+  Snackbar,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import useCategory from "../../../../hooks/useCategory";
 import useCourse from "../../../../hooks/useCourse";
 
+import InputImage from "./InputImage";
+
 const FormAddCourse = () => {
   const [idcurso, setId] = useState(null);
   const [error, setError] = useState(null);
+  const [msg, setMsg] = useState("");
 
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
 
   const { getCategory, categorys } = useCategory();
-  const { saveCourses, courseId, clearCourseId } = useCourse();
+  const { saveCourses, courseId, clearCourseId, message } = useCourse();
 
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
@@ -70,20 +74,25 @@ const FormAddCourse = () => {
         idcategoria,
       });
     }
-
     clearTextFields();
   };
 
-  const handleFileChange = (event) => {
-    setSelectedFile(event.target.files[0]);
-  };
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-  const handleDrop = (event) => {
-    event.preventDefault();
-    setSelectedFile(event.dataTransfer.files[0]);
-  };
+  useEffect(() => {
+    if (message) {
+      setMsg(message);
+    }
+  }, [message]);
+
+  // const handleFileChange = (event) => {
+  //   setSelectedFile(event.target.files[0]);
+  // };
+  // const handleDragOver = (event) => {
+  //   event.preventDefault();
+  // };
+  // const handleDrop = (event) => {
+  //   event.preventDefault();
+  //   setSelectedFile(event.dataTransfer.files[0]);
+  // };
 
   const clearTextFields = () => {
     setTitulo("");
@@ -161,7 +170,8 @@ const FormAddCourse = () => {
           onChange={(e) => setUrl_video_intro(e.target.value)}
         />
         <Typography variant="body1">Subir imagen de portada</Typography>
-        <input
+        <InputImage />
+        {/* <input
           type="file"
           accept="image/*"
           style={{ display: "none" }}
@@ -188,7 +198,8 @@ const FormAddCourse = () => {
           }}
         >
           Arrastra y suelta la imagen aquí
-        </div>
+        </div> */}
+
         <Box
           sx={{
             display: "flex",
@@ -208,6 +219,12 @@ const FormAddCourse = () => {
           </Stack>
         </Box>
       </Stack>
+      <Snackbar
+        open={msg ? true : false}
+        autoHideDuration={3000}
+        onClose={() => setMsg("")}
+        message={msg}
+      />
     </>
   );
 };

@@ -38,6 +38,7 @@ const Navbar = () => {
   return (
     <AppBar
       position="fixed"
+      color="secondary"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Toolbar>

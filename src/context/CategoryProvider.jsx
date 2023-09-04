@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import userAxios from "../config/axios";
 
 const CategoryContext = createContext();
@@ -7,6 +7,7 @@ const CategoryContext = createContext();
 const CategoryProvider = ({ children }) => {
   const [categorys, setCategorys] = useState([]);
   const [categoryId, setCategoryId] = useState({});
+  const [message, setMessage] = useState("");
 
   const getCategory = async () => {
     try {
@@ -26,6 +27,13 @@ const CategoryProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    message &&
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+  }, [message]);
+
   const saveCategory = async (category) => {
     try {
       const token = localStorage.getItem("token");
@@ -43,6 +51,7 @@ const CategoryProvider = ({ children }) => {
         );
         setCategorys(data);
         getCategory();
+        setMessage("Categoria actualizada correctamente");
       } else {
         const { data } = await userAxios.post(
           "/categories/create",
@@ -51,9 +60,11 @@ const CategoryProvider = ({ children }) => {
         );
         setCategorys([...categorys, data]);
         getCategory();
+        setMessage("Categoria guardada correctamente");
       }
     } catch (error) {
       console.log(error);
+      setMessage("Error al guardar la categoria");
     }
   };
 
@@ -77,6 +88,7 @@ const CategoryProvider = ({ children }) => {
       );
       setCategorys(data);
       getCategory();
+      setMessage("Estado eliminado correctamente");
     } catch (error) {
       console.log(error);
     }
@@ -96,6 +108,7 @@ const CategoryProvider = ({ children }) => {
         editCategory,
         editStateCategory,
         clearCategoryId,
+        message,
       }}
     >
       {children}
