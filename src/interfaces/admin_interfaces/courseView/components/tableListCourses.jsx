@@ -12,14 +12,17 @@ import {
   TableRow,
   Chip,
   Tooltip,
+  Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
+import { PostAddRounded, RemoveRedEyeOutlined } from "@mui/icons-material";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import useCourse from "../../../../hooks/useCourse";
-import { Link } from "react-router-dom";
+
 import ModalDetailCourse from "./modalDetailCourse";
-import { PostAddRounded, RemoveRedEyeOutlined } from "@mui/icons-material";
+import { useEffect } from "react";
 
 const columns = [
   { id: "name", label: "Nombre" },
@@ -35,6 +38,9 @@ const TableListCourses = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [courseSelected, setCourseSelected] = React.useState({});
   const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+  const rol = localStorage.getItem("rol");
+  const userRol = parseInt(rol);
 
   const { getCourses, courses, editCourse, editStateCourse, getDetailCourse } =
     useCourse();
@@ -103,42 +109,64 @@ const TableListCourses = () => {
                   <TableCell align="left">{course.total_clases}</TableCell>
                   <TableCell align="left">{course.hora_duracion}</TableCell>
                   <TableCell align="left">
-                    <Tooltip title="Cambiar estado">
-                      <Chip
-                        label={getEstadoLabel(course.estado)}
-                        color={course.estado === 1 ? "success" : "error"}
-                        size="small"
-                        variant="outlined"
-                        onClick={() => editStateCourse(course)}
-                      />
-                    </Tooltip>
+                    {userRol === 1 ? (
+                      <>
+                        <Tooltip title="Cambiar estado">
+                          <Chip
+                            label={getEstadoLabel(course.estado)}
+                            color={course.estado === 1 ? "success" : "error"}
+                            size="small"
+                            variant="outlined"
+                            onClick={() => editStateCourse(course)}
+                          />
+                        </Tooltip>
+                      </>
+                    ) : (
+                      <>
+                        <Typography
+                          variant="body1"
+                          fontWeight={600}
+                          color={course.estado === 1 ? "green" : "error"}
+                          fontFamily={"poppins"}
+                        >
+                          {getEstadoLabel(course.estado)}
+                        </Typography>
+                      </>
+                    )}
                   </TableCell>
                   <TableCell
                     align="center"
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <Tooltip title="Agregar contenido">
-                      <Chip
-                        icon={<PostAddRounded />}
-                        label="Agregar"
-                        color="info"
-                        size="small"
-                        sx={{ marginRight: 1 }}
-                        component={Link}
-                        to={`/dashboard/courses/${course.idcurso}`}
-                        // onClick={() => editCourse(course)}
-                      />
-                    </Tooltip>
-                    <Chip
-                      icon={<EditNoteRoundedIcon />}
-                      label="Editar"
-                      component={Link}
-                      to={`/dashboard/courses/add`}
-                      onClick={() => editCourse(course)}
-                      color="success"
-                      size="small"
-                      sx={{ marginRight: 1 }}
-                    />
+                    {userRol === 2 ? (
+                      <>
+                        <Tooltip title="Agregar contenido">
+                          <Chip
+                            icon={<PostAddRounded />}
+                            label="Agregar"
+                            color="info"
+                            size="small"
+                            sx={{ marginRight: 1 }}
+                            component={Link}
+                            to={`/dashboard/courses/${course.idcurso}`}
+                          />
+                        </Tooltip>
+                      </>
+                    ) : null}
+                    {userRol === 1 ? (
+                      <>
+                        <Chip
+                          icon={<EditNoteRoundedIcon />}
+                          label="Editar"
+                          component={Link}
+                          to={`/dashboard/courses/add`}
+                          onClick={() => editCourse(course)}
+                          color="success"
+                          size="small"
+                          sx={{ marginRight: 1 }}
+                        />
+                      </>
+                    ) : null}
                     <Chip
                       icon={<RemoveRedEyeOutlined />}
                       label="Ver"

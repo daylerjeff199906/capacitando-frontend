@@ -15,6 +15,8 @@ import {
   TextField,
   Tooltip,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Add } from "@mui/icons-material";
@@ -35,6 +37,9 @@ const headerStudent = [
 ];
 
 const FormAddUserCourse = () => {
+  const [msgError, setMsgError] = useState("");
+  const [msg, setMsg] = useState("");
+
   const { users } = useUsers();
   const { courses, getDetailCourse, addUserCourse, deleteUserCourse } =
     useCourse();
@@ -59,6 +64,10 @@ const FormAddUserCourse = () => {
   const filteredAlumnos = users.filter((user) => user.rol === 3);
 
   const handleAddUSer = () => {
+    if (!idcurso || !idusuario) {
+      setMsgError("Debe seleccionar un curso y un usuario");
+      return;
+    }
     addUserCourse({ idcurso, idusuario });
   };
 
@@ -206,6 +215,26 @@ const FormAddUserCourse = () => {
           </Table>
         </TableContainer>
       </Stack>
+      <Snackbar
+        open={msgError}
+        autoHideDuration={4000}
+        onClose={() => setMsgError("")}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="error" sx={{ width: "100%" }}>
+          {msgError}
+        </Alert>
+      </Snackbar>
+      <Snackbar
+        open={msg}
+        autoHideDuration={4000}
+        onClose={() => setMsg("")}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert severity="success" sx={{ width: "100%" }}>
+          {msg}
+        </Alert>
+      </Snackbar>
     </>
   );
 };
