@@ -43,10 +43,9 @@ const LoginIndex = () => {
       setAuth(data);
       if (data.rol !== 3) {
         navigate("/dashboard");
-      }else if (data.rol === 3) {
+      } else if (data.rol === 3) {
         navigate("/home");
       }
-
     } catch (error) {
       console.log(error);
       setError("Error al iniciar sesión. Verifica tus credenciales.");
@@ -83,34 +82,36 @@ const LoginIndex = () => {
               {error}
             </Alert>
           )}
-          <TextField
-            id="username"
-            label="Username"
-            variant="standard"
-            fullWidth
-            margin="normal"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <TextField
-            id="password"
-            label="Password"
-            variant="standard"
-            fullWidth
-            margin="normal"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <Button
-            variant="contained"
-            sx={{ marginY: 4, borderRadius: 4 }}
-            color="secondary"
-            fullWidth
-            onClick={handleLogin}
-          >
-            Iniciar sesión
-          </Button>
+          <form onSubmit={handleLogin}>
+            <TextField
+              id="username"
+              label="Username"
+              variant="standard"
+              fullWidth
+              margin="normal"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <TextField
+              id="password"
+              label="Password"
+              variant="standard"
+              fullWidth
+              margin="normal"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button
+              variant="contained"
+              sx={{ marginY: 4, borderRadius: 4 }}
+              color="secondary"
+              fullWidth
+              type="submit"
+            >
+              Iniciar sesión
+            </Button>
+          </form>
         </Box>
       </Container>
     </Box>
