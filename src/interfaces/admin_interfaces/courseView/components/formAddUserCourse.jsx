@@ -23,6 +23,7 @@ import { Add } from "@mui/icons-material";
 
 import useUsers from "../../../../hooks/useUsers";
 import useCourse from "../../../../hooks/useCourse";
+import { useEffect } from "react";
 
 const headerTeacher = [
   { id: "id", label: "#" },
@@ -41,14 +42,23 @@ const FormAddUserCourse = () => {
   const [msg, setMsg] = useState("");
 
   const { users } = useUsers();
-  const { courses, getDetailCourse, addUserCourse, deleteUserCourse } =
-    useCourse();
+  const {
+    getCourses,
+    courses,
+    getDetailCourse,
+    addUserCourse,
+    deleteUserCourse,
+  } = useCourse();
 
   const [selectedDocentes, setSelectedDocentes] = useState([]);
   const [selectedAlumnos, setSelectedAlumnos] = useState([]);
 
   const [idcurso, setIdCurso] = useState(null);
   const [idusuario, setIdUsuario] = useState(null);
+
+  useEffect(() => {
+    getCourses();
+  }, []);
 
   const handleCourseSelection = (course) => {
     if (course) {
@@ -60,6 +70,7 @@ const FormAddUserCourse = () => {
       });
     }
   };
+
   const filteredDocentes = users.filter((user) => user.rol === 2);
   const filteredAlumnos = users.filter((user) => user.rol === 3);
 
@@ -69,6 +80,7 @@ const FormAddUserCourse = () => {
       return;
     }
     addUserCourse({ idcurso, idusuario });
+    clearTextField();
   };
 
   const handleDeleteUser = (idselected) => {
@@ -76,6 +88,9 @@ const FormAddUserCourse = () => {
     deleteUserCourse({ idcurso, idusuario });
   };
 
+  const clearTextField = () => {
+    setIdUsuario(null);
+  };
   return (
     <>
       <Stack spacing={1} sx={{ marginBottom: 6 }}>

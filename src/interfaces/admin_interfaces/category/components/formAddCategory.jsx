@@ -36,10 +36,11 @@ const FormAddCategory = () => {
       return;
     }
 
-    saveCategory({
-      idcategoria,
-      categoria,
-    });
+    if (idcategoria) {
+      saveCategory({ categoria, idcategoria });
+    } else {
+      saveCategory({ categoria });
+    }
 
     clearTextFields();
   };
