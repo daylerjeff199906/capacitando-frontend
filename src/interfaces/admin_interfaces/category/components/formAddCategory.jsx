@@ -6,6 +6,7 @@ import {
   Chip,
   Divider,
   FormGroup,
+  Snackbar,
   Stack,
   TextField,
   Typography,
@@ -15,8 +16,9 @@ import { Link } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 
 const FormAddCategory = () => {
+  const [msg, setMessage] = useState("");
   const [idcategoria, setId] = useState("");
-  const { saveCategory, categoryId, clearCategoryId } = useCategory();
+  const { saveCategory, categoryId, clearCategoryId, message } = useCategory();
 
   const [categoria, setCategoria] = useState("");
 
@@ -30,6 +32,7 @@ const FormAddCategory = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if ([categoria].includes("")) {
+      setMessage("Todos los campos son obligatorios");
       return;
     }
 
@@ -40,6 +43,12 @@ const FormAddCategory = () => {
 
     clearTextFields();
   };
+
+  useEffect(() => {
+    if (message) {
+      setMessage(message);
+    }
+  }, [message]);
 
   const clearTextFields = () => {
     setCategoria("");
@@ -112,6 +121,12 @@ const FormAddCategory = () => {
             </Box>
           </Stack>
         </FormGroup>
+        <Snackbar
+          open={msg ? true : false}
+          message={msg}
+          autoHideDuration={4000}
+          onClose={() => setMessage("")}
+        />
       </Box>
     </>
   );
