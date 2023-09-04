@@ -15,8 +15,8 @@ const style = {
   transform: "translate(-50%, -50%)",
   minWidth: 256,
   minHeight: 256,
-  width: "70%",
-  height: "70%",
+  width: "80%",
+  maxHeight: "80vh",
   bgcolor: "background.paper",
   border: "2px solid #000",
   borderRadius: 8,
@@ -127,10 +127,12 @@ export default function ModalDetailCourse({ modalOpen, onClose, course }) {
                 )}
               </Grid>
               <Grid item xs={7}>
-                <Box sx={{
-                  overflowY: "scroll",
-                  height: "50%",
-                }}
+                <Box
+                  sx={{
+                    maxHeight: "calc(80vh - 84px)",
+                    overflowY: "auto",
+                    paddingRight: 2,
+                  }}
                 >
                   <Stack spacing={2} sx={{ paddingTop: 2 }}>
                     <Typography
