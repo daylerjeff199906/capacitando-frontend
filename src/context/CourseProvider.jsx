@@ -119,6 +119,26 @@ const CourseProvider = ({ children }) => {
     }
   };
 
+  const addImageCourge = async (course) => {
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    try {
+      const { data } = await userAxios.post(
+        `/courses/image/${course.idcurso}}`,
+        course,
+        config
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addUserCourse = async (userCourse) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -173,6 +193,7 @@ const CourseProvider = ({ children }) => {
         editStateCourse,
         clearCourseId,
         getDetailCourse,
+        addImageCourge,
         saveCourses,
         addUserCourse,
         deleteUserCourse,
