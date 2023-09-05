@@ -27,6 +27,15 @@ export default function ModalViewUser({ user }) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const getRolLabel = (rolId) => {
+    if (rolId === 2) {
+      return "Docente";
+    } else if (rolId === 3) {
+      return "Alumno";
+    }
+    return "";
+  };
+
   const userFields = [
     { label: "DNI", value: user.dni },
     { label: "Nombre", value: user.nombre },
@@ -34,8 +43,7 @@ export default function ModalViewUser({ user }) {
     { label: "Correo", value: user.correo },
     { label: "Dirección", value: user.direccion },
     { label: "Teléfono", value: user.telefono },
-    { label: "Rol", value: user.rol },
-    { label: "Estado", value: user.estado },
+    { label: "Rol", value: getRolLabel(user.rol) },
     { label: "Nombre de usuario", value: user.usuario },
     { label: "Carrera", value: user.carrera },
   ];

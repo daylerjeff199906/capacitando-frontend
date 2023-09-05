@@ -149,6 +149,7 @@ const TableListUsers = () => {
                           color="primary"
                           size="small"
                           sx={{ marginLeft: 1 }}
+                          disabled={user.estado === 0}
                         />
                       </TableCell>
                     </TableRow>
