@@ -27,7 +27,8 @@ import { useEffect } from "react";
 const columns = [
   { id: "name", label: "Nombre" },
   { id: "category", label: "Categoría" },
-  { id: "units", label: "Unidades", minWidth: 50 },
+  { id: "sesiones", label: "Sesiones" },
+  { id: "units", label: "T. Clases", minWidth: 50 },
   { id: "hours", label: "Horas", minWidth: 50 },
   { id: "status", label: "Estado" },
   { id: "action", label: "Acción", align: "center" },
@@ -47,6 +48,7 @@ const TableListCourses = () => {
 
   React.useEffect(() => {
     getCourses();
+    console.log(courses);
   }, []);
 
   const getEstadoLabel = (estadoId) => {
@@ -106,6 +108,7 @@ const TableListCourses = () => {
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align="left">{course.titulo}</TableCell>
                   <TableCell align="left">{course.categoria}</TableCell>
+                  <TableCell align="left"></TableCell>
                   <TableCell align="left">{course.total_clases}</TableCell>
                   <TableCell align="left">{course.hora_duracion}</TableCell>
                   <TableCell align="left">
