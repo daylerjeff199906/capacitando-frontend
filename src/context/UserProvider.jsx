@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import userAxios from "../config/axios";
 
 const UserContext = createContext();
@@ -8,27 +8,24 @@ const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [usuarioId, setUsuarioId] = useState({});
 
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
+  const getUsers = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
 
-        const config = {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await userAxios.get("/users/admin/list", config);
-        console.log(data);
-        setUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUsers();
-  }, []);
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get("/users/admin/list", config);
+      console.log(data);
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const saveUsers = async (user) => {
     const token = localStorage.getItem("token");
@@ -45,10 +42,8 @@ const UserProvider = ({ children }) => {
           user,
           config
         );
-
-        setUsers((prevUsers) =>
-          prevUsers.map((users) => (users.id === data.id ? data : users))
-        );
+        setUsers(data);
+        getUsers();
       } catch (error) {
         console.log(error);
       }
@@ -60,6 +55,7 @@ const UserProvider = ({ children }) => {
           config
         );
         setUsers([...users, data]);
+        getUsers();
       } catch (error) {
         console.log(error);
       }
@@ -87,10 +83,9 @@ const UserProvider = ({ children }) => {
         user,
         config
       );
-      const newUsers = users.map((userState) =>
-        userState.id === user.id ? data : userState
-      );
-      setUsers(newUsers);
+      setUsers(data);
+      getUsers();
+      // setUsers(newUsers);
     } catch (error) {
       console.log(error);
     }
@@ -136,6 +131,7 @@ const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        getUsers,
         users,
         clearUsers,
         usuarioId,

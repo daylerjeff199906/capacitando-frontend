@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import {
   Paper,
   Table,
@@ -51,7 +52,11 @@ const TableListUsers = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
 
-  const { users, editUsers, editStateUser } = useUsers();
+  const { getUsers, users, editUsers, editStateUser } = useUsers();
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   const getRolLabel = (rolId) => {
     if (rolId === 2) {
@@ -104,47 +109,50 @@ const TableListUsers = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((user, index) => (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                    <TableCell align="left">{user.usuario}</TableCell>
-                    <TableCell align="left">
-                      {user.apellido} {user.nombre}
-                    </TableCell>
-                    <TableCell align="left">{user.correo}</TableCell>
-                    <TableCell align="right">{getRolLabel(user.rol)}</TableCell>
-                    <TableCell align="right">
-                      <Tooltip title="Cambiar estado">
+              {users.length > 0 &&
+                users
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((user, index) => (
+                    <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                      <TableCell align="left">{user.usuario}</TableCell>
+                      <TableCell align="left">
+                        {user.apellido} {user.nombre}
+                      </TableCell>
+                      <TableCell align="left">{user.correo}</TableCell>
+                      <TableCell align="right">
+                        {getRolLabel(user.rol)}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Tooltip title="Cambiar estado">
+                          <Chip
+                            label={getEstadoLabel(user.estado)}
+                            color={user.estado === 1 ? "success" : "error"}
+                            size="small"
+                            variant="outlined"
+                            onClick={() => {
+                              editStateUser(user);
+                            }}
+                          />
+                        </Tooltip>
+                      </TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <ModalViewUser user={user} />
                         <Chip
-                          label={getEstadoLabel(user.estado)}
-                          color={user.estado === 1 ? "success" : "error"}
+                          icon={<EditNoteRoundedIcon />}
+                          label="Editar"
+                          component={Link}
+                          to={`/dashboard/users/add`}
+                          onClick={() => editUsers(user)}
+                          color="primary"
                           size="small"
-                          variant="outlined"
-                          onClick={() => {
-                            editStateUser(user);
-                          }}
+                          sx={{ marginLeft: 1 }}
                         />
-                      </Tooltip>
-                    </TableCell>
-                    <TableCell
-                      align="center"
-                      sx={{ display: "flex", justifyContent: "center" }}
-                    >
-                      <ModalViewUser user={user} />
-                      <Chip
-                        icon={<EditNoteRoundedIcon />}
-                        label="Editar"
-                        component={Link}
-                        to={`/dashboard/users/add`}
-                        onClick={() => editUsers(user)}
-                        color="primary"
-                        size="small"
-                        sx={{ marginLeft: 1 }}
-                      />
-                    </TableCell>
-                  </TableRow>
-                ))}
+                      </TableCell>
+                    </TableRow>
+                  ))}
             </TableBody>
           </Table>
         </TableContainer>
