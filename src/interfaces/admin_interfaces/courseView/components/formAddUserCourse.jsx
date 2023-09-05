@@ -73,6 +73,7 @@ const FormAddUserCourse = () => {
 
   const filteredDocentes = users.filter((user) => user.rol === 2);
   const filteredAlumnos = users.filter((user) => user.rol === 3);
+  const filteredCourses = courses.filter((course) => course.estado === 1);
 
   const handleAddUSer = () => {
     if (!idcurso || !idusuario) {
@@ -98,7 +99,7 @@ const FormAddUserCourse = () => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={courses}
+          options={filteredCourses}
           getOptionLabel={(course) => `${course.titulo} `}
           onChange={(event, value) => handleCourseSelection(value.idcurso)}
           sx={{ flex: 2 }}
