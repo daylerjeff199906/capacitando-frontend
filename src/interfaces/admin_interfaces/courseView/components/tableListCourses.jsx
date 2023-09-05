@@ -29,7 +29,7 @@ const columns = [
   { id: "category", label: "Categoría" },
   { id: "sesiones", label: "Sesiones" },
   { id: "units", label: "T. Clases", minWidth: 50 },
-  { id: "hours", label: "Horas", minWidth: 50 },
+  // { id: "hours", label: "Horas", minWidth: 50 },
   { id: "status", label: "Estado" },
   { id: "action", label: "Acción", align: "center" },
 ];
@@ -108,9 +108,9 @@ const TableListCourses = () => {
                 <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                   <TableCell align="left">{course.titulo}</TableCell>
                   <TableCell align="left">{course.categoria}</TableCell>
-                  <TableCell align="left"></TableCell>
-                  <TableCell align="left">{course.total_clases}</TableCell>
-                  <TableCell align="left">{course.hora_duracion}</TableCell>
+                  <TableCell align="center">{course.total_sesiones} </TableCell>
+                  <TableCell align="center">{course.total_clases}</TableCell>
+                  {/* <TableCell align="left">{course.hora_duracion}</TableCell> */}
                   <TableCell align="left">
                     {userRol === 1 ? (
                       <>

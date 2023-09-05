@@ -28,7 +28,7 @@ export default function ModalDetailCourse({ modalOpen, onClose, course }) {
   const userFields = [
     { label: "Categoria", value: course?.categoria },
     { label: "Descripción", value: course?.descripcion },
-    { label: "Horas de duración", value: course?.hora_duracion },
+    // { label: "Horas de duración", value: course?.hora_duracion },
     { label: "Total de clases", value: course?.total_clases },
   ];
 
