@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import {
   Autocomplete,
@@ -53,6 +54,10 @@ const FormAddUserCourse = () => {
   const [selectedDocentes, setSelectedDocentes] = useState([]);
   const [selectedAlumnos, setSelectedAlumnos] = useState([]);
 
+  const [courseValue, setCourseValue] = useState(null);
+  const [studentValue, setStudentValue] = useState(null);
+  const [teacherValue, setTeacherValue] = useState(null);
+
   const [idcurso, setIdCurso] = useState(null);
   const [idusuario, setIdUsuario] = useState(null);
 
@@ -60,20 +65,55 @@ const FormAddUserCourse = () => {
     getCourses();
   }, []);
 
-  const handleCourseSelection = (course) => {
-    if (course) {
-      getDetailCourse(course).then((data) => {
-        console.log(data);
+  useEffect(() => {
+    setCourseValue(null);
+    setStudentValue(null);
+    setTeacherValue(null);
+    setSelectedDocentes([]);
+    setSelectedAlumnos([]);
+    setIdCurso(null);
+    setIdUsuario(null);
+  }, [courses]);
+
+  useEffect(() => {
+    setSelectedAlumnos([]);
+    setSelectedDocentes([]);
+  }, [courseValue]);
+
+  // useEffect(() => {
+  //   setStudentValue(null);
+  // }, [idcurso]);
+
+  const filteredDocentes = users.filter((user) => user.rol === 2);
+  const filteredAlumnos = users.filter((user) => user.rol === 3);
+  const filteredCourses = courses.filter((course) => course.estado === 1);
+
+  console.log("valor seleccionado:", courseValue);
+
+  useEffect(() => {
+    if (courseValue) {
+      getDetailCourse(courseValue.idcurso).then((data) => {
+        // console.log(data);
         setSelectedDocentes(data.docentes);
         setSelectedAlumnos(data.estudiantes);
         setIdCurso(data.idcurso);
       });
     }
-  };
+  }, [courseValue]);
 
-  const filteredDocentes = users.filter((user) => user.rol === 2);
-  const filteredAlumnos = users.filter((user) => user.rol === 3);
-  const filteredCourses = courses.filter((course) => course.estado === 1);
+  useEffect(() => {
+    if (studentValue) {
+      console.log(studentValue);
+      setIdUsuario(studentValue.idusuario);
+    }
+  }, [studentValue]);
+
+  useEffect(() => {
+    if (teacherValue) {
+      console.log(teacherValue);
+      setIdUsuario(teacherValue.idusuario);
+    }
+  }, [teacherValue]);
 
   const handleAddUSer = () => {
     if (!idcurso || !idusuario) {
@@ -101,7 +141,8 @@ const FormAddUserCourse = () => {
           id="combo-box-demo"
           options={filteredCourses}
           getOptionLabel={(course) => `${course.titulo} `}
-          onChange={(event, value) => handleCourseSelection(value.idcurso)}
+          value={courseValue}
+          onChange={(event, value) => setCourseValue(value)}
           sx={{ flex: 2 }}
           renderInput={(params) => (
             <TextField
@@ -120,7 +161,8 @@ const FormAddUserCourse = () => {
             id="combo-box-demo"
             options={filteredDocentes}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
-            onChange={(e, value) => setIdUsuario(value.idusuario)}
+            value={teacherValue}
+            onChange={(event, value) => setTeacherValue(value)}
             sx={{ flex: 2 }}
             renderInput={(params) => (
               <TextField
@@ -182,7 +224,8 @@ const FormAddUserCourse = () => {
             id="combo-box-demo"
             options={filteredAlumnos}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
-            onChange={(e, value) => setIdUsuario(value.idusuario)}
+            value={studentValue}
+            onChange={(event, value) => setStudentValue(value)}
             sx={{ flex: 2 }}
             renderInput={(params) => (
               <TextField
