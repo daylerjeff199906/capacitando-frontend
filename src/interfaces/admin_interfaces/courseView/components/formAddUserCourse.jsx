@@ -121,9 +121,9 @@ const FormAddUserCourse = () => {
     }
   }, [teacherValue]);
 
-  console.log("valor seleccionado:", courseValue);
-  console.log("valor seleccionado:", studentValue);
-  console.log("valor seleccionado:", teacherValue);
+  // console.log("valor seleccionado:", courseValue);
+  // console.log("valor seleccionado:", studentValue);
+  // console.log("valor seleccionado:", teacherValue);
 
   const handleAddUSer = () => {
     if (!courseValue || !idusuario) {
