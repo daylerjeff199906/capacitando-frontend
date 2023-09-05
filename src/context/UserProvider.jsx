@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import userAxios from "../config/axios";
 
 const UserContext = createContext();
@@ -7,6 +7,7 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [usuarioId, setUsuarioId] = useState({});
+  const [message, setMessage] = useState("");
 
   const getUsers = async () => {
     try {
@@ -27,6 +28,13 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    message &&
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+  }, [message]);
+
   const saveUsers = async (user) => {
     const token = localStorage.getItem("token");
     const config = {
@@ -42,10 +50,12 @@ const UserProvider = ({ children }) => {
           user,
           config
         );
-        setUsers(data);
+        // setUsers(data);
+        setMessage(data.message);
+
         getUsers();
       } catch (error) {
-        console.log(error);
+        setMessage("Error al actualizar el usuario");
       }
     } else {
       try {
@@ -54,13 +64,13 @@ const UserProvider = ({ children }) => {
           user,
           config
         );
-        setUsers([...users, data]);
+        setMessage(data.message);
+
         getUsers();
       } catch (error) {
-        console.log(error);
+        setMessage("Error al crear el usuario");
       }
     }
-    console.log("usuario:", user);
     return;
   };
 
@@ -69,7 +79,6 @@ const UserProvider = ({ children }) => {
   };
 
   const editStateUser = async (user) => {
-    console.log("user: ", user);
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -83,11 +92,11 @@ const UserProvider = ({ children }) => {
         user,
         config
       );
-      setUsers(data);
+      setMessage(data.message);
       getUsers();
       // setUsers(newUsers);
     } catch (error) {
-      console.log(error);
+      setMessage("Error al cambiar el estado del usuario");
     }
   };
 
@@ -140,6 +149,7 @@ const UserProvider = ({ children }) => {
         saveUsers,
         editUsers,
         editStateUser,
+        message,
       }}
     >
       {children}

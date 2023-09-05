@@ -11,6 +11,7 @@ import {
   TableRow,
   Chip,
   Tooltip,
+  Snackbar,
 } from "@mui/material";
 
 import EditNoteRoundedIcon from "@mui/icons-material/EditNoteRounded";
@@ -50,9 +51,10 @@ const columns = [
 
 const TableListUsers = () => {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10); // Define the rowsPerPage state
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [msg, setMessage] = useState("");
 
-  const { getUsers, users, editUsers, editStateUser } = useUsers();
+  const { getUsers, users, editUsers, editStateUser, message } = useUsers();
 
   useEffect(() => {
     getUsers();
@@ -84,6 +86,12 @@ const TableListUsers = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  useEffect(() => {
+    if (message) {
+      setMessage(message);
+    }
+  }, [message]);
 
   return (
     <>
@@ -167,6 +175,14 @@ const TableListUsers = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={msg !== ""}
+        autoHideDuration={3000}
+        onClose={() => setMessage("")}
+        message={msg}
+        key={"top" + "center"}
+      />
     </>
   );
 };

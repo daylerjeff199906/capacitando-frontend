@@ -9,6 +9,7 @@ import {
   MenuItem,
   Typography,
   Grid,
+  Snackbar,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import useUsers from "../../../../hooks/useUsers";
@@ -24,8 +25,9 @@ const FormAddUser = () => {
   const [userType, setUserType] = React.useState(0);
   const [isProfileEnabled, setIsProfileEnabled] = React.useState(false);
   const [error, setError] = React.useState(null);
+  const [msg, setMessage] = React.useState("");
 
-  const { saveUsers, usuarioId, clearUsers } = useUsers();
+  const { saveUsers, usuarioId, clearUsers, message } = useUsers();
 
   const [usuario, setUsuario] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -205,6 +207,12 @@ const FormAddUser = () => {
     setPerfil("");
     setRol("");
   };
+
+  React.useEffect(() => {
+    if (message) {
+      setMessage(message);
+    }
+  }, [message]);
 
   React.useEffect(() => {
     return () => {
@@ -474,6 +482,14 @@ const FormAddUser = () => {
             </Box>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={msg !== ""}
+          autoHideDuration={3000}
+          onClose={() => setMessage("")}
+          message={msg}
+          key={"top" + "center"}
+        />
       </Box>
     </>
   );
