@@ -42,7 +42,7 @@ const FormAddUserCourse = () => {
   const [msgError, setMsgError] = useState("");
   const [msg, setMsg] = useState("");
 
-  const { users } = useUsers();
+  const { users, getUsers } = useUsers();
   const {
     getCourses,
     courses,
@@ -64,6 +64,9 @@ const FormAddUserCourse = () => {
   useEffect(() => {
     getCourses();
   }, []);
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   useEffect(() => {
     setCourseValue(null);
@@ -76,52 +79,55 @@ const FormAddUserCourse = () => {
   }, [courses]);
 
   useEffect(() => {
-    setSelectedAlumnos([]);
+    setStudentValue(null);
+    setTeacherValue(null);
     setSelectedDocentes([]);
+    setSelectedAlumnos([]);
+    setIdCurso(null);
+    setIdUsuario(null);
   }, [courseValue]);
-
-  // useEffect(() => {
-  //   setStudentValue(null);
-  // }, [idcurso]);
 
   const filteredDocentes = users.filter((user) => user.rol === 2);
   const filteredAlumnos = users.filter((user) => user.rol === 3);
   const filteredCourses = courses.filter((course) => course.estado === 1);
 
-  console.log("valor seleccionado:", courseValue);
-
   useEffect(() => {
     if (courseValue) {
       getDetailCourse(courseValue.idcurso).then((data) => {
-        // console.log(data);
         setSelectedDocentes(data.docentes);
         setSelectedAlumnos(data.estudiantes);
         setIdCurso(data.idcurso);
       });
     }
-  }, [courseValue]);
+  }, [courseValue, courses]);
 
   useEffect(() => {
     if (studentValue) {
-      console.log(studentValue);
       setIdUsuario(studentValue.idusuario);
+      setTeacherValue(null);
     }
   }, [studentValue]);
 
   useEffect(() => {
     if (teacherValue) {
-      console.log(teacherValue);
       setIdUsuario(teacherValue.idusuario);
+      setStudentValue(null);
     }
   }, [teacherValue]);
 
+  console.log("valor seleccionado:", courseValue);
+  console.log("valor seleccionado:", studentValue);
+  console.log("valor seleccionado:", teacherValue);
+
   const handleAddUSer = () => {
-    if (!idcurso || !idusuario) {
+    if (!courseValue || !idusuario) {
       setMsgError("Debe seleccionar un curso y un usuario");
       return;
     }
+    console.log(idcurso, idusuario);
     addUserCourse({ idcurso, idusuario });
-    clearTextField();
+    setStudentValue(null);
+    setTeacherValue(null);
   };
 
   const handleDeleteUser = (idselected) => {
@@ -129,9 +135,6 @@ const FormAddUserCourse = () => {
     deleteUserCourse({ idcurso, idusuario });
   };
 
-  const clearTextField = () => {
-    setIdUsuario(null);
-  };
   return (
     <>
       <Stack spacing={1} sx={{ marginBottom: 6 }}>
@@ -139,7 +142,7 @@ const FormAddUserCourse = () => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={filteredCourses}
+          options={filteredCourses ? filteredCourses : []}
           getOptionLabel={(course) => `${course.titulo} `}
           value={courseValue}
           onChange={(event, value) => setCourseValue(value)}
@@ -159,8 +162,9 @@ const FormAddUserCourse = () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={filteredDocentes}
+            options={filteredDocentes ? filteredDocentes : []}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
+            getOptionDisabled={(user) => user.estado !== 0}
             value={teacherValue}
             onChange={(event, value) => setTeacherValue(value)}
             sx={{ flex: 2 }}
@@ -222,8 +226,9 @@ const FormAddUserCourse = () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={filteredAlumnos}
+            options={filteredAlumnos ? filteredAlumnos : []}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
+            getOptionDisabled={(user) => user.estado !== 1}
             value={studentValue}
             onChange={(event, value) => setStudentValue(value)}
             sx={{ flex: 2 }}

@@ -153,9 +153,9 @@ const CourseProvider = ({ children }) => {
         userCourse,
         config
       );
-      console.log(data);
+      setMessage(data.message);
     } catch (error) {
-      console.log(error);
+      setMessage("Error al agregar el usuario");
     }
   };
 
