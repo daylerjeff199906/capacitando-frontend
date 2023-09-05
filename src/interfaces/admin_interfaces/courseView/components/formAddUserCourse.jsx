@@ -198,7 +198,7 @@ const FormAddUserCourse = () => {
         </Box>
 
         <TableContainer
-          sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
+          sx={{ maxWidth: "100%", maxHeight: 180, minHeight: 180 }}
         >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -269,7 +269,7 @@ const FormAddUserCourse = () => {
         </Box>
 
         <TableContainer
-          sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
+          sx={{ maxWidth: "100%", maxHeight: 180, minHeight: 180 }}
         >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>

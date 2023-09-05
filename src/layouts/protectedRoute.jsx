@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import { Outlet, Navigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import Navbar from "../components/NavBar";
 import SideBar from "../components/SideBar";
 import { Box, Drawer } from "@mui/material";
 
 const ProtectedRoute = () => {
-  const { auth } = useAuth();
+  const token = localStorage.getItem("token");
 
   return (
     <>
@@ -26,7 +25,7 @@ const ProtectedRoute = () => {
           <SideBar />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 6 }}>
-          {auth?.idusuario ? <Outlet /> : <Navigate to="/" />}
+          {token ? <Outlet /> : <Navigate to="/" />}
         </Box>
       </Box>
     </>
