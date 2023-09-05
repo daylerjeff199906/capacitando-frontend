@@ -24,6 +24,7 @@ const FormAddCourse = () => {
   const [error, setError] = useState(null);
   const [msg, setMsg] = useState("");
 
+  const idRol = localStorage.getItem("rol");
   // const [selectedFile, setSelectedFile] = useState(null);
 
   const { getCategory, categorys } = useCategory();
@@ -129,49 +130,55 @@ const FormAddCourse = () => {
           {error}
         </Alert>
       )}
-      <Stack spacing={1}>
-        <Typography variant="body1">Título</Typography>
-        <TextField
-          size="small"
-          placeholder="Ingrese el título del curso ..."
-          fullWidth
-          value={titulo}
-          onChange={(e) => setTitulo(e.target.value)}
-        />
-        <Typography variant="body1">Categoría</Typography>
-        <Select
-          fullWidth
-          value={idcategoria}
-          onChange={(e) => setIdcategoria(e.target.value)}
-          size="small"
-        >
-          {categorys.map((category) => (
-            <MenuItem key={category.idcategoria} value={category.idcategoria}>
-              {category.categoria}
-            </MenuItem>
-          ))}
-        </Select>
-        <Typography variant="body1">Descripción corta</Typography>
-        <TextField
-          size="small"
-          placeholder="Esta sección aparecerá junto a la imagen de portada, redacte una breve descripción del curso resaltando lo más importante..."
-          fullWidth
-          multiline
-          rows={4}
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
-        <Typography variant="body1">Url de video de presentación</Typography>
-        <TextField
-          size="small"
-          placeholder="Ingrese el título del curso ..."
-          fullWidth
-          value={url_video_intro}
-          onChange={(e) => setUrl_video_intro(e.target.value)}
-        />
-        <Typography variant="body1">Subir imagen de portada</Typography>
-        <InputImage />
-        {/* <input
+      <fieldset
+        style={{
+          border: "0",
+        }}
+        disabled={idRol === "1" ? false : true}
+      >
+        <Stack spacing={1} component={"form"}>
+          <Typography variant="body1">Título</Typography>
+          <TextField
+            size="small"
+            placeholder="Ingrese el título del curso ..."
+            fullWidth
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+          />
+          <Typography variant="body1">Categoría</Typography>
+          <Select
+            fullWidth
+            value={idcategoria}
+            onChange={(e) => setIdcategoria(e.target.value)}
+            size="small"
+          >
+            {categorys.map((category) => (
+              <MenuItem key={category.idcategoria} value={category.idcategoria}>
+                {category.categoria}
+              </MenuItem>
+            ))}
+          </Select>
+          <Typography variant="body1">Descripción corta</Typography>
+          <TextField
+            size="small"
+            placeholder="Esta sección aparecerá junto a la imagen de portada, redacte una breve descripción del curso resaltando lo más importante..."
+            fullWidth
+            multiline
+            rows={4}
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+          />
+          <Typography variant="body1">Url de video de presentación</Typography>
+          <TextField
+            size="small"
+            placeholder="Ingrese el título del curso ..."
+            fullWidth
+            value={url_video_intro}
+            onChange={(e) => setUrl_video_intro(e.target.value)}
+          />
+          <Typography variant="body1">Subir imagen de portada</Typography>
+          <InputImage />
+          {/* <input
           type="file"
           accept="image/*"
           style={{ display: "none" }}
@@ -200,25 +207,26 @@ const FormAddCourse = () => {
           Arrastra y suelta la imagen aquí
         </div> */}
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: 2,
-          }}
-        >
-          <Stack direction="row" spacing={2}>
-            <Button variant="contained" onClick={handleSubmit}>
-              {idcurso ? "Guardar cambios" : "Agregar curso"}
-            </Button>
-            <Link to="/dashboard/courses" style={{ textDecoration: "none" }}>
-              <Button variant="contained" color={"error"}>
-                Cancelar
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginTop: 2,
+            }}
+          >
+            <Stack direction="row" spacing={2}>
+              <Button variant="contained" onClick={handleSubmit}>
+                {idcurso ? "Guardar cambios" : "Agregar curso"}
               </Button>
-            </Link>
-          </Stack>
-        </Box>
-      </Stack>
+              <Link to="/dashboard/courses" style={{ textDecoration: "none" }}>
+                <Button variant="contained" color={"error"}>
+                  Cancelar
+                </Button>
+              </Link>
+            </Stack>
+          </Box>
+        </Stack>
+      </fieldset>
       <Snackbar
         open={msg ? true : false}
         autoHideDuration={3000}

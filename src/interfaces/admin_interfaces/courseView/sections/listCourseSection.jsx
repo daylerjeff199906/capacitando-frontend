@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import TableListCourses from "../components/tableListCourses";
 
 const ListCourseSection = () => {
-  const idRol = localStorage.getItem("idRol");
+  const idRol = localStorage.getItem("rol");
 
   return (
     <>
