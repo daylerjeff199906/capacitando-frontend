@@ -1,19 +1,30 @@
-import { Box, Container, Typography, Grid } from "@mui/material";
+// import * as React from "react";
+import {
+  Box,
+  Container,
+  Typography,
+  Grid,
+  // TextField,
+  // Autocomplete,
+} from "@mui/material";
 import CardCourse from "../../../../components/CardCourse";
 import CustomBreadcrumb from "../../../../components/BreadcrumbCustom";
 
 import useCourse from "../../../../hooks/useCourse";
 
-
 const routesArray = [{ name: "Mis cursos", path: "/home/miscursos" }];
 
 const CourseList = () => {
   const { courses } = useCourse();
-  console.log(courses);
+
+  // const [selectedCourse, setSelectedCourse] = React.useState(null);
+
+  // const goToLink = (id) => {
+  //   window.location.href = `/home/miscursos/${id}`;
+  // };
 
   return (
     <>
- 
       <Box bgcolor="#FFFFFF">
         <Container maxWidth={"xl"}>
           <Typography
@@ -26,6 +37,25 @@ const CourseList = () => {
           >
             Mis cursos asignados
           </Typography>
+
+          {/* <Autocomplete
+            disablePortal
+            id="combo-box-demo"
+            options={courses}
+            getOptionLabel={(option) => option.titulo}
+            value={selectedCourse}
+            onChange={(event, newValue) => {
+              setSelectedCourse(newValue);
+              if (newValue) {
+                goToLink(newValue.idcurso);
+              }
+            }}
+            sx={{ width: 300 }}
+            renderInput={(params) => (
+              <TextField {...params} placeholder="Buscar cursos" />
+            )}
+          /> */}
+
           <Box sx={{ paddingY: 2 }}>
             <CustomBreadcrumb routesArray={routesArray} />
           </Box>
