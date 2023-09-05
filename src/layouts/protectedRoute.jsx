@@ -4,8 +4,10 @@ import Navbar from "../components/NavBar";
 import SideBar from "../components/SideBar";
 import { Box, Drawer } from "@mui/material";
 
+import useAuth from "../hooks/useAuth";
+
 const ProtectedRoute = () => {
-  const token = localStorage.getItem("token");
+  const { auth } = useAuth();
 
   return (
     <>
@@ -25,7 +27,7 @@ const ProtectedRoute = () => {
           <SideBar />
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3, pt: 6 }}>
-          {token ? <Outlet /> : <Navigate to="/" />}
+          {auth.usuario ? <Outlet /> : <Navigate to="/" />}
         </Box>
       </Box>
     </>
