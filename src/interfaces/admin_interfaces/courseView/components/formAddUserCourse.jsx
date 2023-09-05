@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState } from "react";
 import {
   Autocomplete,
@@ -41,7 +42,7 @@ const FormAddUserCourse = () => {
   const [msgError, setMsgError] = useState("");
   const [msg, setMsg] = useState("");
 
-  const { users } = useUsers();
+  const { users, getUsers } = useUsers();
   const {
     getCourses,
     courses,
@@ -53,45 +54,89 @@ const FormAddUserCourse = () => {
   const [selectedDocentes, setSelectedDocentes] = useState([]);
   const [selectedAlumnos, setSelectedAlumnos] = useState([]);
 
+  const [courseValue, setCourseValue] = useState(null);
+  const [studentValue, setStudentValue] = useState(null);
+  const [teacherValue, setTeacherValue] = useState(null);
+
   const [idcurso, setIdCurso] = useState(null);
   const [idusuario, setIdUsuario] = useState(null);
 
   useEffect(() => {
     getCourses();
   }, []);
+  useEffect(() => {
+    getUsers();
+  }, []);
 
-  const handleCourseSelection = (course) => {
-    if (course) {
-      getDetailCourse(course).then((data) => {
-        console.log(data);
-        setSelectedDocentes(data.docentes);
-        setSelectedAlumnos(data.estudiantes);
-        setIdCurso(data.idcurso);
-      });
-    }
-  };
+  useEffect(() => {
+    setCourseValue(null);
+    setStudentValue(null);
+    setTeacherValue(null);
+    setSelectedDocentes([]);
+    setSelectedAlumnos([]);
+    setIdCurso(null);
+    setIdUsuario(null);
+  }, [courses]);
+
+  useEffect(() => {
+    setStudentValue(null);
+    setTeacherValue(null);
+    setSelectedDocentes([]);
+    setSelectedAlumnos([]);
+    setIdCurso(null);
+    setIdUsuario(null);
+  }, [courseValue]);
 
   const filteredDocentes = users.filter((user) => user.rol === 2);
   const filteredAlumnos = users.filter((user) => user.rol === 3);
   const filteredCourses = courses.filter((course) => course.estado === 1);
 
+  useEffect(() => {
+    if (courseValue) {
+      getDetailCourse(courseValue.idcurso).then((data) => {
+        setSelectedDocentes(data.docentes);
+        setSelectedAlumnos(data.estudiantes);
+        setIdCurso(data.idcurso);
+      });
+    }
+  }, [courseValue, courses, idusuario]);
+
+  useEffect(() => {
+    if (studentValue) {
+      setIdUsuario(studentValue.idusuario);
+      setTeacherValue(null);
+    }
+  }, [studentValue]);
+
+  useEffect(() => {
+    if (teacherValue) {
+      setIdUsuario(teacherValue.idusuario);
+      setStudentValue(null);
+    }
+  }, [teacherValue]);
+
+  console.log("valor seleccionado:", courseValue);
+  console.log("valor seleccionado:", studentValue);
+  console.log("valor seleccionado:", teacherValue);
+
   const handleAddUSer = () => {
-    if (!idcurso || !idusuario) {
+    if (!courseValue || !idusuario) {
       setMsgError("Debe seleccionar un curso y un usuario");
       return;
     }
     addUserCourse({ idcurso, idusuario });
-    clearTextField();
-  };
-
-  const handleDeleteUser = (idselected) => {
-    setIdUsuario(idselected);
-    deleteUserCourse({ idcurso, idusuario });
-  };
-
-  const clearTextField = () => {
+    setStudentValue(null);
+    setTeacherValue(null);
     setIdUsuario(null);
   };
+
+  // const handleDeleteUser = (idselected) => {
+  //   // console.log(idselected);
+  //   console.log(idcurso, idselected);
+  //   // setIdUsuario(idselected);
+  //   deleteUserCourse({ idcurso, idusuario: idselected });
+  // };
+
   return (
     <>
       <Stack spacing={1} sx={{ marginBottom: 6 }}>
@@ -99,9 +144,10 @@ const FormAddUserCourse = () => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={filteredCourses}
+          options={filteredCourses ? filteredCourses : []}
           getOptionLabel={(course) => `${course.titulo} `}
-          onChange={(event, value) => handleCourseSelection(value.idcurso)}
+          value={courseValue}
+          onChange={(event, value) => setCourseValue(value)}
           sx={{ flex: 2 }}
           renderInput={(params) => (
             <TextField
@@ -118,9 +164,11 @@ const FormAddUserCourse = () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={filteredDocentes}
+            options={filteredDocentes ? filteredDocentes : []}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
-            onChange={(e, value) => setIdUsuario(value.idusuario)}
+            getOptionDisabled={(user) => user.estado !== 1}
+            value={teacherValue}
+            onChange={(event, value) => setTeacherValue(value)}
             sx={{ flex: 2 }}
             renderInput={(params) => (
               <TextField
@@ -139,6 +187,7 @@ const FormAddUserCourse = () => {
             color="success"
             size="large"
             sx={{ borderRadius: 4, ml: 2 }}
+            disabled={!teacherValue}
           />
         </Box>
 
@@ -161,7 +210,13 @@ const FormAddUserCourse = () => {
                   <TableCell>
                     <Tooltip title="Quitar docente">
                       <IconButton
-                        onClick={() => handleDeleteUser(docente.id_docentes)}
+                        // onClick={() => handleDeleteUser(docente.id_docentes)}
+                        onClick={() =>
+                          deleteUserCourse({
+                            idcurso,
+                            idusuario: docente.id_docentes,
+                          })
+                        }
                       >
                         <HighlightOffRoundedIcon color="error" />
                       </IconButton>
@@ -180,9 +235,11 @@ const FormAddUserCourse = () => {
           <Autocomplete
             disablePortal
             id="combo-box-demo"
-            options={filteredAlumnos}
+            options={filteredAlumnos ? filteredAlumnos : []}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
-            onChange={(e, value) => setIdUsuario(value.idusuario)}
+            getOptionDisabled={(user) => user.estado !== 1}
+            value={studentValue}
+            onChange={(event, value) => setStudentValue(value)}
             sx={{ flex: 2 }}
             renderInput={(params) => (
               <TextField
@@ -201,6 +258,7 @@ const FormAddUserCourse = () => {
             color="success"
             size="large"
             sx={{ borderRadius: 4, ml: 2 }}
+            disabled={!studentValue}
           />
         </Box>
 
@@ -222,7 +280,19 @@ const FormAddUserCourse = () => {
                   <TableCell>{estudiante.estudiante}</TableCell>
                   <TableCell>
                     <Tooltip title="Quitar alumno">
-                      <HighlightOffRoundedIcon color="error" />
+                      <IconButton
+                        // onClick={() =>
+                        //   handleDeleteUser(estudiante.id_estudiante)
+                        // }
+                        onClick={() =>
+                          deleteUserCourse({
+                            idcurso,
+                            idusuario: estudiante.id_estudiante,
+                          })
+                        }
+                      >
+                        <HighlightOffRoundedIcon color="error" />
+                      </IconButton>
                     </Tooltip>
                   </TableCell>
                 </TableRow>

@@ -153,13 +153,14 @@ const CourseProvider = ({ children }) => {
         userCourse,
         config
       );
-      console.log(data);
+      setMessage(data.message);
     } catch (error) {
-      console.log(error);
+      setMessage("Error al agregar el usuario");
     }
   };
 
   const deleteUserCourse = async (userCourse) => {
+    console.log(userCourse);
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -173,9 +174,9 @@ const CourseProvider = ({ children }) => {
         userCourse,
         config
       );
-      console.log(data);
+      setMessage(data.message);
     } catch (error) {
-      console.log(error);
+      setMessage("Error al eliminar el usuario");
     }
   };
 
