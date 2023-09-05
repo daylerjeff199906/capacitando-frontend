@@ -4,6 +4,8 @@ import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import useCourse from "../../../../hooks/useCourse";
 import useUsers from "../../../../hooks/useUsers";
+import LastFiveCourses from "../../dashboard/lastFiveCourses";
+import LastFiveUsers from "../../dashboard/lastFiveUsers";
 
 const IndexAdmin = () => {
   const { courses } = useCourse();
@@ -48,7 +50,7 @@ const IndexAdmin = () => {
         </Typography>
       </Box>
 
-      <Grid container spacing={2} sx={{ paddingRight: 4 }}>
+      <Grid container spacing={2} mb={4} sx={{ paddingRight: 4 }}>
         {cardData.map((data, index) => (
           <Grid item xs={4} key={index}>
             <Box
@@ -82,7 +84,16 @@ const IndexAdmin = () => {
         ))}
       </Grid>
 
-      
+      <Grid container spacing={4} mt={4}>
+        <Grid item xs={12} md={6} sx={{ height: "100%" }}>
+          <Typography align="center" mb={3} variant="h1" fontSize={25}>Últimos 5 cursos añadidos</Typography>
+          <LastFiveCourses />
+        </Grid>
+        <Grid item xs={12} md={6} sx={{ height: "100%" }}>
+        <Typography align="center" mb={3} variant="h1" fontSize={25}>Últimos 5 usuarios añadidos</Typography>
+          <LastFiveUsers />
+        </Grid>
+      </Grid>
     </>
   );
 };
