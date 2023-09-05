@@ -99,7 +99,7 @@ const FormAddUserCourse = () => {
         setIdCurso(data.idcurso);
       });
     }
-  }, [courseValue, courses]);
+  }, [courseValue, courses, idusuario]);
 
   useEffect(() => {
     if (studentValue) {
@@ -124,16 +124,18 @@ const FormAddUserCourse = () => {
       setMsgError("Debe seleccionar un curso y un usuario");
       return;
     }
-    console.log(idcurso, idusuario);
     addUserCourse({ idcurso, idusuario });
     setStudentValue(null);
     setTeacherValue(null);
+    setIdUsuario(null);
   };
 
-  const handleDeleteUser = (idselected) => {
-    setIdUsuario(idselected);
-    deleteUserCourse({ idcurso, idusuario });
-  };
+  // const handleDeleteUser = (idselected) => {
+  //   // console.log(idselected);
+  //   console.log(idcurso, idselected);
+  //   // setIdUsuario(idselected);
+  //   deleteUserCourse({ idcurso, idusuario: idselected });
+  // };
 
   return (
     <>
@@ -164,7 +166,7 @@ const FormAddUserCourse = () => {
             id="combo-box-demo"
             options={filteredDocentes ? filteredDocentes : []}
             getOptionLabel={(user) => `${user.apellido} ${user.nombre}`}
-            getOptionDisabled={(user) => user.estado !== 0}
+            getOptionDisabled={(user) => user.estado !== 1}
             value={teacherValue}
             onChange={(event, value) => setTeacherValue(value)}
             sx={{ flex: 2 }}
@@ -185,6 +187,7 @@ const FormAddUserCourse = () => {
             color="success"
             size="large"
             sx={{ borderRadius: 4, ml: 2 }}
+            disabled={!teacherValue}
           />
         </Box>
 
@@ -207,7 +210,13 @@ const FormAddUserCourse = () => {
                   <TableCell>
                     <Tooltip title="Quitar docente">
                       <IconButton
-                        onClick={() => handleDeleteUser(docente.id_docentes)}
+                        // onClick={() => handleDeleteUser(docente.id_docentes)}
+                        onClick={() =>
+                          deleteUserCourse({
+                            idcurso,
+                            idusuario: docente.id_docentes,
+                          })
+                        }
                       >
                         <HighlightOffRoundedIcon color="error" />
                       </IconButton>
@@ -249,6 +258,7 @@ const FormAddUserCourse = () => {
             color="success"
             size="large"
             sx={{ borderRadius: 4, ml: 2 }}
+            disabled={!studentValue}
           />
         </Box>
 
@@ -270,7 +280,19 @@ const FormAddUserCourse = () => {
                   <TableCell>{estudiante.estudiante}</TableCell>
                   <TableCell>
                     <Tooltip title="Quitar alumno">
-                      <HighlightOffRoundedIcon color="error" />
+                      <IconButton
+                        // onClick={() =>
+                        //   handleDeleteUser(estudiante.id_estudiante)
+                        // }
+                        onClick={() =>
+                          deleteUserCourse({
+                            idcurso,
+                            idusuario: estudiante.id_estudiante,
+                          })
+                        }
+                      >
+                        <HighlightOffRoundedIcon color="error" />
+                      </IconButton>
                     </Tooltip>
                   </TableCell>
                 </TableRow>
