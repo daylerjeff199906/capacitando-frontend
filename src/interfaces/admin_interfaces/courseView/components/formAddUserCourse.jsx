@@ -87,9 +87,15 @@ const FormAddUserCourse = () => {
     setIdUsuario(null);
   }, [courseValue]);
 
-  const filteredDocentes = users.filter((user) => user.rol === 2);
-  const filteredAlumnos = users.filter((user) => user.rol === 3);
-  const filteredCourses = courses.filter((course) => course.estado === 1);
+  const filteredDocentes = Array.isArray(users)
+    ? users.filter((user) => user.rol === 2)
+    : [];
+  const filteredAlumnos = Array.isArray(users)
+    ? users.filter((user) => user.rol === 3)
+    : [];
+  const filteredCourses = Array.isArray(courses)
+    ? courses.filter((course) => course.estado === 1)
+    : [];
 
   useEffect(() => {
     if (courseValue) {

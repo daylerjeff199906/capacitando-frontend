@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import CardCourse from "../../../components/CardCourse";

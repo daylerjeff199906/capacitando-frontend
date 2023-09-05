@@ -23,6 +23,7 @@ const CourseProvider = ({ children }) => {
       };
       const { data } = await userAxios.get("/courses/list", config);
       setCourses(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
