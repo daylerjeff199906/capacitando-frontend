@@ -80,25 +80,24 @@ const Sidebar = () => {
               <></>
             )}
 
-            <MenuItem>
-              <Typography fontWeight={700} color={"white"}>
-                Usuarios
-              </Typography>
-            </MenuItem>
-            <Link
-              to="/dashboard/users"
-              style={{ textDecoration: "none", color: "white" }}
-            >
-              <MenuItem>
-                <ListItemIcon>
-                  <FormatListBulletedIcon htmlColor="white" />
-                </ListItemIcon>
-                <ListItemText primary="Lista de usuarios" />
-              </MenuItem>
-            </Link>
-
             {rolUser === "1" ? (
               <>
+                <MenuItem>
+                  <Typography fontWeight={700} color={"white"}>
+                    Usuarios
+                  </Typography>
+                </MenuItem>
+                <Link
+                  to="/dashboard/users"
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  <MenuItem>
+                    <ListItemIcon>
+                      <FormatListBulletedIcon htmlColor="white" />
+                    </ListItemIcon>
+                    <ListItemText primary="Lista de usuarios" />
+                  </MenuItem>
+                </Link>
                 <Link
                   to="/dashboard/users/add"
                   style={{ textDecoration: "none", color: "white" }}
