@@ -1,6 +1,14 @@
 /* eslint-disable react/prop-types */
 import * as React from "react";
-import { Typography, TextField, Box, Button, Divider } from "@mui/material";
+import {
+  Typography,
+  TextField,
+  Box,
+  Button,
+  Divider,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 
 import { useParams } from "react-router-dom";
 import useSesion from "../../../../hooks/useSesion";
@@ -9,13 +17,29 @@ const FormAddSection = () => {
   const [idcurso, setIdCurso] = React.useState("");
   const [nombre_sesion, setNombreSesion] = React.useState("");
   const [descripcion, setDescripcionSesion] = React.useState("");
+  const [msgError, setMsgError] = React.useState("");
+  const [msg, setMsg] = React.useState("");
 
-  const { saveSesion, getSesions, sesionId, clearSesionId } = useSesion();
+  const { saveSesion, getSesions, sesionId, clearSesionId, message } =
+    useSesion();
   const id = useParams();
 
   React.useEffect(() => {
     setIdCurso(id.id);
   }, [id]);
+
+  React.useEffect(() => {
+    if (idcurso) {
+      getSesions(idcurso);
+    }
+  }, [idcurso]);
+
+  React.useEffect(() => {
+    message &&
+      setTimeout(() => {
+        setMsg("");
+      }, 3000);
+  }, [message]);
 
   React.useEffect(() => {
     if (sesionId?.idsesion) {
@@ -28,7 +52,7 @@ const FormAddSection = () => {
     e.preventDefault();
 
     if ([nombre_sesion].includes("")) {
-      // setMessageContent("Todos los campos son obligatorios");
+      setMsgError("Todos los campos son obligatorios");
       return;
     }
 
@@ -54,6 +78,7 @@ const FormAddSection = () => {
     setNombreSesion("");
     setDescripcionSesion("");
     clearSesionId();
+    setMsgError("");
   };
 
   return (
@@ -62,6 +87,15 @@ const FormAddSection = () => {
         {sesionId?.idsesion ? "Editar sesión" : "Añadir sesión"}
       </Typography>
       <Divider sx={{ marginBottom: 2 }} />
+      <Alert
+        severity="error"
+        sx={{ display: msgError ? "flex" : "none", marginBottom: 2 }}
+        open={msgError ? true : false}
+        autoHideDuration={3000}
+      >
+        {msgError}
+      </Alert>
+
       <Typography variant="body1" paddingY={1} fontFamily={"Poppins"}>
         Título de sesión
       </Typography>
@@ -77,7 +111,7 @@ const FormAddSection = () => {
       </Typography>
       <TextField
         size="small"
-        placeholder="Opcional ..."
+        placeholder="Descripción de la sesión"
         fullWidth
         multiline
         value={descripcion}
@@ -98,12 +132,12 @@ const FormAddSection = () => {
           Cancelar
         </Button>
       </Box>
-      {/* <Snackbar
-        open={message ? true : false}
+      <Snackbar
+        open={msg ? true : false}
         message={message}
         autoHideDuration={3000}
-        // onClose={() => setMessageContent("")}
-      /> */}
+        onClose={() => setMsg("")}
+      />
     </>
   );
 };

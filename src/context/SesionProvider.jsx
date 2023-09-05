@@ -67,10 +67,11 @@ const SesionProvider = ({ children }) => {
           sesion,
           config
         );
-        setMessage(data);
+        console.log(data);
+        setMessage(data.message);
         getSesions(idCurso);
       } catch (error) {
-        console.log(error);
+        setMessage("Error al actualizar la sesión");
       }
     } else {
       try {
@@ -79,12 +80,10 @@ const SesionProvider = ({ children }) => {
           sesion,
           config
         );
-        setSesions([...sesions, data]);
         setMessage(data.message);
         getSesions(idCurso);
       } catch (error) {
-        setMessage(error.response.data.message);
-        console.log(error);
+        setMessage("Error al crear la sesión");
       }
     }
   };
@@ -107,8 +106,8 @@ const SesionProvider = ({ children }) => {
         sesion,
         config
       );
-      setMessage(data);
       getSesions(idCurso);
+      setMessage(data.message);
     } catch (error) {
       console.log(error);
     }
