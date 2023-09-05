@@ -7,28 +7,33 @@ const UserContext = createContext();
 const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
   const [usuarioId, setUsuarioId] = useState({});
+  const [message, setMessage] = useState("");
+
+  const getUsers = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await userAxios.get("/users/admin/list", config);
+      console.log(data);
+      setUsers(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        if (!token) return;
-
-        const config = {
-          headers: {
-            "content-type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        };
-        const { data } = await userAxios.get("/users/admin/list", config);
-        console.log(data);
-        setUsers(data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUsers();
-  }, []);
+    message &&
+      setTimeout(() => {
+        setMessage("");
+      }, 3000);
+  }, [message]);
 
   const saveUsers = async (user) => {
     const token = localStorage.getItem("token");
@@ -45,12 +50,12 @@ const UserProvider = ({ children }) => {
           user,
           config
         );
+        // setUsers(data);
+        setMessage(data.message);
 
-        setUsers((prevUsers) =>
-          prevUsers.map((users) => (users.id === data.id ? data : users))
-        );
+        getUsers();
       } catch (error) {
-        console.log(error);
+        setMessage("Error al actualizar el usuario");
       }
     } else {
       try {
@@ -59,12 +64,13 @@ const UserProvider = ({ children }) => {
           user,
           config
         );
-        setUsers([...users, data]);
+        setMessage(data.message);
+
+        getUsers();
       } catch (error) {
-        console.log(error);
+        setMessage("Error al crear el usuario");
       }
     }
-    console.log("usuario:", user);
     return;
   };
 
@@ -73,7 +79,6 @@ const UserProvider = ({ children }) => {
   };
 
   const editStateUser = async (user) => {
-    console.log("user: ", user);
     const token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -87,12 +92,11 @@ const UserProvider = ({ children }) => {
         user,
         config
       );
-      const newUsers = users.map((userState) =>
-        userState.id === user.id ? data : userState
-      );
-      setUsers(newUsers);
+      setMessage(data.message);
+      getUsers();
+      // setUsers(newUsers);
     } catch (error) {
-      console.log(error);
+      setMessage("Error al cambiar el estado del usuario");
     }
   };
 
@@ -136,6 +140,7 @@ const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        getUsers,
         users,
         clearUsers,
         usuarioId,
@@ -144,6 +149,7 @@ const UserProvider = ({ children }) => {
         saveUsers,
         editUsers,
         editStateUser,
+        message,
       }}
     >
       {children}
