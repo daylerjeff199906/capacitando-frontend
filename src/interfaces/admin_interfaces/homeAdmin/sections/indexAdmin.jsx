@@ -52,7 +52,7 @@ const IndexAdmin = () => {
 
       <Grid container spacing={2} mb={4} sx={{ paddingRight: 4 }}>
         {cardData.map((data, index) => (
-          <Grid item xs={4} key={index}>
+          <Grid item xs={12} md={6} lg={4} key={index}>
             <Box
               padding={3}
               borderRadius={4}
