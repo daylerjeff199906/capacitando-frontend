@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 import useCategory from "../../../../hooks/useCategory";
 import useCourse from "../../../../hooks/useCourse";
 
-import InputImage from "./InputImage";
+  // import InputImage from "./InputImage";
 
 const FormAddCourse = () => {
   const [idcurso, setId] = useState(null);
@@ -176,8 +176,8 @@ const FormAddCourse = () => {
             value={url_video_intro}
             onChange={(e) => setUrl_video_intro(e.target.value)}
           />
-          <Typography variant="body1">Subir imagen de portada</Typography>
-          <InputImage />
+          {/* <Typography variant="body1">Subir imagen de portada</Typography>
+          <InputImage /> */}
           {/* <input
           type="file"
           accept="image/*"
