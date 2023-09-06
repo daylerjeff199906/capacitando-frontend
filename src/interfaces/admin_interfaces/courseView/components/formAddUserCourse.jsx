@@ -5,7 +5,7 @@ import {
   Box,
   //   Button,
   Chip,
-  IconButton,
+  // IconButton,
   Stack,
   Table,
   TableBody,
@@ -14,12 +14,12 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Tooltip,
+  // Tooltip,
   Typography,
   Snackbar,
   Alert,
 } from "@mui/material";
-import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
+// import HighlightOffRoundedIcon from "@mui/icons-material/HighlightOffRounded";
 import { Add } from "@mui/icons-material";
 
 import useUsers from "../../../../hooks/useUsers";
@@ -29,13 +29,13 @@ import { useEffect } from "react";
 const headerTeacher = [
   { id: "id", label: "#" },
   { id: "nombre", label: "Docente" },
-  { id: "actions", label: "Acciones" },
+  // { id: "actions", label: "Acciones" },
 ];
 
 const headerStudent = [
   { id: "id", label: "#" },
   { id: "nombre", label: "Alumno" },
-  { id: "actions", label: "Acciones" },
+  // { id: "actions", label: "Acciones" },
 ];
 
 const FormAddUserCourse = () => {
@@ -48,7 +48,7 @@ const FormAddUserCourse = () => {
     courses,
     getDetailCourse,
     addUserCourse,
-    deleteUserCourse,
+    // deleteUserCourse,
   } = useCourse();
 
   const [selectedDocentes, setSelectedDocentes] = useState([]);
@@ -198,7 +198,7 @@ const FormAddUserCourse = () => {
         </Box>
 
         <TableContainer
-          sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
+          sx={{ maxWidth: "100%", maxHeight: 180, minHeight: 180 }}
         >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -213,7 +213,7 @@ const FormAddUserCourse = () => {
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{docente.docente}</TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Tooltip title="Quitar docente">
                       <IconButton
                         // onClick={() => handleDeleteUser(docente.id_docentes)}
@@ -227,7 +227,7 @@ const FormAddUserCourse = () => {
                         <HighlightOffRoundedIcon color="error" />
                       </IconButton>
                     </Tooltip>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
@@ -269,7 +269,7 @@ const FormAddUserCourse = () => {
         </Box>
 
         <TableContainer
-          sx={{ maxWidth: "100%", maxHeight: 150, minHeight: 150 }}
+          sx={{ maxWidth: "100%", maxHeight: 180, minHeight: 180 }}
         >
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -284,7 +284,7 @@ const FormAddUserCourse = () => {
                 <TableRow key={index}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>{estudiante.estudiante}</TableCell>
-                  <TableCell>
+                  {/* <TableCell>
                     <Tooltip title="Quitar alumno">
                       <IconButton
                         // onClick={() =>
@@ -300,7 +300,7 @@ const FormAddUserCourse = () => {
                         <HighlightOffRoundedIcon color="error" />
                       </IconButton>
                     </Tooltip>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
