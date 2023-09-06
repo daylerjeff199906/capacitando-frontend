@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Tooltip } from "@mui/material";
+import { Box, Button, Tooltip } from "@mui/material";
 import { Link } from "react-router-dom";
 import TableListCourses from "../components/tableListCourses";
 
@@ -8,7 +8,7 @@ const ListCourseSection = () => {
   return (
     <>
       <Box display="flex" paddingBottom={2}>
-        <TextField size="small" placeholder="Buscar usuario..." fullWidth />
+        {/* <TextField size="small" placeholder="Buscar usuario..." fullWidth /> */}
         {idRol === "1" ? (
           <Tooltip title="Agregar nuevo curso">
             <Link

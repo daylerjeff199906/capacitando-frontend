@@ -40,7 +40,7 @@ const CourseContentSection = ({
             height="500"
             src={
               findContenido?.url_video !== null
-                ? findContenido?.url_video + "?autoplay=1&mute=1"
+                ? findContenido?.url_video 
                 : "https://www.youtube.com/embed/1y_kfWUCFDQ?autoplay=1&mute=1"
             }
             title="YouTube video player"
