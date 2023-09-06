@@ -75,7 +75,7 @@ const LoginIndex = () => {
             fontWeight={700}
             gutterBottom
           >
-            Capacitandome
+            Capacitando
           </Typography>
           {error && (
             <Alert severity="error" sx={{ marginBottom: 2 }}>

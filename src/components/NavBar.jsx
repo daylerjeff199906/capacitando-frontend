@@ -65,7 +65,7 @@ const Navbar = () => {
             fontWeight={700}
             sx={{ marginRight: "auto" }}
           >
-            Capacitandome
+            Capacitando
           </Typography>
 
           {auth && (
